@@ -202,6 +202,40 @@
           }
         }
       ]
+    },
+    {
+      "name": "ge-skill-workorder-report",
+      "title": {
+        "zh": "工单日报智能体",
+        "en": "Workorder Daily Report Agent"
+      },
+      "description": {
+        "zh": "金鹰智慧物业工单日报：自动登录、项目×技能标签五指标统计、飞书/邮件推送、HTML 可视化晨报。开发者：张宸熙。",
+        "en": "Daily workorder report agent: auto login, project×skill statistics, Feishu/email push, HTML morning report. Developer: 张宸熙."
+      },
+      "author": "张宸熙",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/task-report-workorder",
+      "metadata": {
+        "category": "office",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793086438,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "8c33b1ef3c63a7ef8433867f105705585916373f",
+            "path": "packages/ge-skill-workorder-report"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
     }
   ]
 }
