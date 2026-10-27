@@ -10,13 +10,170 @@
   },
   "metadata": {
     "categories": {
-      "mcp": { "title": { "en": "MCP", "zh": "MCP 服务" } },
-      "skill": { "title": { "en": "Skills", "zh": "技能" } },
-      "office": { "title": { "en": "Office", "zh": "办公" } }
+      "mcp": {
+        "title": {
+          "en": "MCP",
+          "zh": "MCP 服务"
+        }
+      },
+      "skill": {
+        "title": {
+          "en": "Skills",
+          "zh": "技能"
+        }
+      },
+      "office": {
+        "title": {
+          "en": "Office",
+          "zh": "办公"
+        }
+      }
     },
     "labels": {
-      "approved": { "title": { "en": "Approved", "zh": "已审批" } }
+      "approved": {
+        "title": {
+          "en": "Approved",
+          "zh": "已审批"
+        }
+      }
     }
   },
-  "plugins": []
+  "plugins": [
+    {
+      "name": "ge-mcp-jinying",
+      "title": {
+        "zh": "金鹰物业安全管理系统 MCP",
+        "en": "Jinying Safety MCP"
+      },
+      "description": {
+        "zh": "通过 MCP 调用金鹰物业安全管理系统（Snowy 1.8，SM2 加密），28 个工具。开发者：Zcx-BaixiaoBai。",
+        "en": "MCP connector for the Jinying property safety system (28 tools). Developer: Zcx-BaixiaoBai."
+      },
+      "author": "Zcx-BaixiaoBai",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/GE-MCP",
+      "metadata": {
+        "category": "mcp",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793082646,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "__COMMIT__",
+            "path": "packages/ge-mcp-jinying"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-mcp-ruixin",
+      "title": {
+        "zh": "瑞信电表系统 MCP",
+        "en": "Ruixin Metering MCP"
+      },
+      "description": {
+        "zh": "通过 MCP 调用瑞信智慧预付费电表系统（RSA 加密），81 个工具。开发者：Zcx-BaixiaoBai。",
+        "en": "MCP connector for the Ruixin prepaid metering system (81 tools). Developer: Zcx-BaixiaoBai."
+      },
+      "author": "Zcx-BaixiaoBai",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/GE-MCP",
+      "metadata": {
+        "category": "mcp",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793082646,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "__COMMIT__",
+            "path": "packages/ge-mcp-ruixin"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-mcp-sd123",
+      "title": {
+        "zh": "123 物联网平台 MCP",
+        "en": "SD123 IoT MCP"
+      },
+      "description": {
+        "zh": "通过 MCP 调用 123 物联网平台（HTTP + MQTT），9 个工具。开发者：Zcx-BaixiaoBai。",
+        "en": "MCP connector for the SD123 IoT platform (9 tools). Developer: Zcx-BaixiaoBai."
+      },
+      "author": "Zcx-BaixiaoBai",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/GE-MCP",
+      "metadata": {
+        "category": "mcp",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793082646,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "__COMMIT__",
+            "path": "packages/ge-mcp-sd123"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-mcp-fuca",
+      "title": {
+        "zh": "eFlex 能碳管理平台 MCP",
+        "en": "eFlex Energy MCP"
+      },
+      "description": {
+        "zh": "通过 MCP 调用 eFlex 能碳管理平台（温度/运行状态/能耗/报警），67 个工具。开发者：Zcx-BaixiaoBai。",
+        "en": "MCP connector for the eFlex energy platform (67 tools). Developer: Zcx-BaixiaoBai."
+      },
+      "author": "Zcx-BaixiaoBai",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/GE-MCP",
+      "metadata": {
+        "category": "mcp",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793082646,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "__COMMIT__",
+            "path": "packages/ge-mcp-fuca"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    }
+  ]
 }

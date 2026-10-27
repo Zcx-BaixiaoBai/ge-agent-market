@@ -1,0 +1,13 @@
+# eFlex 能碳管理平台 MCP 连接器（开发者：Zcx-BaixiaoBai）
+- insert:
+    - id: ge-mcp-fuca-skill
+      name: 'ge-mcp-fuca'
+    - id: mcp-fuca
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: fuca
+        transport: stdio
+        command: !!js "process.env.GE_MCP_PYTHON || (process.platform === 'win32' ? 'python' : 'python3')"
+        args:
+          - !!js "`${process.env.GE_MCP_ROOT || ((process.env.HOME || process.env.USERPROFILE || '') + '/GE-MCP')}/fuca_mcp/server.py`"
+        cwd: !!js "`${process.env.GE_MCP_ROOT || ((process.env.HOME || process.env.USERPROFILE || '') + '/GE-MCP')}/fuca_mcp`"

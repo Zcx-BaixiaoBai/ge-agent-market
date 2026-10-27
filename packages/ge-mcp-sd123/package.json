@@ -1,0 +1,25 @@
+{
+  "name": "ge-mcp-sd123",
+  "version": "0.1.0",
+  "description": "通过 MCP 调用 123 物联网平台（HTTP + MQTT），9 个工具。开发者：Zcx-BaixiaoBai。",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "SKILL.md",
+    "cordis.patch.yml"
+  ],
+  "author": "Zcx-BaixiaoBai (https://github.com/Zcx-BaixiaoBai)",
+  "license": "MIT",
+  "engines": {
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@deepseek-ai/dsh-mcp-client": "0.2.1-rc.2"
+  }
+}
