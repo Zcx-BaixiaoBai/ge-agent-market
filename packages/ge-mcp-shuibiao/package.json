@@ -1,7 +1,7 @@
 {
   "name": "ge-mcp-shuibiao",
-  "version": "0.1.1",
-  "description": "通过 MCP 调用南京金鹰智慧能源管理平台（智能水表/电表），64 个工具。开发者：张宸熙。",
+  "version": "0.1.2",
+  "description": "通过 MCP 调用南京金鹰智慧能源管理平台（智能水表/电表），64 个工具。内置技能与 MCP 连接。开发者：张宸熙。",
   "type": "module",
   "main": "index.js",
   "files": [

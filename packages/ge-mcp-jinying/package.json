@@ -1,6 +1,6 @@
 {
   "name": "ge-mcp-jinying",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "通过 MCP 调用金鹰物业安全管理系统（Snowy 1.8，SM2 加密），28 个工具。开发者：Zcx-BaixiaoBai。",
   "type": "module",
   "main": "index.js",

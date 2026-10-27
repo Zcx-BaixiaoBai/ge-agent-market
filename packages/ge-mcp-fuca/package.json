@@ -1,6 +1,6 @@
 {
   "name": "ge-mcp-fuca",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "通过 MCP 调用 eFlex 能碳管理平台（温度/运行状态/能耗/报警），67 个工具。开发者：Zcx-BaixiaoBai。",
   "type": "module",
   "main": "index.js",

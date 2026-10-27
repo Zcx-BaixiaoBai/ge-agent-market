@@ -1,6 +1,6 @@
 {
   "name": "ge-mcp-sd123",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "通过 MCP 调用 123 物联网平台（HTTP + MQTT），9 个工具。开发者：Zcx-BaixiaoBai。",
   "type": "module",
   "main": "index.js",

@@ -1,5 +1,7 @@
 # eFlex 能碳管理平台 MCP 连接器（开发者：张宸熙）
 - insert:
+    - id: ge-mcp-fuca-skill
+      name: 'ge-mcp-fuca'
     - id: mcp-fuca
       name: '@deepseek-ai/dsh-mcp-client'
       config:
