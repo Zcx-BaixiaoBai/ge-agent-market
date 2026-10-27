@@ -1,4 +1,4 @@
-> 开发者（Developer）：Zcx-BaixiaoBai · 仓库：https://github.com/Zcx-BaixiaoBai/GE-MCP
+> 开发者（Developer）：张宸熙（Zcx-BaixiaoBai） · 仓库：https://github.com/Zcx-BaixiaoBai/GE-MCP
 
 # 123 物联网平台 MCP 技能
 

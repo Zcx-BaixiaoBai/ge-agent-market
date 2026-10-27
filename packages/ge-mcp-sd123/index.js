@@ -5,10 +5,10 @@ export const inject = ['skills']
 
 const SKILL_URL = new URL('./SKILL.md', import.meta.url)
 const RESOURCE_BASE = { kind: 'directory', path: new URL('./', import.meta.url).pathname }
-const DEVELOPER = 'Zcx-BaixiaoBai'
+const DEVELOPER = '张宸熙'
 const CANDIDATE = {
   name: 'ge-mcp-sd123',
-  description: '通过 MCP 调用 123 物联网平台（HTTP + MQTT），9 个工具。开发者：Zcx-BaixiaoBai。',
+  description: '通过 MCP 调用 123 物联网平台（HTTP + MQTT），9 个工具。开发者：张宸熙。',
   invocation: { modelInvocable: true, userInvocable: true },
   provider: 'ge-mcp-sd123',
   source: 'bundled',

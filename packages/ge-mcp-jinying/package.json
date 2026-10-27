@@ -9,7 +9,7 @@
     "SKILL.md",
     "cordis.patch.yml"
   ],
-  "author": "Zcx-BaixiaoBai (https://github.com/Zcx-BaixiaoBai)",
+  "author": "张宸熙 (https://github.com/Zcx-BaixiaoBai)",
   "license": "MIT",
   "engines": {
     "dsh": ">=0.2.0-rc.2 <0.3.0"
