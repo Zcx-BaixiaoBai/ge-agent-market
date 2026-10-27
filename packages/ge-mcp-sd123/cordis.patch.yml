@@ -1,7 +1,5 @@
 # 123 物联网平台 MCP 连接器（开发者：张宸熙）
 - insert:
-    - id: ge-mcp-sd123-skill
-      name: 'ge-mcp-sd123'
     - id: mcp-sd123
       name: '@deepseek-ai/dsh-mcp-client'
       config:

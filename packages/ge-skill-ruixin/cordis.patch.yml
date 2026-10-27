@@ -1,0 +1,4 @@
+# 瑞信电表 MCP 技能（开发者：张宸熙）
+- insert:
+    - id: ge-skill-ruixin-skill
+      name: 'ge-skill-ruixin'

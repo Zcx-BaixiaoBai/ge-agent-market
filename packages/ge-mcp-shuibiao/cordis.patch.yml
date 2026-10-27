@@ -1,7 +1,5 @@
 # 水表 MCP 连接器（开发者：张宸熙）
 - insert:
-    - id: ge-mcp-shuibiao-skill
-      name: 'ge-mcp-shuibiao'
     - id: mcp-shuibiao
       name: '@deepseek-ai/dsh-mcp-client'
       config:

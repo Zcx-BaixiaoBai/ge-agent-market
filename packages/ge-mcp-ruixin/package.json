@@ -1,6 +1,6 @@
 {
   "name": "ge-mcp-ruixin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "通过 MCP 调用瑞信智慧预付费电表系统（RSA 加密），81 个工具。开发者：Zcx-BaixiaoBai。",
   "type": "module",
   "main": "index.js",
