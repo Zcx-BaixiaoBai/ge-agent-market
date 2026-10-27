@@ -1,0 +1,29 @@
+{
+  "format": 1,
+  "title": {
+    "zh": "金鹰 Agent 技能库",
+    "en": "Jinying Agent Skills"
+  },
+  "description": {
+    "zh": "纯技能（SKILL.md + 脚本），安装到 dsh 用户技能目录即生效，无需插件",
+    "en": "Pure skills (SKILL.md + scripts) installed into the dsh user skill root"
+  },
+  "skills": [
+    {
+      "name": "task-report-workorder",
+      "title": {
+        "zh": "工单日报智能体",
+        "en": "Workorder Daily Report"
+      },
+      "description": {
+        "zh": "金鹰智慧物业工单日报：自动登录、项目×技能标签统计、飞书/邮件推送、HTML 晨报。",
+        "en": "Daily workorder report: auto login, statistics, Feishu/email push, HTML report."
+      },
+      "author": "张宸熙",
+      "version": "0.1.0",
+      "path": "skills/task-report-workorder",
+      "entry": "SKILL.md",
+      "repository": "https://github.com/Zcx-BaixiaoBai/task-report-workorder"
+    }
+  ]
+}

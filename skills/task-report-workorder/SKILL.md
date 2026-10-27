@@ -1,6 +1,7 @@
-> 开发者（Developer）：张宸熙 · 仓库：https://github.com/Zcx-BaixiaoBai/task-report-workorder
->
-> 本插件已随附全部脚本（资源目录下的 ge_*.mjs 与 public/）。首次使用时，请把资源目录中的脚本复制到持久目录（例如 `~/ge-workorder/`），在该目录创建 `config.json`（参考 `config.example.json`），之后所有命令都在该目录执行——升级插件不会覆盖你的配置。
+---
+name: task-report-workorder
+description: 金鹰智慧物业运营平台（任务/工单系统）的每日工单统计与推送智能体。自动登录(算术验证码 OCR)、拉全量工单、按项目×技能标签聚合五指标(进行中/今日新增/未完成/今日新增未完成/今日完成)、生成飞书日报(可只发本人或群发负责人)与 HTML 可视化晨报。当用户要给这套工单系统做"每日工单统计+推送"时使用。
+---
 
 # 工单日报智能体 (task-report-workorder)
 
