@@ -16,10 +16,10 @@
           "zh": "MCP 服务"
         }
       },
-      "office": {
+      "skill": {
         "title": {
-          "en": "Office",
-          "zh": "办公"
+          "en": "Skills",
+          "zh": "技能"
         }
       }
     },
@@ -196,6 +196,40 @@
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
             "commit": "43242ad1b8bbc5eb5c2d1ef35eb457c5d2e1d41d",
             "path": "packages/ge-mcp-shuibiao"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-workorder-report",
+      "title": {
+        "zh": "工单日报智能体",
+        "en": "Workorder Daily Report"
+      },
+      "description": {
+        "zh": "金鹰智慧物业工单日报：自动登录、项目×技能标签统计、飞书/邮件推送、HTML 晨报。开发者：张宸熙。",
+        "en": "Daily workorder report skill: auto login, statistics, Feishu/email push, HTML morning report. Developer: 张宸熙."
+      },
+      "author": "张宸熙",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/task-report-workorder",
+      "metadata": {
+        "category": "skill",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793087905,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "b38dda0ba2c319567bfbc5b9f6157411c03813e3",
+            "path": "packages/ge-skill-workorder-report"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
