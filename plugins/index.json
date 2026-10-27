@@ -21,6 +21,12 @@
           "en": "Skills",
           "zh": "技能"
         }
+      },
+      "office": {
+        "title": {
+          "en": "Office",
+          "zh": "办公"
+        }
       }
     },
     "labels": {
@@ -216,7 +222,7 @@
       "author": "张宸熙",
       "homepage": "https://github.com/Zcx-BaixiaoBai/task-report-workorder",
       "metadata": {
-        "category": "skill",
+        "category": "office",
         "labels": [
           "approved"
         ]
