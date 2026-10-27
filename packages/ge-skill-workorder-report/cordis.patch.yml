@@ -1,0 +1,4 @@
+# 工单日报智能体（开发者：张宸熙）
+- insert:
+    - id: ge-skill-workorder-report-skill
+      name: 'ge-skill-workorder-report'

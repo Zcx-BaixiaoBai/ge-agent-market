@@ -1,0 +1,12 @@
+{
+  "name": "ge-skill-workorder-report",
+  "version": "0.1.0",
+  "description": "金鹰智慧物业工单日报智能体：自动登录、按项目×技能标签统计、飞书/邮件推送、HTML 晨报。开发者：张宸熙。",
+  "type": "module",
+  "main": "index.js",
+  "files": ["index.js", "SKILL.md", "cordis.patch.yml", "ge_login.mjs", "ge_stats.mjs", "ge_report.mjs", "ge_report_html.mjs", "ge_feishu_sync.mjs", "ge_feishu_directory.mjs", "ge_server.mjs", "config.example.json", "public"],
+  "author": "张宸熙 (https://github.com/Zcx-BaixiaoBai)",
+  "license": "MIT",
+  "engines": { "dsh": ">=0.2.0-rc.2 <0.3.0" },
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
+}
