@@ -1,0 +1,22 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Jinying Agent Market",
+    "zh": "金鹰 Agent 插件市场"
+  },
+  "description": {
+    "en": "Company-approved plugins, skills and MCP servers",
+    "zh": "公司审批通过的插件、技能与 MCP 服务"
+  },
+  "metadata": {
+    "categories": {
+      "mcp": { "title": { "en": "MCP", "zh": "MCP 服务" } },
+      "skill": { "title": { "en": "Skills", "zh": "技能" } },
+      "office": { "title": { "en": "Office", "zh": "办公" } }
+    },
+    "labels": {
+      "approved": { "title": { "en": "Approved", "zh": "已审批" } }
+    }
+  },
+  "plugins": []
+}
