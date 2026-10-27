@@ -64,7 +64,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "734f06b4de68bfb8cfe5c9108e4e1674dc94fecf",
+            "commit": "83287ccf2acb2241cc810c384e641e9da0c12d2a",
             "path": "packages/ge-mcp-jinying"
           },
           "engines": {
@@ -102,7 +102,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "734f06b4de68bfb8cfe5c9108e4e1674dc94fecf",
+            "commit": "83287ccf2acb2241cc810c384e641e9da0c12d2a",
             "path": "packages/ge-mcp-ruixin"
           },
           "engines": {
@@ -140,7 +140,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "734f06b4de68bfb8cfe5c9108e4e1674dc94fecf",
+            "commit": "83287ccf2acb2241cc810c384e641e9da0c12d2a",
             "path": "packages/ge-mcp-sd123"
           },
           "engines": {
@@ -178,7 +178,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "734f06b4de68bfb8cfe5c9108e4e1674dc94fecf",
+            "commit": "83287ccf2acb2241cc810c384e641e9da0c12d2a",
             "path": "packages/ge-mcp-fuca"
           },
           "engines": {
