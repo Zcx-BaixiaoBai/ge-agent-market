@@ -5,8 +5,8 @@
     "zh": "金鹰 Agent 插件市场"
   },
   "description": {
-    "en": "Company-approved plugins, skills and MCP servers",
-    "zh": "公司审批通过的插件、技能与 MCP 服务"
+    "zh": "公司审批通过的插件（MCP 连接、技能与工具随插件分发）",
+    "en": "Company-approved plugins (MCP connections, skills and tools ship together)"
   },
   "metadata": {
     "categories": {
@@ -14,12 +14,6 @@
         "title": {
           "en": "MCP",
           "zh": "MCP 服务"
-        }
-      },
-      "skill": {
-        "title": {
-          "en": "Skills",
-          "zh": "技能"
         }
       },
       "office": {
@@ -59,12 +53,12 @@
       },
       "versions": [
         {
-          "version": "0.1.1",
-          "publishTimestamp": 1793085613,
+          "version": "0.1.2",
+          "publishTimestamp": 1793085920,
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
+            "commit": "43242ad1b8bbc5eb5c2d1ef35eb457c5d2e1d41d",
             "path": "packages/ge-mcp-jinying"
           },
           "engines": {
@@ -93,12 +87,12 @@
       },
       "versions": [
         {
-          "version": "0.1.1",
-          "publishTimestamp": 1793085613,
+          "version": "0.1.2",
+          "publishTimestamp": 1793085920,
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
+            "commit": "43242ad1b8bbc5eb5c2d1ef35eb457c5d2e1d41d",
             "path": "packages/ge-mcp-ruixin"
           },
           "engines": {
@@ -127,12 +121,12 @@
       },
       "versions": [
         {
-          "version": "0.1.1",
-          "publishTimestamp": 1793085613,
+          "version": "0.1.2",
+          "publishTimestamp": 1793085920,
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
+            "commit": "43242ad1b8bbc5eb5c2d1ef35eb457c5d2e1d41d",
             "path": "packages/ge-mcp-sd123"
           },
           "engines": {
@@ -161,12 +155,12 @@
       },
       "versions": [
         {
-          "version": "0.1.1",
-          "publishTimestamp": 1793085613,
+          "version": "0.1.2",
+          "publishTimestamp": 1793085920,
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
+            "commit": "43242ad1b8bbc5eb5c2d1ef35eb457c5d2e1d41d",
             "path": "packages/ge-mcp-fuca"
           },
           "engines": {
@@ -195,183 +189,13 @@
       },
       "versions": [
         {
-          "version": "0.1.1",
-          "publishTimestamp": 1793085613,
+          "version": "0.1.2",
+          "publishTimestamp": 1793085920,
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
+            "commit": "43242ad1b8bbc5eb5c2d1ef35eb457c5d2e1d41d",
             "path": "packages/ge-mcp-shuibiao"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.2 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "ge-skill-jinying",
-      "title": {
-        "zh": "金鹰安全管理系统技能",
-        "en": "金鹰安全管理系统 Skill"
-      },
-      "description": {
-        "zh": "通过 MCP 调用金鹰安全管理系统的作业指引（开发者：张宸熙）。",
-        "en": "Agent skill for the 金鹰安全管理系统 MCP connector (developer: 张宸熙)."
-      },
-      "author": "张宸熙",
-      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-      "metadata": {
-        "category": "skill",
-        "labels": [
-          "approved"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.1.0",
-          "publishTimestamp": 1793085613,
-          "source": {
-            "type": "git",
-            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
-            "path": "packages/ge-skill-jinying"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.2 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "ge-skill-ruixin",
-      "title": {
-        "zh": "瑞信电表系统技能",
-        "en": "瑞信电表系统 Skill"
-      },
-      "description": {
-        "zh": "通过 MCP 调用瑞信电表系统的作业指引（开发者：张宸熙）。",
-        "en": "Agent skill for the 瑞信电表系统 MCP connector (developer: 张宸熙)."
-      },
-      "author": "张宸熙",
-      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-      "metadata": {
-        "category": "skill",
-        "labels": [
-          "approved"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.1.0",
-          "publishTimestamp": 1793085613,
-          "source": {
-            "type": "git",
-            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
-            "path": "packages/ge-skill-ruixin"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.2 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "ge-skill-sd123",
-      "title": {
-        "zh": "123 物联网平台技能",
-        "en": "123 物联网平台 Skill"
-      },
-      "description": {
-        "zh": "通过 MCP 调用123 物联网平台的作业指引（开发者：张宸熙）。",
-        "en": "Agent skill for the 123 物联网平台 MCP connector (developer: 张宸熙)."
-      },
-      "author": "张宸熙",
-      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-      "metadata": {
-        "category": "skill",
-        "labels": [
-          "approved"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.1.0",
-          "publishTimestamp": 1793085613,
-          "source": {
-            "type": "git",
-            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
-            "path": "packages/ge-skill-sd123"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.2 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "ge-skill-fuca",
-      "title": {
-        "zh": "eFlex 能碳管理平台技能",
-        "en": "eFlex 能碳管理平台 Skill"
-      },
-      "description": {
-        "zh": "通过 MCP 调用eFlex 能碳管理平台的作业指引（开发者：张宸熙）。",
-        "en": "Agent skill for the eFlex 能碳管理平台 MCP connector (developer: 张宸熙)."
-      },
-      "author": "张宸熙",
-      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-      "metadata": {
-        "category": "skill",
-        "labels": [
-          "approved"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.1.0",
-          "publishTimestamp": 1793085613,
-          "source": {
-            "type": "git",
-            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
-            "path": "packages/ge-skill-fuca"
-          },
-          "engines": {
-            "dsh": ">=0.2.0-rc.2 <0.3.0"
-          }
-        }
-      ]
-    },
-    {
-      "name": "ge-skill-shuibiao",
-      "title": {
-        "zh": "智慧能源管理平台（水表/电表）技能",
-        "en": "智慧能源管理平台（水表/电表） Skill"
-      },
-      "description": {
-        "zh": "通过 MCP 调用智慧能源管理平台（水表/电表）的作业指引（开发者：张宸熙）。",
-        "en": "Agent skill for the 智慧能源管理平台（水表/电表） MCP connector (developer: 张宸熙)."
-      },
-      "author": "张宸熙",
-      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-      "metadata": {
-        "category": "skill",
-        "labels": [
-          "approved"
-        ]
-      },
-      "versions": [
-        {
-          "version": "0.1.0",
-          "publishTimestamp": 1793085613,
-          "source": {
-            "type": "git",
-            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
-            "path": "packages/ge-skill-shuibiao"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
