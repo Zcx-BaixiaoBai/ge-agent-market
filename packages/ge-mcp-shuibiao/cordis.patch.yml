@@ -1,0 +1,16 @@
+# 水表 MCP 连接器（开发者：张宸熙）
+- insert:
+    - id: ge-mcp-shuibiao-skill
+      name: 'ge-mcp-shuibiao'
+    - id: mcp-shuibiao
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: shuibiao
+        transport: stdio
+        command: !!js "process.env.SHUIBIAO_MCP_UV || 'uv'"
+        args:
+          - '--directory'
+          - !!js "`${process.env.SHUIBIAO_MCP_ROOT || ((process.env.HOME || process.env.USERPROFILE || '') + '/shuibiao-mcp')}`"
+          - 'run'
+          - 'shuibiao-mcp'
+        cwd: !!js "`${process.env.SHUIBIAO_MCP_ROOT || ((process.env.HOME || process.env.USERPROFILE || '') + '/shuibiao-mcp')}`"
