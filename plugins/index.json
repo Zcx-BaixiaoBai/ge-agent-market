@@ -59,20 +59,16 @@
       },
       "versions": [
         {
-          "version": "0.1.0",
-          "publishTimestamp": 1793082646,
+          "version": "0.1.1",
+          "publishTimestamp": 1793085613,
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "83287ccf2acb2241cc810c384e641e9da0c12d2a",
+            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
             "path": "packages/ge-mcp-jinying"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
-          },
-          "description": {
-            "zh": "通过 MCP 调用金鹰物业安全管理系统（Snowy 1.8，SM2 加密），28 个工具。开发者：Zcx-BaixiaoBai。",
-            "en": "MCP connector for the Jinying property safety system (28 tools). Developer: Zcx-BaixiaoBai."
           }
         }
       ]
@@ -97,20 +93,16 @@
       },
       "versions": [
         {
-          "version": "0.1.0",
-          "publishTimestamp": 1793082646,
+          "version": "0.1.1",
+          "publishTimestamp": 1793085613,
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "83287ccf2acb2241cc810c384e641e9da0c12d2a",
+            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
             "path": "packages/ge-mcp-ruixin"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
-          },
-          "description": {
-            "zh": "通过 MCP 调用瑞信智慧预付费电表系统（RSA 加密），81 个工具。开发者：Zcx-BaixiaoBai。",
-            "en": "MCP connector for the Ruixin prepaid metering system (81 tools). Developer: Zcx-BaixiaoBai."
           }
         }
       ]
@@ -135,20 +127,16 @@
       },
       "versions": [
         {
-          "version": "0.1.0",
-          "publishTimestamp": 1793082646,
+          "version": "0.1.1",
+          "publishTimestamp": 1793085613,
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "83287ccf2acb2241cc810c384e641e9da0c12d2a",
+            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
             "path": "packages/ge-mcp-sd123"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
-          },
-          "description": {
-            "zh": "通过 MCP 调用 123 物联网平台（HTTP + MQTT），9 个工具。开发者：Zcx-BaixiaoBai。",
-            "en": "MCP connector for the SD123 IoT platform (9 tools). Developer: Zcx-BaixiaoBai."
           }
         }
       ]
@@ -173,20 +161,16 @@
       },
       "versions": [
         {
-          "version": "0.1.0",
-          "publishTimestamp": 1793082646,
+          "version": "0.1.1",
+          "publishTimestamp": 1793085613,
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "83287ccf2acb2241cc810c384e641e9da0c12d2a",
+            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
             "path": "packages/ge-mcp-fuca"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
-          },
-          "description": {
-            "zh": "通过 MCP 调用 eFlex 能碳管理平台（温度/运行状态/能耗/报警），67 个工具。开发者：Zcx-BaixiaoBai。",
-            "en": "MCP connector for the eFlex energy platform (67 tools). Developer: Zcx-BaixiaoBai."
           }
         }
       ]
@@ -211,13 +195,183 @@
       },
       "versions": [
         {
-          "version": "0.1.0",
-          "publishTimestamp": 1793085075,
+          "version": "0.1.1",
+          "publishTimestamp": 1793085613,
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "10b833aec3566406ccfac5359e8b9cc60e6f63ec",
+            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
             "path": "packages/ge-mcp-shuibiao"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-jinying",
+      "title": {
+        "zh": "金鹰安全管理系统技能",
+        "en": "金鹰安全管理系统 Skill"
+      },
+      "description": {
+        "zh": "通过 MCP 调用金鹰安全管理系统的作业指引（开发者：张宸熙）。",
+        "en": "Agent skill for the 金鹰安全管理系统 MCP connector (developer: 张宸熙)."
+      },
+      "author": "张宸熙",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+      "metadata": {
+        "category": "skill",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793085613,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
+            "path": "packages/ge-skill-jinying"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-ruixin",
+      "title": {
+        "zh": "瑞信电表系统技能",
+        "en": "瑞信电表系统 Skill"
+      },
+      "description": {
+        "zh": "通过 MCP 调用瑞信电表系统的作业指引（开发者：张宸熙）。",
+        "en": "Agent skill for the 瑞信电表系统 MCP connector (developer: 张宸熙)."
+      },
+      "author": "张宸熙",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+      "metadata": {
+        "category": "skill",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793085613,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
+            "path": "packages/ge-skill-ruixin"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-sd123",
+      "title": {
+        "zh": "123 物联网平台技能",
+        "en": "123 物联网平台 Skill"
+      },
+      "description": {
+        "zh": "通过 MCP 调用123 物联网平台的作业指引（开发者：张宸熙）。",
+        "en": "Agent skill for the 123 物联网平台 MCP connector (developer: 张宸熙)."
+      },
+      "author": "张宸熙",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+      "metadata": {
+        "category": "skill",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793085613,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
+            "path": "packages/ge-skill-sd123"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-fuca",
+      "title": {
+        "zh": "eFlex 能碳管理平台技能",
+        "en": "eFlex 能碳管理平台 Skill"
+      },
+      "description": {
+        "zh": "通过 MCP 调用eFlex 能碳管理平台的作业指引（开发者：张宸熙）。",
+        "en": "Agent skill for the eFlex 能碳管理平台 MCP connector (developer: 张宸熙)."
+      },
+      "author": "张宸熙",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+      "metadata": {
+        "category": "skill",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793085613,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
+            "path": "packages/ge-skill-fuca"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-shuibiao",
+      "title": {
+        "zh": "智慧能源管理平台（水表/电表）技能",
+        "en": "智慧能源管理平台（水表/电表） Skill"
+      },
+      "description": {
+        "zh": "通过 MCP 调用智慧能源管理平台（水表/电表）的作业指引（开发者：张宸熙）。",
+        "en": "Agent skill for the 智慧能源管理平台（水表/电表） MCP connector (developer: 张宸熙)."
+      },
+      "author": "张宸熙",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+      "metadata": {
+        "category": "skill",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793085613,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "44ba06d8780fb07530425d221d2cb2b0645e08ca",
+            "path": "packages/ge-skill-shuibiao"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
