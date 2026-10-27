@@ -190,6 +190,40 @@
           }
         }
       ]
+    },
+    {
+      "name": "ge-mcp-shuibiao",
+      "title": {
+        "zh": "智慧能源水表 MCP",
+        "en": "Smart Energy Water Meter MCP"
+      },
+      "description": {
+        "zh": "通过 MCP 调用南京金鹰智慧能源管理平台（智能水表/电表），64 个工具（含 20 个写操作）。开发者：张宸熙。",
+        "en": "MCP connector for the Jinying smart energy platform (water/electric meters, 64 tools). Developer: 张宸熙."
+      },
+      "author": "张宸熙",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/shuibiao-mcp",
+      "metadata": {
+        "category": "mcp",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793085075,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "10b833aec3566406ccfac5359e8b9cc60e6f63ec",
+            "path": "packages/ge-mcp-shuibiao"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
     }
   ]
 }

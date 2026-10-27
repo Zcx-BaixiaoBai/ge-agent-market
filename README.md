@@ -15,6 +15,7 @@
 | ge-mcp-ruixin | 瑞信电表系统 | 81 | 张宸熙 | 智慧预付费管控，RSA 加密 |
 | ge-mcp-sd123 | 123 物联网平台 | 9 | 张宸熙 | HTTP + MQTT |
 | ge-mcp-fuca | eFlex 能碳管理平台 | 67 | 张宸熙 | 温度/运行状态/能耗/报警 |
+| ge-mcp-shuibiao | 智慧能源管理平台（水表/电表） | 64 | 张宸熙 | 南京金鹰智慧能源管理平台 |
 
 安装前提：本机有 GE-MCP 检出（默认 `~/GE-MCP`，可用 `GE_MCP_ROOT` 覆盖）、Python 依赖
 （`pip install fastmcp httpx playwright`）、各自系统的 `config.json`（账号密码）。每个包同时内置该系统的
