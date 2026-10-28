@@ -1,0 +1,4 @@
+node_modules/
+*.tgz
+# Release tarball stays in the repo: the workbench market installs from it.
+!ge-workbench-datacenter-*.tgz

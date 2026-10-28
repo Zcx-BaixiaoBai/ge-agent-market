@@ -1,0 +1,9 @@
+# 金鹰集团数据管理中心工作台（ge-workbench-datacenter）
+#
+# 服务端入口注册在本机接口前缀 /api/datacenter-workbench/ 下，
+# 负责读取数据管理中心的业务数据，并保存用户选择的项目。
+- insert:
+    - id: ge-workbench-datacenter
+      name: ge-workbench-datacenter
+      config:
+        root: !!js dshHomePath('datacenter-workbench')

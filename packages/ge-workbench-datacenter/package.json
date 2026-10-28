@@ -1,0 +1,55 @@
+{
+  "name": "ge-workbench-datacenter",
+  "version": "0.3.3",
+  "description": "金鹰集团数据管理中心工作台：按项目查看设备、电表、安全与预算全景数据",
+  "type": "module",
+  "main": "dsh/index.js",
+  "exports": {
+    ".": "./dsh/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "files": [
+    "dsh/index.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "张宸熙 (https://github.com/Zcx-BaixiaoBai)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zcx-BaixiaoBai/ge-agent-market.git",
+    "directory": "packages/ge-workbench-datacenter"
+  },
+  "engines": {
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "dsh-desktop-workbenches",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": ">=3.18.0 <4.0.0"
+  },
+  "scripts": {
+    "build": "esbuild src/entry.js --bundle --format=iife --target=es2022 --outfile=lib/client.js",
+    "test": "node test/server.test.mjs && node test/client.test.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "jsdom": "^28.0.0"
+  }
+}
