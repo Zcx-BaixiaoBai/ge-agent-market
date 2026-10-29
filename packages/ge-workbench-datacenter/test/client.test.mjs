@@ -289,7 +289,7 @@ check('选择已提交到服务端', postedSelection.includes('上海金鹰国�
 console.log('\n[2b] 集团总览首页')
 check('显示集团核心指标区', text().includes('核心指标（集团）'), text().slice(0, 300))
 check('显示智能电表总数 KPI', text().includes('智能电表总数'), text().slice(0, 400))
-check('KPI 显示集团电表总数', text().includes('8720'), text().slice(0, 400))
+check('KPI 显示集团电表总数（千分位）', text().includes('8,720'), text().slice(0, 400))
 check('显示电表故障率 KPI', text().includes('电表故障率'), text().slice(0, 400))
 check('显示隐患总数 KPI', text().includes('隐患总数'), text().slice(0, 400))
 check('显示安全履职 KPI', text().includes('安全履职'), text().slice(0, 500))
@@ -435,8 +435,8 @@ check('窄窗口下页面不横向溢出', document.documentElement.scrollWidth 
   client: document.documentElement.clientWidth,
 })
 const titleNode = query('.dcHeader__title')[0]
-check('标题允许换行，不撑破容器', titleNode !== undefined && computed(titleNode).overflowWrap === 'anywhere', titleNode && computed(titleNode).overflowWrap)
-const projectsNode = query('.dcHeader__projectsValue')[0]
+check('标题在紧凑顶栏内省略而不撑破容器', titleNode !== undefined && computed(titleNode).textOverflow === 'ellipsis', titleNode && computed(titleNode).textOverflow)
+const projectsNode = query('.dcProjectChip__value')[0]
 check('顶栏项目名过长时省略显示', projectsNode !== undefined && computed(projectsNode).textOverflow === 'ellipsis', projectsNode && computed(projectsNode).textOverflow)
 const subtitle = query('.dcHeader__subtitle')[0]
 check('副标题为真实中文且可换行', subtitle !== undefined && /金鹰集团/.test(subtitle.textContent ?? ''), subtitle?.textContent)

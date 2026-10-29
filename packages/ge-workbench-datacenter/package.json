@@ -1,6 +1,6 @@
 {
   "name": "ge-workbench-datacenter",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "金鹰集团数据管理中心工作台：按项目查看设备、电表、安全与预算全景数据",
   "type": "module",
   "main": "dsh/index.js",
