@@ -1,0 +1,4 @@
+# 飞书 CLI 办公助手（技能包，封装自 Z.ai lark-cli 0.1.2，MIT）
+- insert:
+    - id: ge-skill-lark-cli
+      name: 'ge-skill-lark-cli'

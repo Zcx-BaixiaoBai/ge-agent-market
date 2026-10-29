@@ -1,0 +1,35 @@
+{
+  "name": "ge-skill-lark-cli",
+  "version": "0.1.2",
+  "description": "飞书 CLI 办公助手：通过本机 lark-cli 操作云文档、表格、多维表格、日历、消息等，含应用配置与 OAuth 引导。封装自 Z.ai lark-cli 0.1.2（MIT）。",
+  "type": "module",
+  "main": "index.mjs",
+  "files": [
+    "index.mjs",
+    "cordis.patch.yml",
+    "skills/setup/SKILL.md",
+    "skills/cli/SKILL.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "Z.ai",
+  "license": "MIT",
+  "homepage": "https://github.com/larksuite/cli",
+  "engines": {
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "keywords": [
+    "feishu",
+    "lark",
+    "lark-cli",
+    "office",
+    "docs",
+    "sheets",
+    "calendar"
+  ]
+}
