@@ -324,7 +324,7 @@
       "author": "Z.ai",
       "homepage": "https://github.com/larksuite/cli",
       "metadata": {
-        "category": "office",
+        "category": "plugin",
         "labels": [
           "approved"
         ]
@@ -338,6 +338,142 @@
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
             "commit": "df4abe8b056a56348ce2f7ac6725f8384e34c408",
             "path": "packages/ge-skill-lark-cli"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-officecli-docx",
+      "title": {
+        "zh": "OfficeCLI Word 文档",
+        "en": "OfficeCLI Word Documents"
+      },
+      "description": {
+        "zh": "创建、读取、编辑 Word .docx 文档：报告、信函、备忘、模板、批注、修订、目录。使用 officecli CLI，无需安装 Office。来源：OfficeCLI（Apache-2.0）。",
+        "en": "Create, read and edit Word .docx documents with officecli: reports, letters, memos, templates, comments, tracked changes and TOCs. No Office install required. Upstream: OfficeCLI (Apache-2.0)."
+      },
+      "author": "OfficeCLI (iOfficeAI)",
+      "homepage": "https://github.com/iOfficeAI/OfficeCLI",
+      "metadata": {
+        "category": "office",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793288189,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "25ed59a05800b9c8b6027373da4546856e270871",
+            "path": "packages/ge-skill-officecli-docx"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-officecli-xlsx",
+      "title": {
+        "zh": "OfficeCLI Excel 表格",
+        "en": "OfficeCLI Excel Spreadsheets"
+      },
+      "description": {
+        "zh": "创建、读取、编辑 Excel .xlsx/.csv：公式、图表、透视表、数据看板、财务模型。使用 officecli CLI，无需安装 Office。来源：OfficeCLI（Apache-2.0）。",
+        "en": "Create, read and edit Excel .xlsx/.csv workbooks with officecli: formulas, charts, pivot tables, dashboards and financial models. No Office install required. Upstream: OfficeCLI (Apache-2.0)."
+      },
+      "author": "OfficeCLI (iOfficeAI)",
+      "homepage": "https://github.com/iOfficeAI/OfficeCLI",
+      "metadata": {
+        "category": "office",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793288189,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "25ed59a05800b9c8b6027373da4546856e270871",
+            "path": "packages/ge-skill-officecli-xlsx"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-officecli-pptx",
+      "title": {
+        "zh": "OfficeCLI PowerPoint 演示",
+        "en": "OfficeCLI PowerPoint Decks"
+      },
+      "description": {
+        "zh": "创建、读取、编辑 PowerPoint .pptx 演示文稿：模板、版式、图表、演讲备注。使用 officecli CLI，无需安装 Office。来源：OfficeCLI（Apache-2.0）。",
+        "en": "Create, read and edit PowerPoint .pptx decks with officecli: templates, layouts, charts and speaker notes. No Office install required. Upstream: OfficeCLI (Apache-2.0)."
+      },
+      "author": "OfficeCLI (iOfficeAI)",
+      "homepage": "https://github.com/iOfficeAI/OfficeCLI",
+      "metadata": {
+        "category": "office",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793288189,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "25ed59a05800b9c8b6027373da4546856e270871",
+            "path": "packages/ge-skill-officecli-pptx"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-internal-comms",
+      "title": {
+        "zh": "内部沟通写作",
+        "en": "Internal Communications"
+      },
+      "description": {
+        "zh": "撰写状态报告、领导更新、3P（Progress/Plans/Problems）、公司通讯、FAQ、事故报告、项目更新；内置四类格式模板。来源：Anthropic skills（Apache-2.0）。",
+        "en": "Write status reports, leadership updates, 3P updates, company newsletters, FAQs, incident reports and project updates with four built-in format guides. Upstream: Anthropic skills (Apache-2.0)."
+      },
+      "author": "Anthropic, PBC",
+      "homepage": "https://github.com/anthropics/skills",
+      "metadata": {
+        "category": "office",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793288189,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "25ed59a05800b9c8b6027373da4546856e270871",
+            "path": "packages/ge-skill-internal-comms"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"

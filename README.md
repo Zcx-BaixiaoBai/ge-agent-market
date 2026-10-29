@@ -25,11 +25,20 @@
 `JLITE_ACCOUNT_FILE`），后者读 `~/.robot-partner/session.json`（或 `ROBOT_PARTNER_ACCESS_TOKEN`）。
 每个包同时内置该系统的 SKILL.md 技能（技能描述里也标注开发者）。
 
-## 已上架技能 / 插件
+## 已上架插件
 
 | 包名 | 能力 | 开发者 | 说明 |
 |---|---|---|---|
 | ge-skill-lark-cli | 飞书 CLI 办公助手 | Z.ai | 封装官方 lark-cli（MIT）；文档/表格/多维表格/日历/消息，含 setup 与 OAuth 引导 |
+
+## 已上架办公技能
+
+| 包名 | 能力 | 开发者 | 说明 |
+|---|---|---|---|
+| ge-skill-officecli-docx | Word 文档 | OfficeCLI | 创建/读取/编辑 .docx；officecli 单二进制，无需装 Office（Apache-2.0） |
+| ge-skill-officecli-xlsx | Excel 表格 | OfficeCLI | 创建/读取/编辑 .xlsx/.csv、公式/图表/透视表（Apache-2.0） |
+| ge-skill-officecli-pptx | PowerPoint 演示 | OfficeCLI | 创建/读取/编辑 .pptx、模板/版式/备注（Apache-2.0） |
+| ge-skill-internal-comms | 内部沟通写作 | Anthropic | 状态报告/领导更新/3P/公司通讯/FAQ/事故报告（Apache-2.0） |
 
 上架流程（Phase 1 起走内部审批）：提交 → 自动检查 → 复核 → 合并本仓库。当前为 PoC 空目录，
 内容随内部审批结果更新。
