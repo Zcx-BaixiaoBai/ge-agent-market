@@ -23,22 +23,22 @@
         "en": "Golden Eagle group data center: per-project overview of devices, meters, safety and budget. Creator: Zhang Chenxi."
       },
       "author": "张宸熙",
-      "version": "0.3.3",
+      "version": "0.4.0",
       "license": "MIT",
       "distribution": {
         "type": "github-release",
-        "version": "0.3.3",
-        "url": "https://cdn.jsdelivr.net/gh/Zcx-BaixiaoBai/ge-agent-market@aad2a434985bb89836311628f05a31fa4e650ee2/packages/ge-workbench-datacenter/ge-workbench-datacenter-0.3.3.tgz",
-        "sha256": "65086dca6a9850644200a12b8a56621a6bb5b08ef57964a8566116437448a31d"
+        "version": "0.4.0",
+        "url": "https://cdn.jsdelivr.net/gh/Zcx-BaixiaoBai/ge-agent-market@ba7f65cbda5a80081a392192bb8d0470aa09ef2d/packages/ge-workbench-datacenter/ge-workbench-datacenter-0.4.0.tgz",
+        "sha256": "625c114fdb840f661725ca9435ba50469b5c338a600e7e83905a265bc00f7356"
       },
       "screenshots": [
         {
-          "url": "https://cdn.jsdelivr.net/gh/Zcx-BaixiaoBai/ge-agent-market@aad2a434985bb89836311628f05a31fa4e650ee2/packages/ge-workbench-datacenter/docs/screenshots/overview.png",
-          "alt": "数据管理中心总览：核心指标、电表故障排名与设备通讯故障分布",
-          "sha256": "94fb82f588d52ec438d74a9479cf1b0478b6c87763648c0df833606985b546e1",
+          "url": "https://cdn.jsdelivr.net/gh/Zcx-BaixiaoBai/ge-agent-market@ba7f65cbda5a80081a392192bb8d0470aa09ef2d/packages/ge-workbench-datacenter/docs/screenshots/overview.png",
+          "alt": "数据管理中心总览：风险摘要、所选项目指标、电表故障排名与通讯故障分布",
+          "sha256": "7ed27b75121d028e885f3c87913bed8955ae70843fffbe5a59f5a597d2e5e454",
           "width": 1280,
           "height": 720,
-          "bytes": 216244
+          "bytes": 156345
         }
       ]
     }
