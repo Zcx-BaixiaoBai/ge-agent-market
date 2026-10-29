@@ -242,6 +242,74 @@
           }
         }
       ]
+    },
+    {
+      "name": "ge-mcp-jieshun",
+      "title": {
+        "zh": "捷顺云停车 MCP",
+        "en": "Jieshun Parking MCP"
+      },
+      "description": {
+        "zh": "通过 MCP 查询捷顺云停车（只读）：车场、人员、通行记录、异常放行、场内车辆、停车优惠与收费统计，9 个工具。开发者：颜政。",
+        "en": "Read-only MCP connector for Jieshun cloud parking: lots, personnel, traffic records, exceptions, in-lot vehicles, discounts and charge statistics (9 tools). Developer: 颜政."
+      },
+      "author": "颜政",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market/tree/main/packages/ge-mcp-jieshun",
+      "metadata": {
+        "category": "mcp",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793285052,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "12cdaab6c525b0e4bbb43148b1dea04762f10cd9",
+            "path": "packages/ge-mcp-jieshun"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-mcp-robot-partner",
+      "title": {
+        "zh": "高仙机器人合作伙伴平台 MCP",
+        "en": "Gaussian Robot Partner MCP"
+      },
+      "description": {
+        "zh": "通过 MCP 查询高仙机器人合作伙伴平台（只读）：项目、设备、实时概览、任务统计、任务日历、达标阈值与告警，10 个工具。开发者：颜政。",
+        "en": "Read-only MCP connector for the Gaussian Robotics partner platform: projects, devices, realtime overview, task statistics, calendars, thresholds and alerts (10 tools). Developer: 颜政."
+      },
+      "author": "颜政",
+      "homepage": "https://github.com/Zcx-BaixiaoBai/ge-agent-market/tree/main/packages/ge-mcp-robot-partner",
+      "metadata": {
+        "category": "mcp",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793285052,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "12cdaab6c525b0e4bbb43148b1dea04762f10cd9",
+            "path": "packages/ge-mcp-robot-partner"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
     }
   ]
 }

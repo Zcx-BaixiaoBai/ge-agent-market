@@ -16,10 +16,14 @@
 | ge-mcp-sd123 | 123 物联网平台 | 9 | 张宸熙 | HTTP + MQTT |
 | ge-mcp-fuca | eFlex 能碳管理平台 | 67 | 张宸熙 | 温度/运行状态/能耗/报警 |
 | ge-mcp-shuibiao | 智慧能源管理平台（水表/电表） | 64 | 张宸熙 | 南京金鹰智慧能源管理平台 |
+| ge-mcp-jieshun | 捷顺云停车 | 9 | 颜政 | 车场/通行/异常放行/场内车辆/优惠/收费统计，只读 |
+| ge-mcp-robot-partner | 高仙机器人合作伙伴平台 | 10 | 颜政 | 项目/设备/任务统计/日历/阈值/告警，只读 |
 
-安装前提：本机有 GE-MCP 检出（默认 `~/GE-MCP`，可用 `GE_MCP_ROOT` 覆盖）、Python 依赖
-（`pip install fastmcp httpx playwright`）、各自系统的 `config.json`（账号密码）。每个包同时内置该系统的
-SKILL.md 技能（技能描述里也标注开发者）。
+安装前提：GE-MCP 系列需要本机有 GE-MCP 检出（默认 `~/GE-MCP`，可用 `GE_MCP_ROOT` 覆盖）、Python 依赖
+（`pip install fastmcp httpx playwright`）、各自系统的 `config.json`（账号密码）。`ge-mcp-jieshun` 与
+`ge-mcp-robot-partner` 为自包含 Node 包，不需要检出：前者读 `~/.jlite/accounts.csv`（或
+`JLITE_ACCOUNT_FILE`），后者读 `~/.robot-partner/session.json`（或 `ROBOT_PARTNER_ACCESS_TOKEN`）。
+每个包同时内置该系统的 SKILL.md 技能（技能描述里也标注开发者）。
 
 上架流程（Phase 1 起走内部审批）：提交 → 自动检查 → 复核 → 合并本仓库。当前为 PoC 空目录，
 内容随内部审批结果更新。
