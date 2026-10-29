@@ -268,7 +268,7 @@
           "source": {
             "type": "git",
             "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
-            "commit": "12cdaab6c525b0e4bbb43148b1dea04762f10cd9",
+            "commit": "e1735eb7114dddd71b8f29ff92c9f0492bdd838c",
             "path": "packages/ge-mcp-jieshun"
           },
           "engines": {
