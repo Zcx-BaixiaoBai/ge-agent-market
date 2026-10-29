@@ -1,0 +1,32 @@
+{
+  "name": "ge-skill-officecli-xlsx",
+  "version": "0.1.0",
+  "description": "创建、读取、编辑 Excel .xlsx/.csv：公式、图表、透视表、数据看板、财务模型。使用 officecli CLI，无需安装 Office。来源：OfficeCLI（Apache-2.0）。",
+  "type": "module",
+  "main": "index.mjs",
+  "files": [
+    "index.mjs",
+    "cordis.patch.yml",
+    "SKILL.md",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "author": "OfficeCLI (iOfficeAI)",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/iOfficeAI/OfficeCLI",
+  "engines": {
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "keywords": [
+    "office",
+    "xlsx",
+    "excel",
+    "officecli"
+  ]
+}

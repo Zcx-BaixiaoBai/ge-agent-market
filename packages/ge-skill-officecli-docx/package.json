@@ -1,0 +1,32 @@
+{
+  "name": "ge-skill-officecli-docx",
+  "version": "0.1.0",
+  "description": "创建、读取、编辑 Word .docx 文档：报告、信函、备忘、模板、批注、修订、目录。使用 officecli CLI，无需安装 Office。来源：OfficeCLI（Apache-2.0）。",
+  "type": "module",
+  "main": "index.mjs",
+  "files": [
+    "index.mjs",
+    "cordis.patch.yml",
+    "SKILL.md",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "author": "OfficeCLI (iOfficeAI)",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/iOfficeAI/OfficeCLI",
+  "engines": {
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "keywords": [
+    "office",
+    "docx",
+    "word",
+    "officecli"
+  ]
+}

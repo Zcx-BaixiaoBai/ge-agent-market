@@ -1,0 +1,4 @@
+# OfficeCLI Word 文档技能（来源：iOfficeAI/OfficeCLI，Apache-2.0）
+- insert:
+    - id: ge-skill-officecli-docx
+      name: 'ge-skill-officecli-docx'

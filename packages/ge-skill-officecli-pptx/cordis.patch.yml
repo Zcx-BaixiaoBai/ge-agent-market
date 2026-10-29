@@ -1,0 +1,4 @@
+# OfficeCLI PowerPoint 演示技能（来源：iOfficeAI/OfficeCLI，Apache-2.0）
+- insert:
+    - id: ge-skill-officecli-pptx
+      name: 'ge-skill-officecli-pptx'

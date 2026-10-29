@@ -1,0 +1,4 @@
+# 内部沟通写作技能（来源：Anthropic skills/internal-comms，Apache-2.0）
+- insert:
+    - id: ge-skill-internal-comms
+      name: 'ge-skill-internal-comms'
