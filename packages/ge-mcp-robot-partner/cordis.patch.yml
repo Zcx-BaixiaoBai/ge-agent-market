@@ -1,0 +1,28 @@
+# 高仙机器人合作伙伴平台只读 MCP 连接器（开发者：颜政）
+#
+# 启动同包内置的 stdio 服务：node dist/index.js。
+# 桌面端没有独立 Node，因此用 process.execPath（Electron Helper）配
+# ELECTRON_RUN_AS_NODE=1 运行；命令行环境里该变量对 node 无副作用。
+# 包安装位置按 dsh 桌面端固定 profile（web）解析，可用环境变量覆盖：
+#   GE_MCP_NODE                  指定 node 可执行文件
+#   GE_MCP_ROBOT_PARTNER_ENTRY   指定 dist/index.js 绝对路径
+#   ROBOT_PARTNER_ACCESS_TOKEN   直接提供 accessToken
+#   ROBOT_PARTNER_REFRESH_TOKEN  直接提供 refreshToken
+#   ROBOT_PARTNER_SESSION_FILE   会话文件（默认 ~/.robot-partner/session.json）
+- insert:
+    - id: ge-mcp-robot-partner-skill
+      name: 'ge-mcp-robot-partner'
+    - id: mcp-robot-partner
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: robot_partner
+        transport: stdio
+        command: !!js "process.env.GE_MCP_NODE || process.execPath"
+        args:
+          - !!js "process.env.GE_MCP_ROBOT_PARTNER_ENTRY || (`${process.env.DSH_HOME || ((process.env.HOME || process.env.USERPROFILE || '') + '/.dsh')}/profiles/web/node_modules/ge-mcp-robot-partner/dist/index.js`)"
+        env:
+          ELECTRON_RUN_AS_NODE: '1'
+          ROBOT_PARTNER_BASE_URL: !!js "process.env.ROBOT_PARTNER_BASE_URL || ''"
+          ROBOT_PARTNER_SESSION_FILE: !!js "process.env.ROBOT_PARTNER_SESSION_FILE || ((process.env.HOME || process.env.USERPROFILE || '') + '/.robot-partner/session.json')"
+          ROBOT_PARTNER_ACCESS_TOKEN: !!js "process.env.ROBOT_PARTNER_ACCESS_TOKEN || ''"
+          ROBOT_PARTNER_REFRESH_TOKEN: !!js "process.env.ROBOT_PARTNER_REFRESH_TOKEN || ''"

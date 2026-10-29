@@ -1,0 +1,48 @@
+{
+  "name": "ge-mcp-robot-partner",
+  "version": "0.1.0",
+  "description": "高仙机器人合作伙伴平台只读 MCP 服务：项目、设备、实时概览、任务统计、任务日历、达标阈值与告警，10 个工具。开发者：颜政。",
+  "type": "module",
+  "main": "index.mjs",
+  "bin": {
+    "robot-partner-mcp": "dist/index.js",
+    "robot-partner-auth": "dist/auth-cli.js",
+    "robot-partner-doctor": "dist/doctor.js"
+  },
+  "files": [
+    "index.mjs",
+    "SKILL.md",
+    "cordis.patch.yml",
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "author": "颜政",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20",
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "auth": "node dist/auth-cli.js",
+    "doctor": "node dist/doctor.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.4.0",
+    "playwright-core": "^1.64.1",
+    "zod": "^4.1.12"
+  },
+  "keywords": [
+    "mcp",
+    "robot",
+    "gaussian",
+    "cleaning",
+    "read-only"
+  ]
+}
