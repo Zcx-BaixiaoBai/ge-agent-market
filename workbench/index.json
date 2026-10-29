@@ -8,14 +8,35 @@
         "zh": "运营监控",
         "en": "Operations"
       }
+    },
+    {
+      "id": "productivity",
+      "name": {
+        "zh": "效率工具",
+        "en": "Productivity"
+      }
+    },
+    {
+      "id": "data",
+      "name": {
+        "zh": "数据分析",
+        "en": "Analytics"
+      }
+    },
+    {
+      "id": "engineering",
+      "name": {
+        "zh": "工程支持",
+        "en": "Engineering"
+      }
     }
   ],
   "workbenches": [
     {
       "id": "zcx-baixiaobai/ge-agent-market",
-      "owner": "Zcx-BaixiaoBai",
+      "owner": "zcx-baixiaobai",
       "repository": "ge-agent-market",
-      "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+      "url": "https://github.com/zcx-baixiaobai/ge-agent-market",
       "name": "数据管理中心",
       "category": "operations",
       "description": {
@@ -39,6 +60,37 @@
           "width": 1280,
           "height": 720,
           "bytes": 156345
+        }
+      ]
+    },
+    {
+      "id": "zcx-baixiaobai/ge-workbench-electric-safety",
+      "owner": "zcx-baixiaobai",
+      "repository": "ge-workbench-electric-safety",
+      "url": "https://github.com/zcx-baixiaobai/ge-workbench-electric-safety",
+      "name": "用电安全助手",
+      "category": "operations",
+      "author": "张宸熙",
+      "version": "0.2.0",
+      "license": "MIT",
+      "description": {
+        "zh": "用电安全助手：每日拉取能源管理系统 AI 自检报告，汇总异常租户（模型偏离/双命中/负向偏离/代码侧异常），展示夜实际与夜预测用电曲线及偏离分。创作者：张宸熙。",
+        "en": "Electric-safety assistant: pulls the daily AI self-check report from the energy management system, summarizes anomalous tenants (model deviation, double hits, negative deviation, code-side anomalies) and shows night actual vs forecast usage curves with deviation scores. Creator: 张宸熙."
+      },
+      "distribution": {
+        "type": "github-release",
+        "version": "0.2.0",
+        "url": "https://cdn.jsdelivr.net/gh/Zcx-BaixiaoBai/ge-agent-market@176c38ffe572d03d1c2b4bb89d73218b79d09fd0/packages/ge-workbench-electric-safety/ge-workbench-electric-safety-0.2.0.tgz",
+        "sha256": "d536e1079c54ed896e009d1a6296f5cc6c0039df49533e54511111f1561817c3"
+      },
+      "screenshots": [
+        {
+          "url": "https://cdn.jsdelivr.net/gh/Zcx-BaixiaoBai/ge-agent-market@176c38ffe572d03d1c2b4bb89d73218b79d09fd0/packages/ge-workbench-electric-safety/docs/screenshots/overview.png",
+          "alt": "用电安全助手总览：异常租户卡片、夜实际/夜预测曲线与偏离分、优先核查提示（示例数据预览）",
+          "sha256": "abc603cfa5679e0bf812e80000e49c189963ec92161fdf96e72621bd9d13eb29",
+          "width": 1600,
+          "height": 900,
+          "bytes": 191567
         }
       ]
     }
