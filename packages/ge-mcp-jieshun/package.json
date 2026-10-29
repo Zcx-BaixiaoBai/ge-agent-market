@@ -1,0 +1,41 @@
+{
+  "name": "ge-mcp-jieshun",
+  "version": "0.1.0",
+  "description": "捷顺云停车只读 MCP 服务：车场、人员、通行记录、异常放行、场内车辆、停车优惠与收费统计，9 个工具。开发者：颜政。",
+  "type": "commonjs",
+  "main": "index.mjs",
+  "bin": {
+    "ge-mcp-jieshun": "src/server.js"
+  },
+  "files": [
+    "index.mjs",
+    "SKILL.md",
+    "cordis.patch.yml",
+    "src",
+    "assets",
+    "vendor",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "颜政",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18",
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "selftest": "node src/server.js --selftest"
+  },
+  "keywords": [
+    "mcp",
+    "parking",
+    "jieshun",
+    "read-only"
+  ]
+}

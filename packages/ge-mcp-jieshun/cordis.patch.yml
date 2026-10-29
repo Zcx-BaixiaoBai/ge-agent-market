@@ -1,0 +1,23 @@
+# 捷顺云停车只读 MCP 连接器（开发者：颜政）
+#
+# 启动同包内置的 stdio 服务：node src/server.js。
+# 桌面端没有独立 Node，因此用 process.execPath（Electron Helper）配
+# ELECTRON_RUN_AS_NODE=1 运行；命令行环境里该变量对 node 无副作用。
+# 包安装位置按 dsh 桌面端固定 profile（web）解析，可用环境变量覆盖：
+#   GE_MCP_NODE            指定 node 可执行文件
+#   GE_MCP_JIESHUN_ENTRY   指定 server.js 绝对路径
+#   JLITE_ACCOUNT_FILE     车场账号文件（CSV/JSON），默认 ~/.jlite/accounts.csv
+- insert:
+    - id: ge-mcp-jieshun-skill
+      name: 'ge-mcp-jieshun'
+    - id: mcp-jieshun
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: jieshun
+        transport: stdio
+        command: !!js "process.env.GE_MCP_NODE || process.execPath"
+        args:
+          - !!js "process.env.GE_MCP_JIESHUN_ENTRY || (`${process.env.DSH_HOME || ((process.env.HOME || process.env.USERPROFILE || '') + '/.dsh')}/profiles/web/node_modules/ge-mcp-jieshun/src/server.js`)"
+        env:
+          ELECTRON_RUN_AS_NODE: '1'
+          JLITE_ACCOUNT_FILE: !!js "process.env.JLITE_ACCOUNT_FILE || ''"
