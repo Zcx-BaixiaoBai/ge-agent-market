@@ -49,12 +49,12 @@
       "distribution": {
         "type": "github-release",
         "version": "0.4.0",
-        "url": "https://cdn.jsdelivr.net/gh/Zcx-BaixiaoBai/ge-agent-market@ba7f65cbda5a80081a392192bb8d0470aa09ef2d/packages/ge-workbench-datacenter/ge-workbench-datacenter-0.4.0.tgz",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-datacenter/ge-workbench-datacenter-0.4.0.tgz",
         "sha256": "625c114fdb840f661725ca9435ba50469b5c338a600e7e83905a265bc00f7356"
       },
       "screenshots": [
         {
-          "url": "https://cdn.jsdelivr.net/gh/Zcx-BaixiaoBai/ge-agent-market@ba7f65cbda5a80081a392192bb8d0470aa09ef2d/packages/ge-workbench-datacenter/docs/screenshots/overview.png",
+          "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-datacenter/docs/screenshots/overview.png",
           "alt": "数据管理中心总览：风险摘要、所选项目指标、电表故障排名与通讯故障分布",
           "sha256": "7ed27b75121d028e885f3c87913bed8955ae70843fffbe5a59f5a597d2e5e454",
           "width": 1280,
@@ -80,12 +80,12 @@
       "distribution": {
         "type": "github-release",
         "version": "0.2.0",
-        "url": "https://cdn.jsdelivr.net/gh/Zcx-BaixiaoBai/ge-agent-market@176c38ffe572d03d1c2b4bb89d73218b79d09fd0/packages/ge-workbench-electric-safety/ge-workbench-electric-safety-0.2.0.tgz",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-electric-safety/ge-workbench-electric-safety-0.2.0.tgz",
         "sha256": "d536e1079c54ed896e009d1a6296f5cc6c0039df49533e54511111f1561817c3"
       },
       "screenshots": [
         {
-          "url": "https://cdn.jsdelivr.net/gh/Zcx-BaixiaoBai/ge-agent-market@176c38ffe572d03d1c2b4bb89d73218b79d09fd0/packages/ge-workbench-electric-safety/docs/screenshots/overview.png",
+          "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-electric-safety/docs/screenshots/overview.png",
           "alt": "用电安全助手总览：异常租户卡片、夜实际/夜预测曲线与偏离分、优先核查提示（示例数据预览）",
           "sha256": "abc603cfa5679e0bf812e80000e49c189963ec92161fdf96e72621bd9d13eb29",
           "width": 1600,
