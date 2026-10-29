@@ -310,6 +310,40 @@
           }
         }
       ]
+    },
+    {
+      "name": "ge-skill-lark-cli",
+      "title": {
+        "zh": "飞书 CLI 办公助手",
+        "en": "Lark CLI Office Assistant"
+      },
+      "description": {
+        "zh": "通过本机 lark-cli 操作飞书云文档、表格、多维表格、日历、消息等；含安装、应用配置/OAuth 引导与写操作确认。封装自 Z.ai lark-cli 0.1.2（MIT）。",
+        "en": "Operate Lark docs, sheets, Base, calendar and messages through the local lark-cli, with guided app setup, OAuth login and write confirmations. Packaged from Z.ai lark-cli 0.1.2 (MIT)."
+      },
+      "author": "Z.ai",
+      "homepage": "https://github.com/larksuite/cli",
+      "metadata": {
+        "category": "office",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.2",
+          "publishTimestamp": 1793286771,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "df4abe8b056a56348ce2f7ac6725f8384e34c408",
+            "path": "packages/ge-skill-lark-cli"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
     }
   ]
 }

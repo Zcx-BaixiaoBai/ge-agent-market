@@ -25,5 +25,11 @@
 `JLITE_ACCOUNT_FILE`），后者读 `~/.robot-partner/session.json`（或 `ROBOT_PARTNER_ACCESS_TOKEN`）。
 每个包同时内置该系统的 SKILL.md 技能（技能描述里也标注开发者）。
 
+## 已上架技能 / 插件
+
+| 包名 | 能力 | 开发者 | 说明 |
+|---|---|---|---|
+| ge-skill-lark-cli | 飞书 CLI 办公助手 | Z.ai | 封装官方 lark-cli（MIT）；文档/表格/多维表格/日历/消息，含 setup 与 OAuth 引导 |
+
 上架流程（Phase 1 起走内部审批）：提交 → 自动检查 → 复核 → 合并本仓库。当前为 PoC 空目录，
 内容随内部审批结果更新。
