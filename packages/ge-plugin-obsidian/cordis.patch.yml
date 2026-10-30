@@ -1,0 +1,5 @@
+# Obsidian 官方 Agent Skills 插件（封装自 Z.ai obsidian 0.1.2，MIT）
+# 注册 9 个技能：setup / markdown / bases / canvas / mermaid / excalidraw / cli / defuddle / knap
+- insert:
+    - id: ge-plugin-obsidian
+      name: 'ge-plugin-obsidian'

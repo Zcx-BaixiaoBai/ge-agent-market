@@ -1,0 +1,37 @@
+{
+  "name": "ge-plugin-obsidian",
+  "version": "0.1.2",
+  "description": "Obsidian 官方 Agent Skills 插件：Obsidian 风格 Markdown、Bases、JSON Canvas、Mermaid/Excalidraw 图表、Obsidian CLI、Defuddle 网页提取、Knap 模板批量生成，含依赖检测。封装自 Z.ai obsidian 0.1.2（MIT）。",
+  "type": "module",
+  "main": "index.mjs",
+  "files": [
+    "index.mjs",
+    "cordis.patch.yml",
+    "skills",
+    "README.md",
+    "LICENSE",
+    "UPSTREAM.md"
+  ],
+  "author": "Z.ai",
+  "license": "MIT",
+  "homepage": "https://github.com/kepano/obsidian-skills",
+  "engines": {
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "keywords": [
+    "obsidian",
+    "markdown",
+    "bases",
+    "canvas",
+    "mermaid",
+    "excalidraw",
+    "notes",
+    "defuddle",
+    "knap"
+  ]
+}
