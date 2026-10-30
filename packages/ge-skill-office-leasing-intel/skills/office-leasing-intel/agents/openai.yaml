@@ -1,0 +1,4 @@
+interface:
+  display_name: "写字楼招商情报分析"
+  short_description: "区域定位、竞品比对、商圈密度、产业氛围、评分卡与招商评估 Word 报告"
+  default_prompt: "帮我分析这批写字楼项目的区域定位与竞品，输出招商评估报告（Word，A4，公开口径）"
