@@ -1,0 +1,10 @@
+{
+  "name": "office-leasing-report-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "playwright": "^1.59.0",
+    "puppeteer-core": "^25.11.0",
+    "@guandata/guancli": "^1.0.67"
+  }
+}

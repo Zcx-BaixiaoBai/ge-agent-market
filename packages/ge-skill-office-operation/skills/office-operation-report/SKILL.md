@@ -6,15 +6,41 @@ agent_created: true
 
 # 办公业态报告总控
 
-> **市场版说明**：本包只包含「报告总控」技能与知识库。六个子技能、BI 取数脚本、示例报告不在市场包内。
-> 若当前环境未安装子技能，直接按本文件与 `references/knowledge_base/` 的规则逐章完成；数据请自备
-> BI 取数产出的 Excel，或直接把 Excel 上传给 Agent 读取。
+> **市场版说明**：本包包含「报告总控」技能、知识库、BI 取数/认证/PDF 脚本和示例报告；六个子技能不在包内。
+> 若当前环境未安装子技能，直接按本文件与 `references/knowledge_base/` 的规则逐章完成。
 
 统筹写字楼经营分析报告的全流程：读取 Excel → 调用六个子 Skill → 汇总十一个章节 → 自检 → 输出管理层报告。
 
+## 首次配置（环境变量）
+
+本包所有 OA/BI 账号、工号、内网地址都从环境变量读取，不内置任何凭证。首次使用先装依赖：
+
+```bash
+python3 -m venv .venv && . .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r scripts/requirements.txt
+cd scripts && npm install && cd ..
+```
+
+再设置环境变量（按实际环境替换尖括号内容）：
+
+```bash
+export BI_BASE="https://<观远BI地址>"
+export BI_ORIGIN="$BI_BASE"
+export OA_URL="http://<OA地址>/wui/index.html"
+export OA_SSO_URL="http://<OA地址>/interface/ywf/GoToOtherSys.jsp?syscode=001"
+export OA_LOGIN_ID="<OA工号/账号>"
+export OA_PASSWORD="<OA密码>"
+export GUANCLI_BIN="guancli"                                  # 可选
+export GUANCLI_CONFIG="$HOME/.config/guancli/config.json"     # 可选，按平台
+export PROJECT_ROOT="$(pwd)"                                  # 可选，数据/输出根目录
+```
+
+Windows PowerShell 用 `$env:BI_BASE = "..."` 形式；正式部署建议把同样变量放进平台密钥管理。
+`scripts/fetch_bi_data.py` 会读取这些变量并通过 `scripts/bi_auth_refresh.js` 自动刷新 BI token。
+
 ## 数据文件来源（BI 自动化取数）
 
-- **默认数据文件**：`data/写字楼经营分析-BI取数_{报告截止日}.xlsx`（由 BI 取数流程产出；本市场包不含取数脚本）。报告截止日缺省=昨日；用户指定日期时用对应文件。
+- **默认数据文件**：`data/写字楼经营分析-BI取数_{报告截止日}.xlsx`（由 `scripts/fetch_bi_data.py` 从 BI 自动取数产出）。报告截止日缺省=昨日；用户指定日期时用对应文件。
 - **兼容旧模板**：若上述文件不存在，回退到 `data/写字楼出租率-数据模板.xlsx`（人工维护，结构为旧版，行号见各子 Skill 括注）。
 - **sheet 识别一律用前缀匹配**，不要写死完整 sheet 名（期间会变，如 `B权责1-10月累计分析`、`B权责1-11月累计分析`）。前缀 → 用途对照见下节。
 - **取数日志 sheet**（名 `取数日志`）记录报告截止日、期间开始、各卡行数与警告；若其中有「⚠️ 警告」，报告第十一章必须如实引用，对应章节标注「数据未提供/待补全」，严禁编造。
@@ -30,6 +56,12 @@ agent_created: true
 | `references/knowledge_base/异常规则.md` | 10 类异常识别条件、标注方式、汇总输出格式 |
 | `references/knowledge_base/报告模板.md` | 固定十一个章节 Markdown 骨架 |
 | `references/knowledge_base/报告样式-财务风.md` | HTML 报告固定视觉规范（金鹰暖色财务风：米色纸张质感、金色主色、深棕表头、宋体封面标题、模块化分析卡片、Chart.js 带数据标签、PDF 5mm 边距章节不强制分页） |
+
+## 示例与模板
+
+- `frontend/办公业态经营分析_2026年10月_金鹰版.html`：现行报告样例，作为视觉/结构基准（含真实经营数据，仅内部使用）。
+- `frontend/金鹰版-内网部署模板.html` + `frontend/vendor/`：内网无外网时可整目录托管。
+- `scripts/gen_pdf_jinying.js <input.html> <output.pdf>`：按 A4 / 5mm 边距 / 封面独占页导出 PDF；`CHROME_BIN` 可指定浏览器。
 
 ## 十一个章节骨架
 
@@ -130,7 +162,7 @@ agent_created: true
 ### 6. 输出
 将最终报告保存为 Markdown 文件到 `output/` 目录，文件名格式：`办公业态经营分析_YYYY年MM月.md`，并把文件路径交付给用户。
 
-如需输出 HTML 版本，必须按 `references/knowledge_base/报告样式-财务风.md` 的设计令牌与元素规范生成（金鹰暖色财务风：米色纸张质感背景、金色主色、深棕表头、宋体封面标题、顶部毛玻璃导航 + 左侧默认展开浮动目录、简要分析/结论/问题/建议四类分析卡片、Chart.js 图表必须带数据标签），不得使用其他风格。PDF 可用本机浏览器或文档技能按上述版式导出：A4 纵向、四边 5mm 页边距、封面独占一页、章节间不强制分页（本市场包不含 PDF 生成脚本）。
+如需输出 HTML 版本，必须按 `references/knowledge_base/报告样式-财务风.md` 的设计令牌与元素规范生成（金鹰暖色财务风：米色纸张质感背景、金色主色、深棕表头、宋体封面标题、顶部毛玻璃导航 + 左侧默认展开浮动目录、简要分析/结论/问题/建议四类分析卡片、Chart.js 图表必须带数据标签），不得使用其他风格。PDF 用 `scripts/gen_pdf_jinying.js <input.html> <output.pdf>` 生成：A4 纵向、四边 5mm 页边距、封面独占一页、章节间不强制分页；浏览器路径可用 `CHROME_BIN` 指定。
 
 ## 维护知识库
 

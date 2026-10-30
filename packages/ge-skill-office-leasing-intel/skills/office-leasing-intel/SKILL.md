@@ -12,6 +12,21 @@ description: >-
 把“一批写字楼项目”变成一份可招商、可汇报的中文评估报告：每个项目给出区位画像、周边竞品、
 配套与产业密度、交通实测、公开市场定位和差异化打法，最后落成 A4 Word（另存 Markdown 源稿）。
 
+## 首次配置（推荐 venv + .env）
+
+本技能不内置任何 Key。第一次使用前在技能目录执行：
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate          # Windows: .venv\Scripts\activate
+cp env.example .env
+# 编辑 .env，把 AMAP_KEY 换成公司的高德 Web 服务 Key
+```
+
+也可以不用 venv，直接 `export AMAP_KEY=你的Key`（Windows：`setx AMAP_KEY "你的Key"`）。
+`scripts/amap_client.py` 会自动读取技能根目录或当前目录的 `.env`；`AMAP_CACHE_DIR` 可指向任务缓存目录。
+没有 Key 时脚本会提示按本节配置，不会回退到任何内置凭证。
+
 ## 标准工作流
 
 对每个物理项目（同一园区多栋塔楼算一个检索点，但独立建档）：

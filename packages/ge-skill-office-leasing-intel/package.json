@@ -1,6 +1,6 @@
 {
   "name": "ge-skill-office-leasing-intel",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "写字楼招商情报分析：基于地图 POI 与公开市场数据，输出区位画像、竞品比对、商圈成熟度、产业氛围、交通可达性、评分卡与招商评估报告。开发者：颜政。",
   "type": "module",
   "main": "index.mjs",

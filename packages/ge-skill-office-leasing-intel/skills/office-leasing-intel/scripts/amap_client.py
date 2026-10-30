@@ -2,10 +2,12 @@
 """通用 POI 数据客户端：地理编码 / 逆地理 / 文本与周边检索 / 步行与驾车路径。
 
 依赖：Python 3 stdlib（无需第三方包）。
-Key 处理：本技能不内置任何凭证，必须通过环境变量 AMAP_KEY 提供高德 Web 服务 Key。
+Key 处理：本技能不内置任何凭证。优先读环境变量 AMAP_KEY；也支持当前目录或技能根目录的
+`.env`（`AMAP_KEY=...`），便于配合 venv 做一次性配置。
 环境变量：
   AMAP_KEY        必填，高德 Web 服务 Key。
   AMAP_CACHE_DIR  可选，缓存目录；默认 ~/.codex/cache/amap。建议设为任务目录以便复跑与迁移。
+  AMAP_ENV_FILE   可选，指定要加载的 .env 路径（默认依次找 ./.env、技能根目录/.env）。
 
 用法示例：
   from amap_client import around_all, geocode, regeo, walking_route
@@ -29,11 +31,42 @@ DEFAULT_CACHE_DIR = os.path.join(
 _LAST_CALL = [0.0]
 
 
+def _load_env_file():
+    """把技能根目录 / 当前目录的 .env 读进 os.environ；已有的环境变量优先。"""
+    here = os.path.dirname(os.path.abspath(__file__))
+    candidates = [
+        os.environ.get("AMAP_ENV_FILE"),
+        os.path.join(os.getcwd(), ".env"),
+        os.path.join(os.path.dirname(here), ".env"),
+    ]
+    for path in candidates:
+        if not path or not os.path.isfile(path):
+            continue
+        try:
+            with open(path, encoding="utf-8") as handle:
+                for line in handle:
+                    line = line.strip()
+                    if not line or line.startswith("#") or "=" not in line:
+                        continue
+                    key, value = line.split("=", 1)
+                    key = key.strip()
+                    value = value.strip().strip('"').strip("'")
+                    if key and key not in os.environ:
+                        os.environ[key] = value
+        except OSError:
+            pass
+        break
+
+
+_load_env_file()
+
+
 def _get_key():
     key = os.environ.get("AMAP_KEY") or os.environ.get("AMAP_EMBEDDED_KEY")
     if not key:
         raise RuntimeError(
-            "缺少高德 Web 服务 Key：请设置环境变量 AMAP_KEY 后重试"
+            "缺少高德 Web 服务 Key：请按 SKILL.md「首次配置」创建 venv，"
+            "在 .env 写入 AMAP_KEY=你的Key（或 export AMAP_KEY=...）后重试"
         )
     return key
 

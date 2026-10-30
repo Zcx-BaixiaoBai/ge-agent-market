@@ -1,6 +1,6 @@
 {
   "name": "ge-skill-office-operation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "写字楼经营分析：从 BI 取数 Excel 生成办公业态经营分析报告，覆盖指标口径、异常规则、十一章节模板与财务风 HTML/PDF 版式。开发者：冯杰。",
   "type": "module",
   "main": "index.mjs",

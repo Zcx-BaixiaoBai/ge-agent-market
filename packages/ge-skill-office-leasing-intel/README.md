@@ -11,11 +11,24 @@
 
 ## 前置条件
 
-- **高德 Web 服务 Key**：必须设置环境变量 `AMAP_KEY`。本市场包**不内置任何 Key 或凭证**；
-  缺少时 `scripts/amap_client.py` 会直接报错，不会回退到内置 Key。
+- **高德 Web 服务 Key**：本市场包**不内置任何 Key 或凭证**。推荐按下面的 venv + `.env` 方式配置；
+  缺少时 `scripts/amap_client.py` 会提示配置，不会回退到内置 Key。
 - Python 3（只用标准库，无需第三方包）。
-- 可选：设置 `AMAP_CACHE_DIR` 指向任务目录，复跑时复用缓存、少扣配额。
 - 输出 Word 时配合 `documents`/Word 技能使用。
+
+## 首次配置（推荐 venv + .env）
+
+在技能目录（`skills/office-leasing-intel/`）执行：
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate          # Windows: .venv\Scripts\activate
+cp env.example .env
+# 编辑 .env，填入 AMAP_KEY=公司的高德 Web 服务 Key
+```
+
+也可以跳过 venv，直接 `export AMAP_KEY=你的Key`（Windows 用 `setx AMAP_KEY "你的Key"`）。
+脚本会自动读取技能根目录或当前目录的 `.env`；`AMAP_CACHE_DIR` 可指向任务缓存目录，复跑时复用缓存、少扣配额。
 
 ## 能做什么
 
