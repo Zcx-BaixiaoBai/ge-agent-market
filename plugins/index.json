@@ -514,6 +514,72 @@
           }
         }
       ]
+    },
+    {
+      "name": "ge-skill-office-leasing-intel",
+      "title": {
+        "zh": "写字楼招商分析",
+        "en": "Office Leasing Intelligence"
+      },
+      "description": {
+        "zh": "基于地图 POI 与公开市场数据的写字楼区位分析：区位画像、竞品比对、商圈成熟度、产业氛围、交通可达性、评分卡与招商评估报告。开发者：颜政。",
+        "en": "Office leasing location analysis based on map POI and public market data: location profiling, competitor benchmarking, district maturity, industry density, transit accessibility, scoring and leasing reports. Developer: 颜政."
+      },
+      "author": "颜政",
+      "metadata": {
+        "category": "office",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793327486,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "7d2ccd7b9d6db5a44536589a3b27600f88330607",
+            "path": "packages/ge-skill-office-leasing-intel"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ge-skill-office-operation",
+      "title": {
+        "zh": "写字楼经营分析",
+        "en": "Office Operation Analysis"
+      },
+      "description": {
+        "zh": "写字楼招商运营全流程管理助手：从 BI 取数 Excel 生成办公业态经营分析报告，覆盖指标口径、异常规则、十一章节模板与财务风 HTML/PDF 版式。开发者：冯杰。",
+        "en": "Full-cycle office leasing operation assistant: generate an 11-section management report from a BI Excel export, with metric definitions, anomaly rules, report templates and a finance-style HTML/PDF layout. Developer: 冯杰."
+      },
+      "author": "冯杰",
+      "metadata": {
+        "category": "office",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793327486,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "7d2ccd7b9d6db5a44536589a3b27600f88330607",
+            "path": "packages/ge-skill-office-operation"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
     }
   ]
 }

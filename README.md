@@ -40,6 +40,8 @@
 | ge-skill-officecli-xlsx | Excel 表格 | OfficeCLI | 创建/读取/编辑 .xlsx/.csv、公式/图表/透视表（Apache-2.0） |
 | ge-skill-officecli-pptx | PowerPoint 演示 | OfficeCLI | 创建/读取/编辑 .pptx、模板/版式/备注（Apache-2.0） |
 | ge-skill-internal-comms | 内部沟通写作 | Anthropic | 状态报告/领导更新/3P/公司通讯/FAQ/事故报告（Apache-2.0） |
+| ge-skill-office-leasing-intel | 写字楼招商分析 | 颜政 | 地图 POI + 公开市场数据的区位/竞品/交通/评分与招商报告 |
+| ge-skill-office-operation | 写字楼经营分析 | 冯杰 | BI 取数 Excel → 十一章节经营分析报告，含口径/异常/财务风版式 |
 
 上架流程（Phase 1 起走内部审批）：提交 → 自动检查 → 复核 → 合并本仓库。当前为 PoC 空目录，
 内容随内部审批结果更新。
