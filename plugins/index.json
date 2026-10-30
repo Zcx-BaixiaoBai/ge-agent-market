@@ -534,6 +534,19 @@
       },
       "versions": [
         {
+          "version": "0.2.0",
+          "publishTimestamp": 1793328538,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "1410a90f510e414a9c897a65b9e7c343ba3de2e5",
+            "path": "packages/ge-skill-office-leasing-intel"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        },
+        {
           "version": "0.1.0",
           "publishTimestamp": 1793327486,
           "source": {
@@ -566,6 +579,19 @@
         ]
       },
       "versions": [
+        {
+          "version": "0.2.0",
+          "publishTimestamp": 1793328538,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "1410a90f510e414a9c897a65b9e7c343ba3de2e5",
+            "path": "packages/ge-skill-office-operation"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        },
         {
           "version": "0.1.0",
           "publishTimestamp": 1793327486,
