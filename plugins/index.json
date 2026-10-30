@@ -480,6 +480,40 @@
           }
         }
       ]
+    },
+    {
+      "name": "ge-plugin-obsidian",
+      "title": {
+        "zh": "Obsidian 笔记与可视化",
+        "en": "Obsidian Notes & Visualization"
+      },
+      "description": {
+        "zh": "Obsidian 官方 Agent Skills 插件：Obsidian 风格 Markdown、Bases、JSON Canvas、Mermaid/Excalidraw 图表、Obsidian CLI、Defuddle 网页提取、Knap 模板批量生成，含依赖检测。封装自 Z.ai obsidian 0.1.2（MIT）。",
+        "en": "Obsidian authoring plugin: Obsidian Flavored Markdown, Bases, JSON Canvas, Mermaid/Excalidraw diagrams, Obsidian CLI, Defuddle web extraction and Knap templates, with a setup skill for CLI prerequisites. Packaged from Z.ai obsidian 0.1.2 (MIT)."
+      },
+      "author": "Z.ai",
+      "homepage": "https://github.com/kepano/obsidian-skills",
+      "metadata": {
+        "category": "plugin",
+        "labels": [
+          "approved"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.2",
+          "publishTimestamp": 1793326381,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "1b976166b6c70c390a24f3f712403ef8470c9ae7",
+            "path": "packages/ge-plugin-obsidian"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
     }
   ]
 }

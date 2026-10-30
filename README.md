@@ -30,6 +30,7 @@
 | 包名 | 能力 | 开发者 | 说明 |
 |---|---|---|---|
 | ge-skill-lark-cli | 飞书 CLI 办公助手 | Z.ai | 封装官方 lark-cli（MIT）；文档/表格/多维表格/日历/消息，含 setup 与 OAuth 引导 |
+| ge-plugin-obsidian | Obsidian 笔记与可视化 | Z.ai | 官方 Obsidian 技能包（MIT）；Markdown/Bases/Canvas/Mermaid/Excalidraw/CLI/Defuddle/Knap，9 个技能 |
 
 ## 已上架办公技能
 
