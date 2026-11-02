@@ -27,6 +27,12 @@
           "en": "Office",
           "zh": "办公"
         }
+      },
+      "plugin": {
+        "title": {
+          "en": "Plugins",
+          "zh": "插件"
+        }
       }
     },
     "labels": {
@@ -568,8 +574,8 @@
         "en": "Office Operation Analysis"
       },
       "description": {
-        "zh": "写字楼招商运营全流程管理助手：从 BI 取数 Excel 生成办公业态经营分析报告，覆盖指标口径、异常规则、十一章节模板与财务风 HTML/PDF 版式。开发者：冯杰。",
-        "en": "Full-cycle office leasing operation assistant: generate an 11-section management report from a BI Excel export, with metric definitions, anomaly rules, report templates and a finance-style HTML/PDF layout. Developer: 冯杰."
+        "zh": "写字楼招商运营全流程管理助手：报告总控 + 6 个专项子技能（出租率、合同、租金、财务、竞品、招商漏斗），从 BI 取数 Excel 生成十一章节经营分析报告，含指标口径、异常规则、财务风 HTML/PDF 与问数助手。开发者：冯杰。",
+        "en": "Full-cycle office leasing operation assistant: a report orchestrator plus 6 specialist subskills (occupancy, contracts, rent, finance, competitors, pipeline) that generate an 11-section management report from a BI Excel export, with metric definitions, anomaly rules, finance-style HTML/PDF and an in-report Q&A widget. Developer: 冯杰."
       },
       "author": "冯杰",
       "metadata": {
@@ -579,6 +585,19 @@
         ]
       },
       "versions": [
+        {
+          "version": "0.3.0",
+          "publishTimestamp": 1793591685,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Zcx-BaixiaoBai/ge-agent-market",
+            "commit": "92c9cc0fcc679b2aec6fbb70a82c87f15c5841de",
+            "path": "packages/ge-skill-office-operation"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        },
         {
           "version": "0.2.0",
           "publishTimestamp": 1793328538,
