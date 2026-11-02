@@ -14,6 +14,7 @@ const PDF = path.resolve(OUTPUT);
 
 function findChrome() {
   if (process.env.CHROME_BIN) return process.env.CHROME_BIN;
+  if (process.env.CHROME_PATH) return process.env.CHROME_PATH;
   const candidates = process.platform === 'darwin'
     ? [
         '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
@@ -30,7 +31,7 @@ function findChrome() {
   for (const candidate of candidates) {
     if (fs.existsSync(candidate)) return candidate;
   }
-  console.error('未找到 Chrome/Chromium，请设置 CHROME_BIN 指向浏览器可执行文件');
+  console.error('未找到 Chrome/Chromium，请设置 CHROME_BIN 或 CHROME_PATH 指向浏览器可执行文件');
   process.exit(1);
 }
 
@@ -60,6 +61,7 @@ function findChrome() {
   await page.addStyleTag({ content: `
     .topbar{display:none!important}
     .module-rail{display:none!important}
+    .chat-launcher,.chat-panel{display:none!important}
     .page-wrap{max-width:none!important;padding:0!important}
     body{background:#fff!important}
     .cover-page{
@@ -141,6 +143,9 @@ function findChrome() {
     margin: { top: '5mm', right: '5mm', bottom: '5mm', left: '5mm' }
   });
 
-  console.log('PDF generated successfully');
+  console.log(`PDF generated successfully: ${PDF}`);
   await browser.close();
-})();
+})().catch(err => {
+  console.error('PDF 生成失败:', err.message);
+  process.exit(1);
+});

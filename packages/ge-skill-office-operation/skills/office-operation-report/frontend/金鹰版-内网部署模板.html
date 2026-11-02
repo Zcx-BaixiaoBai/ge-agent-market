@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>写字楼租赁业务经营分析报告 · 2026年1-10月</title>
-<script src="./vendor/chart.umd.js"></script>
-<script src="./vendor/chartjs-plugin-datalabels.min.js"></script>
+<title>写字楼租赁业务经营分析报告 · 2026年1-11月</title>
+<script src="vendor/chart.umd.js"></script>
+<script src="vendor/chartjs-plugin-datalabels.min.js"></script>
 <style>
 /* ========== Design Tokens (Golden Eagle Style) ========== */
 :root {
@@ -497,6 +497,7 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
     <a href="#s9">风险</a>
     <a href="#s10">行动</a>
     <a href="#s11">口径</a>
+    <a href="#" id="topbarAsk" style="color:#ad8833;font-weight:600">问数</a>
   </div>
 </div>
 
@@ -530,11 +531,11 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="cover-logo">写字楼租赁业务 · 经营分析</div>
   <div class="cover-period">REPORTING PERIOD</div>
   <h1 class="cover-title">写字楼租赁业务经营分析</h1>
-  <div class="cover-subtitle">2026年1-10月（累计）</div>
+  <div class="cover-subtitle">2026年1-11月（累计）</div>
   <div class="cover-meta">
-    <span>数据截止：2026年10月18日</span>
-    <span>生成日期：2026年10月19日</span>
-    <span>数据来源：观远 BI 自动化取数（2026-10-19 07:19）</span>
+    <span>数据截止：2026年11月1日</span>
+    <span>生成日期：2026年11月2日</span>
+    <span>数据来源：观远 BI 自动化取数（2026-11-02 08:32）</span>
     <span>报告类型：管理层月度经营分析</span>
     <span>内部资料 · 请勿外传</span>
   </div>
@@ -553,6 +554,15 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   </div>
 </div>
 
+<!-- ==================== 本期口径特别说明 ==================== -->
+<div class="section" id="s0">
+  <div class="alert alert-danger" style="margin-bottom:0">
+    <strong>⚠️ 本期数据口径特别说明（必读）</strong><br>
+    <strong>① 面积段口径异常（待数据组核实）</strong>：本期 BI 可租赁面积合计较上期精确翻倍（321,306.38 → 642,612.76㎡，8 个在营项目均恰好 2 倍），已出租面积 529,471.81㎡ ≈ 各项目「上期已出租＋上期可租赁」之和，出租率跳升至 82.4%、净增长 +321,126.15㎡；A 分月卡 202611 列同步翻倍（出租达成率 193.9%-307.8%）。单日变动不具业务合理性，判定为<strong>上游 11 月分区数据异常</strong>。本报告面积类指标一律采用 <strong>2026-10-31 已验证同口径</strong>，BI 原始值见第十一章异常 1。<br>
+    <strong>② 月初财务口径切换</strong>：期间标签进入「1-11月」但 11 月财务尚未入账，收入/利润累计实际仍为 1-10 月；BI 表同比窗口扩至 2025 年 1-11 月、年化除数 10→11，BI 口径全年利润缺口 -3,993.38 万失真。本报告同比与全年预估采用<strong>同口径还原值</strong>（对照见第八章 8.2）。
+  </div>
+</div>
+
 <!-- ==================== 1. 管理层摘要 ==================== -->
 <div class="section" id="s1">
   <div class="section-heading">一、管理层摘要</div>
@@ -560,13 +570,13 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="metric-strip">
     <div class="metric-card">
       <div class="mc-label">整体出租率</div>
-      <div class="mc-value">66.5%</div>
-      <div class="mc-desc">已出租 207,981㎡ / 可租赁 312,885㎡</div>
+      <div class="mc-value">64.9%</div>
+      <div class="mc-desc">208,602㎡ / 321,306㎡（10-31同口径）</div>
     </div>
     <div class="metric-card">
       <div class="mc-label">全年利润缺口</div>
       <div class="mc-value mc-red">-2,822.7万</div>
-      <div class="mc-desc">预估可控利润 12,878.1万，同比 -18.0%</div>
+      <div class="mc-desc">预估 12,878.1万，同比 -18.0%（同口径）</div>
     </div>
     <div class="metric-card">
       <div class="mc-label">量价判断</div>
@@ -575,25 +585,25 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
     </div>
     <div class="metric-card">
       <div class="mc-label">本年净吸纳</div>
-      <div class="mc-value mc-red">-9,224㎡</div>
-      <div class="mc-desc">新签 22,292㎡ vs 掉铺 31,516㎡</div>
+      <div class="mc-value mc-red">-6,516㎡</div>
+      <div class="mc-desc">新签 24,417㎡ vs 掉铺 30,934㎡</div>
     </div>
   </div>
 
   <div class="brief-analysis">
-    <p><strong>总体判断：</strong>整体经营承压——出租率 <span class="metric">66.5%</span>、空置超 10 万㎡，本年累计净吸纳为负，全年利润缺口约 <span class="metric">2,823 万元</span>，<span class="focus">量价分化</span>加剧。项目间分化显著：金鹰世界出租率同比大幅回升（A 座 +27.8%、B 座 +21.9%），而丹阳（-36.2%）、昆山（-15.8%）深度下滑。较年初净增长 <span class="metric">-364.19㎡</span>，存量盘面转负。</p>
+    <p><strong>总体判断：</strong>经营盘面与上期完全持平（C 合同 / F 储备 / D 竞品 / 财务累计零变化）——同口径出租率 <span class="metric">64.9%</span>，<strong>较年初净增长 <span class="metric">+256.15㎡</span> 连续第四期保持正值</strong>；空置 11.27 万㎡，全年利润缺口约 <span class="metric">2,823 万元</span>（同口径），<span class="focus">量价分化</span>格局未改。<strong>本期最大事件为 BI 面积段口径单日翻倍异常</strong>（可租赁 32.13 万 → 64.26 万㎡，判定上游分区问题、待数据组核实）与月初同比/年化窗口切换失真，均已还原处理（见第八章 8.2 与第十一章异常 1-2）。项目间分化显著：金鹰世界出租率同比大幅回升（A 座 +27.8%、B 座 +23.9%），而丹阳（-36.2%）、昆山（-15.8%）深度下滑。10 月租费收入全月落定 <span class="metric">83.0%</span>（实际 1,284.75 万 / 预算 1,547.69 万，完整月口径）；11 月租费预算 1,716.75 万，月初尚未入账。</p>
   </div>
 
   <div class="section-subhead">核心关注事项</div>
   <div class="table-wrap"><table>
     <thead><tr><th style="width:140px">维度</th><th>核心结论</th></tr></thead>
     <tbody>
-      <tr><td>全年利润最大拖累</td><td><strong>南京新街口金鹰中心</strong>全年预估可控利润同比 <span class="num-red">-1,274.19万元</span>，占全集团利润缺口（-2,822.65万）的 45.1%；其本年累计掉铺 25 单/7,680㎡ 为全集团最多</td></tr>
-      <tr><td>出租率与空置</td><td>空置前三：金鹰世界 49,650.02㎡（出租率 58.2%）、芜湖滨江 19,255.38㎡（60.1%）、金鹰中心 16,215.82㎡（71.2%）；<strong>丹阳出租率 46.6% 为全集团最低</strong>，空置占比 53.4%</td></tr>
-      <tr><td>合同动态</td><td>本年累计净吸纳 <span class="num-red">-9,223.73㎡</span>，整体净流失。净流失最大：昆山 -4,615.19㎡（新签仅 2 单/499㎡）、丹阳 -3,314.26㎡、珠江壹号 -2,238.00㎡；仅金鹰世界 B 座（+2,933.00㎡）与芜湖商城（+811.64㎡）净吸纳为正</td></tr>
-      <tr><td>租金量价</td><td>全租户在营均价 1.92 元/㎡/天、平均租金 1.27 元/㎡/天。珠江壹号在营均价 2.84 元/㎡/天为全集团最高且出租率 91.2%，<strong>量价双优</strong>；丹阳、昆山呈量价齐跌特征</td></tr>
-      <tr><td>储备与招商</td><td>可跟进储备 64 单/49,039.1㎡（剔除异常口径），对空置覆盖倍数仅 <strong>0.47 倍</strong>。昆山储备 210㎡ 接近枯竭；珠江壹号"医疗公司 700,800㎡"疑似录入错误</td></tr>
-      <tr><td>需管理层决策</td><td>① 丹阳出租率跌破 50%、全年收入达成率仅 61.0%，是否启动整租/业态转型；② 昆山储备枯竭且净流失最大，需集团招商资源倾斜；③ 芜湖滨江全年预估支出激增 177.5%（房产税口径），需核实税源与预算；④ 珠江壹号储备异常数据需 BI 侧修正</td></tr>
+      <tr><td>全年利润最大拖累</td><td><strong>南京新街口金鹰中心</strong>全年预估可控利润同比 <span class="num-red">-1,274.19万元</span>，占全集团利润缺口（-2,822.65万）的 45.1%；其本年累计掉铺 29 单/9,385㎡ 为全集团最多（C 流失统计口径）</td></tr>
+      <tr><td>出租率与空置</td><td>空置前三：金鹰世界 49,143.02㎡（出租率 58.6%）、芜湖滨江 19,204.19㎡（60.2%）、金鹰中心 16,687.24㎡（70.4%）；<strong>丹阳出租率 46.6% 为全集团最低</strong>，空置占比 53.4%；芜湖商城空置 8,616.54㎡ 居第四；⚠️ 本期 BI 面积段异常（返回出租率 82.4%），不予采信，本行采用 10-31 同口径</td></tr>
+      <tr><td>合同动态</td><td>本年累计净吸纳 <span class="num-red">-6,516.38㎡</span>，仍净流失、缺口与上期持平。净流失最大：昆山 -3,697.19㎡（新签仅 4 单/986.73㎡）、丹阳 -3,314.26㎡、芜湖滨江 -943.61㎡、金鹰中心A -670.64㎡；净吸纳为正：金鹰世界 B 座（+1,633.00㎡）、芜湖商城（+811.64㎡）、金鹰世界 A 座（+137.75㎡）</td></tr>
+      <tr><td>租金量价</td><td>全租户在营均价 1.91 元/㎡/天、平均租金 1.24 元/㎡/天。珠江壹号在营均价 2.80 元/㎡/天为全集团最高且出租率 92.6%，<strong>量价双优</strong>、累计收入达成率 100.2% 破百；<strong>昆山收入达成率亦破百（101.5%）</strong>；丹阳、昆山呈量价齐跌特征；⚠️ 本期 BI 租金行受面积异常失真（0.69/0.56 元），表列 10-31 同口径</td></tr>
+      <tr><td>储备与招商</td><td>可跟进储备 84 条/52,251.77㎡（剔除异常口径），对空置覆盖倍数仅 <strong>0.5 倍</strong>。芜湖滨江储备 2,339.21㎡（0.1 倍）最薄弱；芜湖商城空置 8,616.54㎡ 而储备为 0 单；丹阳亚朵/全季酒店（约 1,000㎡ 意向）已流失（原因：无接待大堂）；F 储备表两条面积疑似录入错误（珠江壹号"医疗公司"700,800㎡、金鹰世界"汉都餐饮"349,341㎡）</td></tr>
+      <tr><td>需管理层决策</td><td><strong>① 【本期新增】BI 面积口径单日翻倍异常（可租赁 32.13 万→64.26 万㎡），需当日督促数据组核查 11 月分区，并推动报表期间参数锚定「最近入账月」</strong>；② 丹阳出租率 46.6% 全集团最低、收入同比 -38.2%，且亚朵/全季酒店意向流失，需调整整租/业态转型方案；③ 昆山净流失 -3,697.19㎡ 集团最大且新签仅 4 单，需集团招商资源倾斜；④ 芜湖商城空置 8,616.54㎡ 仍无储备，需落实招商责任人与补库计划；⑤ 芜湖滨江全年预估支出激增 177.5%（房产税口径），需核实税源与预算；⑥ F 储备两条大面积异常记录（700,800㎡ / 349,341㎡）需 BI 侧修正</td></tr>
     </tbody>
   </table></div>
 </div>
@@ -603,7 +613,7 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="section-heading">二、关键指标总览</div>
 
   <div class="conclusion">
-    1-10 月累计收入 <strong>12,113.41 万元</strong>（同比 -8.8%）、可控利润 <strong>10,731.70 万元</strong>（同比 -9.0%）；全年预估收入 14,536.09 万元，较上年全年缺口 <span class="num-red">-3,100.00 万元</span>。
+    累计收入 <strong>12,113.41 万元</strong>（同口径同比 -8.8%）、可控利润 <strong>10,731.70 万元</strong>（同口径同比 -9.0%）（11 月财务尚未入账，累计实际为 1-10 月）；同口径全年预估收入 14,536.09 万元，较上年全年缺口 <span class="num-red">-3,100.00 万元</span>。
   </div>
 
   <div class="chart-row">
@@ -612,13 +622,13 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   </div>
 
   <div class="table-wrap"><table>
-    <thead><tr><th>指标</th><th>本期(1-10月)</th><th>去年同期</th><th>同比</th><th>全年预估</th><th>上年全年</th><th>同比</th></tr></thead>
+    <thead><tr><th>指标</th><th>本期(累计)</th><th>去年同期</th><th>同比</th><th>全年预估</th><th>上年全年</th><th>同比</th></tr></thead>
     <tbody>
-      <tr><td>合计可租赁面积(㎡)</td><td>312,885.02</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
-      <tr><td>合计已出租面积(㎡)</td><td>207,981.47</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
-      <tr><td>整体出租率</td><td class="text-gold">66.5%</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
-      <tr><td>合计空置面积(㎡)</td><td>104,903.55</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
-      <tr><td>净吸纳面积(㎡，本年累计)</td><td class="num-red">-9,223.73</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
+      <tr><td>合计可租赁面积(㎡·10-31口径)</td><td>321,306.38</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
+      <tr><td>合计已出租面积(㎡·10-31口径)</td><td>208,601.81</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
+      <tr><td>整体出租率（10-31口径）</td><td class="text-gold">64.9%</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
+      <tr><td>合计空置面积(㎡·10-31口径)</td><td>112,704.57</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
+      <tr><td>净吸纳面积(㎡，本年累计)</td><td class="num-red">-6,516.38</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
       <tr><td>收入(万元)</td><td>12,113.41</td><td>13,279.19</td><td class="decrease">-8.8%</td><td>14,536.09</td><td>17,636.08</td><td class="decrease">-17.6%</td></tr>
       <tr class="key-financial-row"><td>可控利润(万元)</td><td>10,731.70</td><td>11,799.14</td><td class="decrease">-9.0%</td><td>12,878.05</td><td>15,700.69</td><td class="decrease">-18.0%</td></tr>
       <tr><td>EBITDA(万元)</td><td>10,731.70</td><td>11,799.14</td><td class="decrease">-9.0%</td><td>12,878.05</td><td>15,700.69</td><td class="decrease">-18.0%</td></tr>
@@ -626,8 +636,8 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   </table></div>
 
   <div class="alert alert-info">
-    <strong>数据说明：</strong>已出租面积与出租率为 B 权责表 8.31 填报时点口径，非报告截止日实时值；面积类指标上年同期 BI 未提供。EBITDA 与可控利润同源等值（BI 表 R12=R10）。<br>
-    较年初净增长面积：<strong class="num-red">-364.19㎡</strong>（B 出租面积明细：已出租 − 去年 1231 出租面积），其中世界 +4,482.34、滨江 +2,007.13、商城 +602.84 为正，昆山 -3,502.92、丹阳 -3,377.03、中心 -542.50、珠江 -34.05 为负。
+    <strong>数据说明：</strong><strong>⚠️ 本期 BI 面积段口径异常（可租赁精确翻倍至 642,612.76㎡、出租率 82.4%、净增长 +321,126.15㎡），面积类指标均为 2026-10-31 已验证同口径</strong>；同比与全年预估为同口径还原值（基数 2025 年 1-10 月、年化 ÷10），BI 原始口径对照见第八章 8.2。已出租面积与出租率原为 B 权责表 8.31 填报时点口径，非报告截止日实时值；面积类指标上年同期 BI 未提供。EBITDA 与可控利润同源等值（BI 表 R12=R10）。<br>
+    较年初净增长面积：<strong class="num-green">+256.15㎡（转正）</strong>（B 出租面积明细：已出租 − 去年 1231 出租面积），其中世界 +4,989.34、滨江 +2,036.89、商城 +602.84、珠江 +520.95 为正，昆山 -3,502.92、丹阳 -3,377.03、中心 -1,013.92 为负。
   </div>
 </div>
 
@@ -636,7 +646,7 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="section-heading">三、出租率与空置</div>
 
   <div class="conclusion">
-    <strong>整体出租率 66.5%</strong>，空置 104,903.55㎡。空置前三：金鹰世界（49,650.02㎡）、芜湖滨江（19,255.38㎡）、金鹰中心（16,215.82㎡）；<strong>丹阳出租率 46.6% 为全集团最低</strong>，空置占比 53.4%。
+    <strong>整体出租率 64.9%</strong>，空置 112,704.57㎡（<strong>10-31 同口径</strong>；本期 BI 面积段异常、返回出租率 82.4% 不予采信，详见第十一章异常 1）。空置前三：金鹰世界（49,143.02㎡）、芜湖滨江（19,204.19㎡）、金鹰中心（16,687.24㎡）；<strong>丹阳出租率 46.6% 为全集团最低</strong>，空置占比 53.4%。
   </div>
 
   <div class="chart-box" style="height:320px"><canvas id="c3" role="img" aria-label="出租率与空置面积">出租率与空置面积</canvas></div>
@@ -644,14 +654,14 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="table-wrap"><table>
     <thead><tr><th>项目</th><th>可租赁面积(㎡)</th><th>已出租面积(㎡)</th><th>出租率</th><th>空置面积(㎡)</th><th>空置占比</th><th>出租达成率</th><th>收入达成率</th></tr></thead>
     <tbody>
-      <tr class="key-financial-row"><td>合计</td><td>312,885.02</td><td>207,981.47</td><td class="text-gold">66.5%</td><td>104,903.55</td><td>33.5%</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
-      <tr><td>金鹰世界(含A、B座)</td><td>118,690.65</td><td>69,040.63</td><td class="num-red">58.2%</td><td>49,650.02</td><td class="num-red">41.8%</td><td>A 96.8% / B 93.0%</td><td>A 94.0% / B 87.6%</td></tr>
-      <tr><td>新街口金鹰中心</td><td>56,366.97</td><td>40,151.15</td><td>71.2%</td><td>16,215.82</td><td>28.8%</td><td>99.0%</td><td>90.2%</td></tr>
-      <tr><td>芜湖滨江金鹰世界</td><td>48,216.46</td><td>28,961.08</td><td class="num-red">60.1%</td><td>19,255.38</td><td class="num-red">39.9%</td><td>93.5%</td><td>81.1%</td></tr>
-      <tr><td>珠江壹号</td><td>39,748.07</td><td>36,258.54</td><td class="num-green">91.2%</td><td>3,489.53</td><td class="num-green">8.8%</td><td class="num-green">110.6%</td><td>97.4%</td></tr>
-      <tr><td>昆山金鹰</td><td>27,757.49</td><td>18,593.71</td><td>67.0%</td><td>9,163.78</td><td>33.0%</td><td>92.6%</td><td>88.8%</td></tr>
-      <tr><td>丹阳金鹰天地</td><td>13,025.68</td><td>6,070.41</td><td class="num-red">46.6%</td><td>6,955.27</td><td class="num-red">53.4%</td><td>99.3%</td><td>83.6%</td></tr>
-      <tr><td>芜湖商城/芜湖商业</td><td>9,079.70</td><td>8,905.95</td><td class="num-green">98.1%</td><td>173.75</td><td class="num-green">1.9%</td><td>98.1%</td><td class="num-red">52.0%</td></tr>
+      <tr class="key-financial-row"><td>合计</td><td>321,306.38</td><td>208,601.81</td><td class="text-gold">64.9%</td><td>112,704.57</td><td>35.1%</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
+      <tr><td>金鹰世界(含A、B座)</td><td>118,690.65</td><td>69,547.63</td><td class="num-red">58.6%</td><td>49,143.02</td><td class="num-red">41.4%</td><td>A 96.8% / B 94.5%</td><td>A 96.2% / B 91.4%</td></tr>
+      <tr><td>新街口金鹰中心</td><td>56,366.97</td><td>39,679.73</td><td>70.4%</td><td>16,687.24</td><td>29.6%</td><td>97.8%</td><td>97.5%</td></tr>
+      <tr><td>芜湖滨江金鹰世界</td><td>48,195.03</td><td>28,990.84</td><td>60.2%</td><td>19,204.19</td><td>39.8%</td><td>93.6%</td><td>92.6%</td></tr>
+      <tr><td>珠江壹号</td><td>39,748.07</td><td>36,813.54</td><td class="num-green">92.6%</td><td>2,934.53</td><td class="num-green">7.4%</td><td class="num-green">112.3%</td><td class="num-green">100.2%</td></tr>
+      <tr><td>昆山金鹰</td><td>27,757.49</td><td>18,593.71</td><td>67.0%</td><td>9,163.78</td><td>33.0%</td><td>92.6%</td><td class="num-green">101.5%</td></tr>
+      <tr><td>丹阳金鹰天地</td><td>13,025.68</td><td>6,070.41</td><td class="num-red">46.6%</td><td>6,955.27</td><td class="num-red">53.4%</td><td>99.3%</td><td>92.3%</td></tr>
+      <tr><td>芜湖商城/芜湖商业</td><td>17,522.49</td><td>8,905.95</td><td class="num-red">50.8%</td><td>8,616.54</td><td class="num-red">49.2%</td><td>98.1%</td><td class="num-red">56.7%</td></tr>
       <tr><td>马鞍山金鹰</td><td class="text-muted">数据未提供</td><td class="text-muted">数据未提供</td><td class="text-muted">数据未提供</td><td class="text-muted">数据未提供</td><td class="text-muted">数据未提供</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
       <tr><td>盐城金鹰天地广场(聚龙湖)</td><td class="text-muted">数据未提供</td><td class="text-muted">数据未提供</td><td class="text-muted">数据未提供</td><td class="text-muted">数据未提供</td><td class="text-muted">数据未提供</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
     </tbody>
@@ -659,11 +669,13 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
 
   <div class="alert alert-warn">
     <strong>异常标注：</strong><br>
+    - <strong>本期 BI 达成率失真</strong>：出租达成率因面积翻倍全部失真（世界A 307.8%、世界B 193.9%、珠江 233.5%、昆山 218.6%、滨江 238.7%、商城 291.2%、丹阳 268.3%、中心 233.9%）；收入达成率因累计目标窗口扩至 11 月而普降（世界A 90.1%、世界B 81.4%、珠江 92.7%、昆山 87.0%、滨江 79.7%、商城 53.8%、丹阳 80.8%、中心 88.7%），实收未变、非经营恶化。表列达成率均为同口径还原值<br>
     - 出租/收入达成率来自 A 基础信息：出租达成率=已出租÷累计目标，收入达成率=累计实收÷累计目标；金鹰世界 A/B 在 A 表分列<br>
     - <strong>数据未提供/待补全</strong>：马鞍山金鹰（产权面积 14,089.83㎡）、盐城金鹰天地广场（产权面积 49,991.57㎡）在 B 权责表中可租赁面积起均为空，不纳入合计<br>
-    - <strong>珠江壹号出租达成率 110.6%</strong>（已出租 36,258.54㎡ &gt; 累计目标 32,790㎡），目标偏保守或超额完成，予以保留展示<br>
-    - <strong>芜湖商城收入达成率仅 52.0%</strong>（实收 323.16 万 / 目标 621.74 万），与其 98.1% 的出租率明显背离，疑似目标设定或实收口径问题，建议核实<br>
-    - 丹阳出租达成率 99.3% 但出租率仅 46.6%：累计目标（6,116.42㎡）本身设定偏低，达成率不反映真实经营水平
+    - <strong>珠江壹号出租达成率 112.3%</strong>（已出租 36,813.54㎡ &gt; 累计目标 32,790㎡）、<strong>收入达成率 100.2% 破百</strong>（实收 3,918.32 万 / 目标 3,911.38 万），目标偏保守或超额完成，予以保留展示<br>- <strong>昆山金鹰收入达成率 101.5% 破百</strong>（实收 1,503.94 万 / 目标 1,482.25 万，上期 91.5%），继珠江壹号后第二个收入破百项目<br>
+    - <strong>芜湖商城可租赁面积口径</strong>（17,522.49㎡，与产权面积拉齐）：A 基础信息出租达成率 98.1%（累计目标 9,075.95㎡ 口径）与 B 权责出租率 50.8% 差异巨大，且收入达成率仅 56.7%（实收 352.74 万 / 目标 621.74 万），建议核实面积口径与收入目标设定<br>
+    - 丹阳出租达成率 99.3% 但出租率仅 46.6%：累计目标（6,116.42㎡）本身设定偏低，达成率不反映真实经营水平<br>
+    - <strong>芜湖滨江面积口径微调</strong>：可租赁面积 48,216.46→48,195.03㎡（-21.43㎡，产权面积同步下调），已出租 28,852.27→28,990.84㎡（+138.57㎡），出租率 59.8%→60.2%，集团可租赁合计相应 -21.43㎡
   </div>
 </div>
 
@@ -672,7 +684,7 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="section-heading">四、合同动态与净吸纳</div>
 
   <div class="conclusion">
-    本年累计整体净吸纳 <strong class="num-red">-9,223.73㎡</strong>（新签 86 单/22,292.17㎡ − 掉铺 97 单/31,515.90㎡），呈净流失态势；净流失最大为昆山（-4,615.19㎡）。续签 99 单/37,635.20㎡ 是面积基本盘的主要支撑。
+    本年累计整体净吸纳 <strong class="num-red">-6,516.38㎡</strong>（新签 90 单/24,417.38㎡ − 掉铺 91 单/30,933.76㎡），仍呈净流失；C 合同/C 流失两表与上期完全一致（11 月 1 日无新签/掉铺入账），缺口持平；净流失最大为昆山（-3,697.19㎡）。续签 105 单/34,421.00㎡ 是面积基本盘的主要支撑。
   </div>
 
   <div class="chart-box" style="height:300px"><canvas id="c4" role="img" aria-label="合同动态">合同动态</canvas></div>
@@ -680,13 +692,13 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="table-wrap"><table>
     <thead><tr><th>项目</th><th>新签(单/㎡)</th><th>续签(单/㎡)</th><th>掉铺(单/㎡)</th><th>净吸纳(㎡)</th></tr></thead>
     <tbody>
-      <tr class="key-financial-row"><td>总计</td><td>86 / 22,292.17</td><td>99 / 37,635.20</td><td>97 / 31,515.90</td><td class="num-red">-9,223.73</td></tr>
-      <tr><td>金鹰世界A</td><td>4 / 2,946.67</td><td>7 / 6,164.59</td><td>10 / 4,331.32</td><td class="num-red">-1,384.65</td></tr>
-      <tr><td>金鹰世界B</td><td>8 / 3,552.00</td><td>1 / 298.00</td><td>1 / 619.00</td><td class="num-green">+2,933.00</td></tr>
-      <tr><td>金鹰中心A</td><td>8 / 1,559.71</td><td>19 / 11,596.37</td><td>12 / 2,720.46</td><td class="num-red">-1,160.75</td></tr>
-      <tr><td>芜湖滨江</td><td>39 / 8,392.61</td><td>24 / 5,417.63</td><td>39 / 8,648.13</td><td class="num-red">-255.52</td></tr>
-      <tr><td>珠江壹号</td><td>5 / 1,784.00</td><td>7 / 3,568.00</td><td>9 / 4,022.00</td><td class="num-red">-2,238.00</td></tr>
-      <tr><td>昆山金鹰</td><td>2 / 499.00</td><td>9 / 5,588.57</td><td>13 / 5,114.19</td><td class="num-red">-4,615.19</td></tr>
+      <tr class="key-financial-row"><td>总计</td><td>90 / 24,417.38</td><td>105 / 34,421.00</td><td>91 / 30,933.76</td><td class="num-red">-6,516.38</td></tr>
+      <tr><td>金鹰世界A</td><td>4 / 2,946.07</td><td>7 / 6,127.80</td><td>9 / 2,808.32</td><td class="num-green">+137.75</td></tr>
+      <tr><td>金鹰世界B</td><td>7 / 2,252.00</td><td>2 / 1,821.00</td><td>1 / 619.00</td><td class="num-green">+1,633.00</td></tr>
+      <tr><td>金鹰中心A</td><td>9 / 2,323.89</td><td>19 / 6,179.37</td><td>11 / 2,994.53</td><td class="num-red">-670.64</td></tr>
+      <tr><td>芜湖滨江</td><td>38 / 7,837.58</td><td>26 / 5,816.22</td><td>39 / 8,781.19</td><td class="num-red">-943.61</td></tr>
+      <tr><td>珠江壹号</td><td>8 / 4,512.93</td><td>7 / 3,568.00</td><td>8 / 4,986.00</td><td class="num-red">-473.07</td></tr>
+      <tr><td>昆山金鹰</td><td>4 / 986.73</td><td>12 / 5,906.57</td><td>10 / 4,683.92</td><td class="num-red">-3,697.19</td></tr>
       <tr><td>芜湖商城</td><td>7 / 1,866.52</td><td>9 / 2,043.53</td><td>4 / 1,054.88</td><td class="num-green">+811.64</td></tr>
       <tr><td>丹阳金鹰天地</td><td>13 / 1,691.66</td><td>23 / 2,958.51</td><td>9 / 5,005.92</td><td class="num-red">-3,314.26</td></tr>
     </tbody>
@@ -694,24 +706,24 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
 
   <div class="section-subhead">净流失排名</div>
   <div class="alert alert-danger">
-    1. <strong>昆山金鹰：净流失 4,615.19㎡</strong>——新签仅 2 单/499㎡（王舒玥 215㎡、苏州巨量引擎 284㎡），招商近乎停滞；掉铺 13 单/5,114.19㎡<br>
+    1. <strong>昆山金鹰：净流失 3,697.19㎡</strong>——新签仅 4 单/986.73㎡（徐源 199㎡、温小荣 288.73㎡、王舒玥 215㎡、苏州巨量引擎 284㎡）；掉铺 10 单/4,683.92㎡，含中建七局第二建筑 2,948.57㎡（续签明细同名同面积出现，疑似换租/面积调整）<br>
     2. <strong>丹阳金鹰天地：净流失 3,314.26㎡</strong>——掉铺 9 单中含丹阳美杏医疗服务 3,855.59㎡ 大宗退租<br>
-    3. <strong>珠江壹号：净流失 2,238.00㎡</strong>——掉铺 9 单/4,022㎡，含南京中核能源 1,700㎡（新签与掉铺明细同时出现，疑似换租/缩租）<br>
-    4. <strong>金鹰世界A：净流失 1,384.65㎡</strong>——掉铺 10 单/4,331.32㎡，以中小面积为主<br>
-    5. <strong>金鹰中心A：净流失 1,160.75㎡</strong>——掉铺 12 单/2,720.46㎡，但续签 19 单/11,596.37㎡ 为全集团最大续签盘<br>
-    6. <strong>芜湖滨江：净流失 255.52㎡</strong>——新签 39 单/掉铺 39 单，高频小面积换手，基本持平
+    3. <strong>芜湖滨江：净流失 943.61㎡</strong>——新签 38 单/掉铺 39 单高频小面积换手，掉铺 8,781.19㎡ 为全集团最大<br>
+    4. <strong>金鹰中心A：净流失 670.64㎡</strong>——掉铺 11 单/2,994.53㎡；续签 19 单/6,179.37㎡ 为全集团最大续签盘之一<br>
+    5. <strong>珠江壹号：净流失 473.07㎡</strong>——掉铺 8 单/4,986㎡（含中核能源 1,700㎡、城市与交通规划设计院 1,400㎡，两者亦在新签明细出现，疑似换租）；新签 8 单/4,512.93㎡（含平安人寿 1,877.93㎡）<br>
+    6. <strong>净吸纳为正</strong>：金鹰世界B +1,633.00㎡、芜湖商城 +811.64㎡、金鹰世界A +137.75㎡
   </div>
 
   <div class="section-subhead">流失归因（C 流失统计，仅列流失数量 &gt; 0 的项目）</div>
   <div class="table-wrap"><table>
     <thead><tr><th>项目</th><th>流失(单/㎡)</th><th>主因</th><th>代表租户</th></tr></thead>
     <tbody>
-      <tr><td>金鹰中心A</td><td class="num-red">25 / 7,680</td><td>业态不匹配、价格嫌高、意向不明确、房源不合适</td><td>沁宁房产（配套）、生物制药企业（总部）、探世文化传媒（抖音知识付费）</td></tr>
-      <tr><td>金鹰世界</td><td>13 / 5,586</td><td>业态不匹配、房源不合适</td><td class="text-muted">客户名称待补（金融、专业服务类）</td></tr>
-      <tr><td>昆山金鹰</td><td>11 / 2,471</td><td>价格嫌高、意向不明确</td><td>销售公司、视频类传媒公司、寳昱科技</td></tr>
-      <tr><td>丹阳金鹰天地</td><td>3 / 225.54</td><td>意向不明确</td><td class="text-muted">—</td></tr>
-      <tr><td>芜湖滨江</td><td>1 / 200</td><td>有精装需求</td><td>南银法巴业务部（金融类）</td></tr>
-      <tr class="key-financial-row"><td>小计</td><td>53 / 16,162.54</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
+      <tr><td>金鹰中心A</td><td class="num-red">29 / 9,385</td><td>业态不匹配、价格嫌高、意向不明确、房源不合适、有精装需求</td><td>沁宁房产（配套）、生物制药企业（总部）、探世文化传媒（抖音知识付费）</td></tr>
+      <tr><td>金鹰世界</td><td>18 / 8,936</td><td>业态不匹配、急用房且只要精装修拎包、房源不合适、预算不足、不考虑河西板块</td><td>中汇保险（金融）等（部分客户名称待补）</td></tr>
+      <tr><td>昆山金鹰</td><td>12 / 3,470</td><td>价格嫌高、意向不明确</td><td>销售公司、视频类传媒公司</td></tr>
+      <tr><td>丹阳金鹰天地</td><td>5 / 1,288.31</td><td>意向不明确、无接待大堂、费用接受不了</td><td>亚朵/全季酒店（配套）、丁壬阁养生（配套）</td></tr>
+      <tr><td>芜湖滨江</td><td>4 / 931</td><td>有精装需求、未填原因</td><td>律所、邦泰集团、南银法巴业务部（金融类）</td></tr>
+      <tr class="key-financial-row"><td>小计</td><td>68 / 24,010.31</td><td class="text-muted">—</td><td class="text-muted">—</td></tr>
     </tbody>
   </table></div>
 </div>
@@ -721,7 +733,7 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="section-heading">五、租金与量价</div>
 
   <div class="conclusion">
-    整体呈<strong class="focus">量价分化</strong>态势——世界、商城出租率同比回升（量升），丹阳、昆山出租率同比深跌（量跌）且租金处全集团低位；全租户在营均价 <strong>1.92 元/㎡/天</strong>、平均租金 <strong>1.27 元/㎡/天</strong>。珠江壹号以 2.84 元/㎡/天在营均价 + 91.2% 出租率实现量价双优。
+    整体呈<strong class="focus">量价分化</strong>态势——世界、商城出租率同比回升（量升），丹阳、昆山出租率同比深跌（量跌）且租金处全集团低位；全租户在营均价 <strong>1.91 元/㎡/天</strong>、平均租金 <strong>1.24 元/㎡/天</strong>。珠江壹号以 2.80 元/㎡/天在营均价 + 92.6% 出租率实现量价双优。<strong>⚠️ 本章租金为 10-31 同口径：本期 BI 租金变化行受面积口径异常影响失真（在营均价 0.69 / 平均租金 0.56 元/㎡/天），不予采信。</strong>
   </div>
 
   <div class="chart-box" style="height:300px"><canvas id="c5" role="img" aria-label="各项目租金水平">各项目租金水平</canvas></div>
@@ -729,20 +741,20 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="table-wrap"><table>
     <thead><tr><th>项目</th><th>在营均价(元/㎡/天)</th><th>平均租金(元/㎡/天)</th><th>出租率同比(2026.10)</th><th>量价判断</th></tr></thead>
     <tbody>
-      <tr class="key-financial-row"><td>合计</td><td>1.92</td><td>1.27</td><td class="text-muted">—</td><td>量价分化</td></tr>
-      <tr><td>金鹰世界(含A、B座)</td><td>1.99</td><td>1.16</td><td class="num-green">A +27.8% / B +21.9%</td><td><span class="tag tag-info">量升为主，出租率大幅修复</span></td></tr>
-      <tr><td>新街口金鹰中心</td><td>2.05</td><td>1.46</td><td class="decrease">-0.5%</td><td><span class="tag tag-gold">量稳价中高位</span></td></tr>
-      <tr><td>芜湖滨江金鹰世界</td><td>0.94</td><td>0.57</td><td class="decrease">-0.5%</td><td><span class="tag tag-warn">量稳，租金低位运行</span></td></tr>
-      <tr><td>珠江壹号</td><td class="num-green">2.84</td><td>2.59</td><td class="decrease">-0.9%</td><td><span class="tag tag-info">量价双优（集团标杆）</span></td></tr>
+      <tr class="key-financial-row"><td>合计</td><td>1.91</td><td>1.24</td><td class="text-muted">—</td><td>量价分化</td></tr>
+      <tr><td>金鹰世界(含A、B座)</td><td>1.98</td><td>1.16</td><td class="num-green">A +27.8% / B +23.9%</td><td><span class="tag tag-info">量升为主，出租率大幅修复</span></td></tr>
+      <tr><td>新街口金鹰中心</td><td>2.08</td><td>1.46</td><td class="decrease">-1.7%</td><td><span class="tag tag-gold">量稳价中高位</span></td></tr>
+      <tr><td>芜湖滨江金鹰世界</td><td>0.94</td><td>0.57</td><td class="decrease">-0.4%</td><td><span class="tag tag-warn">量稳，租金低位运行</span></td></tr>
+      <tr><td>珠江壹号</td><td class="num-green">2.80</td><td>2.59</td><td class="increase">+0.7%</td><td><span class="tag tag-info">量价双优（集团标杆）</span></td></tr>
       <tr><td>昆山金鹰</td><td>1.83</td><td>1.22</td><td class="num-red">-15.8%</td><td><span class="tag tag-danger">量跌，价格承压</span></td></tr>
       <tr><td>丹阳金鹰天地</td><td class="num-red">0.87</td><td class="num-red">0.40</td><td class="num-red">-36.2%</td><td><span class="tag tag-danger">量价齐跌（集团最低）</span></td></tr>
-      <tr><td>芜湖商城/芜湖商业</td><td>1.00</td><td>0.98</td><td class="num-green">+8.7%</td><td><span class="tag tag-info">量升价稳</span></td></tr>
+      <tr><td>芜湖商城/芜湖商业</td><td>1.00</td><td>0.51</td><td class="num-green">+8.7%</td><td><span class="tag tag-warn">量升；平均租金因可租赁口径上调摊薄</span></td></tr>
       <tr><td>马鞍山 / 盐城聚龙湖</td><td class="text-muted">数据未提供</td><td class="text-muted">数据未提供</td><td class="text-muted">—</td><td class="text-muted">数据未提供/待补全</td></tr>
     </tbody>
   </table></div>
 
   <div class="alert alert-warn">
-    <strong>口径说明：</strong>出租率同比取自 A 出租率分月 202610 列（最新有实际达成月份）。珠江壹号在营均价（2.84）与平均租金（2.59）价差仅 8.8%，折让空间小、租金质量高；世界 A/B 价差大（1.99 vs 1.16），存在免租期/装补等折让。<br>
+    <strong>口径说明：</strong>出租率同比取自 A 出租率分月 202610 列（最新有实际达成月份；202611 列因面积口径异常不采信）。珠江壹号在营均价（2.80）与平均租金（2.59）价差仅 7.4%，折让空间小、租金质量高；世界 A/B 价差大（1.98 vs 1.16），存在免租期/装补等折让。芜湖商城平均租金 0.51 系可租赁口径上调后摊薄所致，非实际降租。月度租费收入达成：9 月达成率 69.5%（实际 1,208.77 万 / 预算 1,739.06 万）；10 月全月实际 1,284.75 万 / 预算 1,547.69 万（83.0%，完整月口径；单月达成率世界 B 156.3%、中心 128.6%、昆山 106.1% 破百，滨江 68.5%、商城 10.4% 偏低）；<strong>11 月租费预算 1,716.75 万，月初尚未入账（实际 0）</strong>。<br>
     <strong>⚠️ 异常标注：</strong>新增租户租金（面价/净价）BI 未提供，存量 vs 新增对比不适用，本章量价判断基于存量租金水平与出租率同比趋势；收入交叉验证未执行（B 权责已出租面积为 8.31 填报时点、租金为当前在营口径，与 1-10 月累计收入期间不匹配）。
   </div>
 </div>
@@ -752,7 +764,7 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="section-heading">六、竞品与项目定位</div>
 
   <div class="conclusion">
-    南京主战场租金竞争白热化——金鹰世界 A 座出租率（45.9%，D 表口径）低于华新城（50%）与新鸿基一期（80%），但租金（2.3-3 元/㎡/天）具备性价比；珠江壹号出租率 90% 领先熊猫（78%）、华贸（60%）；昆山金鹰租金（1.5-2）显著高于裕元新天地（1.1-1.3）、万象汇（1.2-1.6），高价差是净流失主因之一；丹阳面临吾悦（0.4-0.6）低价冲击。
+    南京主战场租金竞争白热化——金鹰世界 A 座出租率（45.9%，D 表口径）低于华新城（50%）与新鸿基一期（80%），但租金（2.3-3 元/㎡/天）具备性价比；珠江壹号出租率 90% 领先熊猫（78%）、华贸（60%）；昆山金鹰租金（1.5-2）显著高于裕元新天地（1.1-1.3）、万象汇（1.2-1.6），高价差是净流失主因之一；丹阳面临吾悦（0.4-0.6）低价冲击。（D 竞品表本期与上期完全一致）
   </div>
 
   <div class="table-wrap"><table>
@@ -785,8 +797,8 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
     <thead><tr><th>项目</th><th>本项目在营均价(元/㎡/天)</th><th>竞品租金中值(元/㎡/天)</th><th>价差判断</th><th>价格竞争力</th></tr></thead>
     <tbody>
       <tr><td>金鹰世界（A/B）</td><td>1.99</td><td>华新城 2.75 / 新鸿基 2.75 / 阿里 1.90</td><td>低于华新/新鸿基，高于阿里</td><td><span class="tag tag-warn">中等</span></td></tr>
-      <tr><td>珠江壹号</td><td>2.84</td><td>熊猫 2.20 / 华贸 3.10 / 德基 3.75</td><td>高于熊猫，低于华贸/德基</td><td><span class="tag tag-info">有竞争力</span></td></tr>
-      <tr><td>新街口金鹰中心</td><td>2.05</td><td>瑞安 2.40 / JLC 3.10 / 金轮 2.05</td><td>低于瑞安/JLC，与金轮持平</td><td><span class="tag tag-warn">中等</span></td></tr>
+      <tr><td>珠江壹号</td><td>2.80</td><td>熊猫 2.20 / 华贸 3.10 / 德基 3.75</td><td>高于熊猫，低于华贸/德基</td><td><span class="tag tag-info">有竞争力</span></td></tr>
+      <tr><td>新街口金鹰中心</td><td>2.08</td><td>瑞安 2.40 / JLC 3.10 / 金轮 2.05</td><td>低于瑞安/JLC，与金轮持平</td><td><span class="tag tag-warn">中等</span></td></tr>
       <tr><td>昆山金鹰</td><td>1.83</td><td>裕元 1.20 / 万象汇 1.40 / 高鑫 1.15</td><td class="num-red">高于竞品 30%-59%</td><td><span class="tag tag-danger">偏高</span></td></tr>
       <tr><td>芜湖滨江</td><td>0.94</td><td>华邑 1.25 / 伟星 1.23 / 世茂 1.18 / 神山 0.80</td><td>低于多数竞品，高于神山智谷</td><td><span class="tag tag-info">有竞争力</span></td></tr>
       <tr><td>丹阳金鹰天地</td><td>0.87</td><td>吾悦 0.50 / 融锦 0.63</td><td class="num-red">高于竞品 38%-74%</td><td><span class="tag tag-danger">偏高</span></td></tr>
@@ -795,7 +807,7 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
 
   <div class="alert alert-warn">
     <strong>口径说明：</strong>竞品租金已统一为元/㎡/天，区间取中值；破折号变体均按区间分隔符处理。<br>
-    <strong>⚠️ 异常标注：</strong>D 表竞品出租率为<strong>静态填报口径</strong>（如金鹰世界 A 座 45.85%），与 B 权责实测口径（世界含 A/B 58.17%）存在时点与范围差异，本章对比仅用于竞争定位，不用于经营指标；融锦广场出租率填报为"/"，标注数据未提供。
+    <strong>⚠️ 异常标注：</strong>D 表竞品出租率为<strong>静态填报口径</strong>（如金鹰世界 A 座 45.85%），与 B 权责实测口径（世界含 A/B 58.6%）存在时点与范围差异，本章对比仅用于竞争定位，不用于经营指标；融锦广场出租率填报为"/"，标注数据未提供。
   </div>
 </div>
 
@@ -804,75 +816,86 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="section-heading">七、租户储备与招商漏斗</div>
 
   <div class="conclusion">
-    整体储备覆盖倍数仅 <strong>0.47 倍</strong>（可跟进 49,039.1㎡ ÷ 空置 104,903.55㎡），储备不足以覆盖现有空置；珠江壹号储备最充足，<strong>昆山储备接近枯竭</strong>（2 单/210㎡）、芜湖滨江与金鹰中心储备薄弱。本年累计已转化 57 单、已流失 101 单，流失主因：未填原因（63 单）、意向不明确（13 单）、租金高（11 单）。
+    整体储备覆盖倍数（对空置）仅 <strong>0.5 倍</strong>（可跟进 52,251.77㎡ ÷ 空置 112,704.57㎡），储备不足以覆盖现有空置；珠江壹号（1.9 倍）储备最充足，<strong>芜湖滨江储备最薄弱</strong>（7 单/2,339.21㎡，0.1 倍）；<strong>芜湖商城空置 8,616.54㎡ 而可跟进储备为 0 单</strong>（面积口径调整后缺口持续存在）。本年累计已转化 70 单、已流失 112 单，流失主因：未填原因（68 单，60.7%）、意向不明确（13 单）、租金高（11 单）。⚠️ 丹阳亚朵/全季酒店（约 1,000㎡ 意向）已流失（无接待大堂）。F 两表本期与上期完全一致；空置面积为 10-31 同口径。
   </div>
 
   <div class="topic-heading">7.1 各项目储备漏斗</div>
   <div class="table-wrap"><table>
-    <thead><tr><th>项目</th><th>可跟进客户数</th><th>可跟进面积(㎡)</th><th>可租赁面积(㎡)</th><th>覆盖倍数</th><th>已转化客户数</th><th>已流失客户数</th></tr></thead>
+    <thead><tr><th>项目</th><th>可跟进客户数</th><th>可跟进面积(㎡，剔除异常)</th><th>空置面积(㎡)</th><th>覆盖倍数(对空置)</th><th>已转化客户数</th><th>已流失客户数</th></tr></thead>
     <tbody>
-      <tr class="key-financial-row"><td>合计</td><td>68</td><td>49,039.1</td><td>312,885.02</td><td class="text-gold">0.16</td><td>57</td><td>101</td></tr>
-      <tr><td>金鹰世界</td><td>27</td><td>33,851.0</td><td>118,690.65</td><td class="text-gold">0.29</td><td>5</td><td>39</td></tr>
-      <tr><td>新街口金鹰中心</td><td>10</td><td>3,327.0</td><td>56,366.97</td><td class="num-red">0.06</td><td>16</td><td>28</td></tr>
-      <tr><td>芜湖滨江</td><td>12</td><td>3,528.8</td><td>48,216.46</td><td class="num-red">0.07</td><td>23</td><td>9</td></tr>
-      <tr><td>珠江壹号</td><td>9</td><td>6,065.0</td><td>39,748.07</td><td class="num-red">0.15</td><td>3</td><td>11</td></tr>
-      <tr><td>昆山金鹰</td><td>2</td><td class="num-red">210.0</td><td>27,757.49</td><td class="num-red">0.01</td><td>5</td><td>11</td></tr>
-      <tr><td>丹阳金鹰天地</td><td>8</td><td>2,057.3</td><td>13,025.68</td><td class="num-red">0.16</td><td>1</td><td>3</td></tr>
-      <tr><td>芜湖商城</td><td>0</td><td>0</td><td>9,079.70</td><td class="text-muted">0.00</td><td>4</td><td>0</td></tr>
+      <tr class="key-financial-row"><td>合计</td><td>102</td><td>52,251.77</td><td>112,704.57</td><td class="text-gold">0.5</td><td>70</td><td>112</td></tr>
+      <tr><td>金鹰世界</td><td>34</td><td>25,292.00</td><td>49,143.02</td><td class="text-gold">0.5</td><td>6</td><td>44</td></tr>
+      <tr><td>新街口金鹰中心</td><td>17</td><td>6,401.00</td><td>16,687.24</td><td class="num-red">0.4</td><td>17</td><td>29</td></tr>
+      <tr><td>芜湖滨江</td><td>12</td><td>2,339.21</td><td>19,204.19</td><td class="num-red">0.1</td><td>25</td><td>11</td></tr>
+      <tr><td>珠江壹号</td><td>9</td><td>5,665.00</td><td>2,934.53</td><td class="num-green">1.9</td><td>3</td><td>11</td></tr>
+      <tr><td>昆山金鹰</td><td>12</td><td>6,918.00</td><td>9,163.78</td><td class="num-red">0.8</td><td>5</td><td>12</td></tr>
+      <tr><td>丹阳金鹰天地</td><td>17</td><td>5,636.56</td><td>6,955.27</td><td class="num-red">0.8</td><td>10</td><td>5</td></tr>
+      <tr><td>芜湖商城</td><td>0</td><td>0</td><td>8,616.54</td><td class="num-red">0（无储备）</td><td>4</td><td>0</td></tr>
     </tbody>
   </table></div>
 
   <div class="alert alert-warn">
-    <strong>口径说明：</strong>覆盖倍数 = 可跟进面积 ÷ 可租赁面积。若按空置面积口径，整体覆盖倍数为 0.47 倍（49,039.1㎡ ÷ 空置 104,903.55㎡）。<br>
-    可跟进面积来自 F 储备转化分析（64 单/剔除异常 49,039.1㎡；含异常口径 749,839.1㎡）；三态客户数来自 F 储备明细（可跟进 68 单）。两表口径存在差异（金鹰世界转化分析 23 单 vs 明细 27 单），面积以转化分析为准、客户数以明细为准，差异已在第十一章标注。<br>
-    <strong>⚠️ 数据异常：</strong>珠江壹号"医疗公司"面积需求 700,800㎡，疑似 700/800 误录；汇总与覆盖倍数采用剔除异常口径。可跟进意向等级：B 级 7 单（金鹰中心 5、珠江壹号 2）、C 级 4 单、D 级 1 单，其余未评级。
+    <strong>口径说明：</strong>覆盖倍数 = 可跟进面积（剔除异常）÷ 空置面积，整体 0.5 倍（52,251.77㎡ ÷ 空置 112,704.57㎡，10-31 同口径）。<br>
+    可跟进面积来自 F 储备转化分析（86 条/剔除异常 52,251.77㎡；含异常口径 1,102,392.77㎡）；三态客户数来自 F 储备明细（可跟进 102 单）。两表口径存在差异（如金鹰世界转化分析 25 条 vs 明细 34 单），面积以转化分析为准、客户数以明细为准，差异已在第十一章标注。<br>
+    <strong>⚠️ 数据异常：</strong>两条大面积疑似误录——珠江壹号"医疗公司"700,800㎡、金鹰世界"汉都餐饮"349,341㎡（备注称现用 100 多平扩容）；汇总与覆盖倍数采用剔除异常口径。
   </div>
 
-  <div class="topic-heading">7.2 重点客户表（可跟进面积 ≥ 500㎡，共 23 条，按面积降序）</div>
+  <div class="topic-heading">7.2 重点客户表（可跟进面积 ≥ 500㎡，共 33 条含 2 条面积异常标注，按面积降序）</div>
   <div class="table-wrap"><table>
     <thead><tr><th>项目</th><th>客户名称</th><th>进度</th><th>面积(㎡)</th><th>经营业态</th><th>跟进进展/备注</th><th>预计转化节点</th></tr></thead>
     <tbody>
-      <tr><td>珠江壹号</td><td>医疗公司</td><td><span class="tag tag-info">可跟进</span></td><td class="num-red">⚠️ 700,800（疑似录入错误）</td><td>配套</td><td>带看 42 楼，客户现租场地 2026 年 1 月到期</td><td>2026年底</td></tr>
-      <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>8,000.0</td><td>互联网科技</td><td class="text-muted">—</td><td>2026.12.31</td></tr>
+      <tr><td>珠江壹号</td><td>医疗公司</td><td><span class="tag tag-info">可跟进</span></td><td class="num-red">⚠️ 700,800（疑似录入错误）</td><td>配套</td><td>带看 42 楼，客户现租场地 2026 年 1 月到期</td><td>2026-12-31</td></tr>
+      <tr><td>金鹰世界</td><td>汉都餐饮</td><td><span class="tag tag-info">可跟进</span></td><td class="num-red">⚠️ 349,341（疑似录入错误）</td><td>餐饮</td><td>现用 100 多平需扩容，不想投入装修、仅接受小拆改，预算不高（现租金 1.4-1.5）</td><td class="text-muted">预计时间待补</td></tr>
       <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>6,000.0</td><td>总部</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
-      <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>6,000.0</td><td>专业服务</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
-      <tr><td>珠江壹号</td><td>好房港</td><td><span class="tag tag-info">可跟进</span></td><td>4,300.0</td><td>渠道</td><td>联办客户，看完很有意向，目前在报条件阶段，需等京翔处理完后推进</td><td>2026.12.31</td></tr>
+      <tr><td>珠江壹号</td><td>好房港</td><td><span class="tag tag-info">可跟进</span></td><td>4,300.0</td><td>渠道</td><td>联办客户，看完很有意向，目前在报条件阶段，需等京翔处理完后推进</td><td>2026-12-31</td></tr>
+      <tr><td>金鹰世界</td><td>北京市炜衡律师事务所</td><td><span class="tag tag-info">可跟进</span></td><td>3,000.0</td><td>服务类</td><td>现租新城科技园（租金 2.05，物业费 7），同步对比新丽华、金融城二期法商港、河西德基高区；可以自己装</td><td class="text-muted">预计时间待补</td></tr>
       <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>2,000.0</td><td>专业服务</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>昆山金鹰</td><td class="text-muted">未知</td><td><span class="tag tag-info">可跟进</span></td><td>2,000.0</td><td>专业服务</td><td>看场 19 楼和 55 层，待反馈意向</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>昆山金鹰</td><td class="text-muted">未知</td><td><span class="tag tag-info">可跟进</span></td><td>2,000.0</td><td>专业服务</td><td>共享办公室，成本测算</td><td class="text-muted">预计时间待补</td></tr>
       <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>1,800.0</td><td>金融</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
       <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>1,500.0</td><td>配套</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
       <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>1,500.0</td><td>互联网科技</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>1,500.0</td><td>互联网科技</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>丹阳金鹰天地</td><td>解橙</td><td><span class="tag tag-info">可跟进</span></td><td>1,500.0</td><td>配套</td><td>10 月 26 日电话沟通</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>丹阳金鹰天地</td><td>莎莎舞</td><td><span class="tag tag-info">可跟进</span></td><td>1,208.19</td><td>其他</td><td>已看场，推位 9F（需求 1,000㎡，朋友推荐渠道）</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>金鹰中心A</td><td>熠禾艺术教育</td><td><span class="tag tag-info">可跟进</span></td><td>1,200.0</td><td>文创</td><td>露天阳台使用事宜，结合工程意见沟通安全相关要求</td><td>2026-12-31</td></tr>
       <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>1,078.0</td><td>金融</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
-      <tr><td>丹阳金鹰天地</td><td>亚朵/全季酒店</td><td><span class="tag tag-info">可跟进</span></td><td>1,000.0</td><td>配套</td><td>本周再次邀约，回复下周回丹阳</td><td class="text-muted">预计时间待补</td></tr>
-      <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>900.0</td><td>总部</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>金鹰世界</td><td>复星联合健康保险</td><td><span class="tag tag-info">可跟进</span></td><td>1,000.0</td><td>保险</td><td>1000 平保险公司，从苏宁环球出来看，预算 2 以下、有家具可以带过来，有定制装修改造需求，推荐带看 B 座 26 楼 707</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>丹阳金鹰天地</td><td>眭明昊</td><td><span class="tag tag-info">可跟进</span></td><td>1,000.0</td><td>自然客户</td><td>电话沟通，最近较忙，预计年底前来看场</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>金鹰世界</td><td>梵池设计</td><td><span class="tag tag-info">可跟进</span></td><td>800.0</td><td>服务类</td><td>目前在江宁胜太路南瑞园区 1000 平（上下两层每层 500），需要更新迭代产品提高对客形象，考虑河西区域优势，自己装</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>金鹰世界</td><td>医疗器械（政府推荐）</td><td><span class="tag tag-info">可跟进</span></td><td>800.0</td><td>医药公司</td><td>要带装修拎包、尽量不调改只出新，过年假期前要搬；现在鼓楼，新设公司，玄武栖霞鼓楼区同步看；核心问题在于政府政策补贴</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>金鹰中心A</td><td>国际船运</td><td><span class="tag tag-info">可跟进</span></td><td>800.0</td><td>总部</td><td>现于长江路办公，计划到期换址；已带看高区整层及 15 楼毛坯，现场沟通了分割方案，客户对层高及采光不太满意</td><td class="text-muted">预计时间待补</td></tr>
       <tr><td>金鹰中心A</td><td>国际船运</td><td><span class="tag tag-info">可跟进</span></td><td>800.0</td><td>总部</td><td>渠道推荐</td><td class="text-muted">预计时间待补</td></tr>
-      <tr><td>金鹰中心A</td><td>国际船运</td><td><span class="tag tag-info">可跟进</span></td><td>800.0</td><td>总部</td><td>现于长江路办公，计划到期换址；已带看高区整层及 15 楼毛坯，客户对层高采光不满意，意向一般，正推珠江路房源</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>芜湖滨江</td><td>友邦保险</td><td><span class="tag tag-info">可跟进</span></td><td>780.0</td><td>专业服务</td><td>集团陈俊婷介绍，客户已实地看房，推荐 34 层 05-08 室，持续跟进</td><td class="text-muted">预计时间待补</td></tr>
       <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>707.0</td><td>总部</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
       <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>707.0</td><td>专业服务</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
-      <tr><td>丹阳金鹰天地</td><td>平安保险</td><td><span class="tag tag-info">可跟进</span></td><td>700.0</td><td>金融类</td><td>完成四次看场，待公司评估结果</td><td>2026.06.15</td></tr>
-      <tr><td>芜湖滨江</td><td>太平保险</td><td><span class="tag tag-info">可跟进</span></td><td>650.0</td><td>金融类</td><td>总部退回原 600㎡ 批复，重新提报 800㎡，二次资料已提报</td><td>2026.06.30</td></tr>
+      <tr><td>丹阳金鹰天地</td><td>平安保险</td><td><span class="tag tag-info">可跟进</span></td><td>700.0</td><td>金融类</td><td>完成四次看场，待公司评估结果</td><td>2026-06-15</td></tr>
+      <tr><td>金鹰中心A</td><td>环球艺盟</td><td><span class="tag tag-info">可跟进</span></td><td>684.0</td><td>自拓</td><td>24 楼在租客户（在租 706.64㎡），意向年底楼内换租 37 楼缩租降本；同步对标国金 500㎡</td><td>2027-01-01</td></tr>
+      <tr><td>昆山金鹰</td><td class="text-muted">未知</td><td><span class="tag tag-info">可跟进</span></td><td>680.0</td><td>保险</td><td>已看场 17 楼半层，预计 11 月确定；渠道推荐，持续跟进</td><td>2026-11-30</td></tr>
+      <tr><td>芜湖滨江</td><td>太平保险</td><td><span class="tag tag-info">可跟进</span></td><td>650.0</td><td>金融类</td><td>租金过高超预算，已在老地址续签 1 年</td><td>2026-06-30</td></tr>
+      <tr><td>金鹰世界</td><td>贸易（粮油奶等）</td><td><span class="tag tag-info">可跟进</span></td><td>600.0</td><td>总部</td><td>急用房，A 座 19 楼华予遗留带家具房源预估可直接使用，我司不做调改，家具由客户自行增减调配，待客户反馈以及老板复看</td><td class="text-muted">预计时间待补</td></tr>
       <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>500.0</td><td>金融</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
       <tr><td>金鹰世界</td><td class="text-muted">客户名称待补</td><td><span class="tag tag-info">可跟进</span></td><td>500.0</td><td>总部</td><td class="text-muted">—</td><td class="text-muted">预计时间待补</td></tr>
-      <tr><td>芜湖滨江</td><td>中金财富</td><td><span class="tag tag-info">可跟进</span></td><td>500.0</td><td>金融类</td><td>总部领导复看，芜湖分公司提报流程</td><td>2026.09.30</td></tr>
-      <tr><td>芜湖滨江</td><td>文宣传媒</td><td><span class="tag tag-info">可跟进</span></td><td>500.0</td><td>服务类</td><td>浙江商会退租房源，信息已发客户，跟进邀约看房</td><td class="text-muted">预计时间待补</td></tr>
-      <tr><td>芜湖滨江</td><td>开艺设计公司</td><td><span class="tag tag-info">可跟进</span></td><td>500.0</td><td>服务类</td><td>待我司推出精装修房源后再考虑</td><td class="text-muted">预计时间待补</td></tr>
+      <tr><td>金鹰中心A</td><td>象心健身</td><td><span class="tag tag-info">可跟进</span></td><td>500.0</td><td>专业服务</td><td>客户同合伙人复访，对房屋硬件不太满意，目前筛选下来仅一套相对匹配，但涉及分割方案目前还在沟通</td><td>2026-11-13</td></tr>
+      <tr><td>昆山金鹰</td><td class="text-muted">未知</td><td><span class="tag tag-info">可跟进</span></td><td>500.0</td><td>专业服务</td><td>客户要与合伙人商量通勤区域问题</td><td class="text-muted">预计时间待补</td></tr>
     </tbody>
   </table></div>
 
   <div class="alert alert-info">
-    客户名称为"客户名称待补"系 BI 侧未填报，以经营类别+面积+进度备注展示，不编造名称。
+    客户名称为"客户名称待补"系 BI 侧未填报，以经营类别+面积+进度备注展示，不编造名称。⚠️ 丹阳亚朵/全季酒店（约 1,000㎡ 意向，D 级）已流失（流失原因：无接待大堂；对方常驻上海多次邀约未到场），不再列入可跟进储备。
   </div>
 
-  <div class="topic-heading">7.3 流失归因（F 储备明细「流失原因」列，共 101 单）</div>
+  <div class="topic-heading">7.3 流失归因（F 储备明细「流失原因」列，共 112 单）</div>
   <div class="table-wrap"><table>
     <thead><tr><th>项目</th><th>流失单数</th><th>主因分布</th></tr></thead>
     <tbody>
-      <tr><td>金鹰世界</td><td class="num-red">39</td><td>未填原因（36 单）、业态不符合（2 单）、房源不合适（1 单）——归因填报严重缺失</td></tr>
-      <tr><td>金鹰中心</td><td>28</td><td>租金高（10 单）、房源不合适（7 单）、未填原因（5 单）、意向不明确（3 单）、业态不符合（2 单）</td></tr>
+      <tr><td>金鹰世界</td><td class="num-red">44</td><td>未填原因（38 单）、业态不符合（2 单）、急用房且只要精装修拎包（1 单）、房源不合适（1 单）、预算不足（1 单）、不考虑河西板块（1 单）——归因填报严重缺失</td></tr>
+      <tr><td>金鹰中心</td><td>29</td><td>租金高（10 单）、房源不合适（7 单）、未填原因（5 单）、意向不明确（3 单）、业态不符合（2 单）、要求精装修（1 单）、商贸续租因价格问题（1 单）</td></tr>
       <tr><td>珠江壹号</td><td>11</td><td>全部未填原因</td></tr>
-      <tr><td>昆山金鹰</td><td>11</td><td>意向不明确（9 单）、租金高（1 单）</td></tr>
-      <tr><td>芜湖滨江</td><td>9</td><td>未填原因（8 单）、要求精装修（1 单）</td></tr>
-      <tr><td>丹阳金鹰天地</td><td>3</td><td>未填原因（2 单）、意向不明确（1 单）</td></tr>
-      <tr class="key-financial-row"><td>全集团分布</td><td>101</td><td>未填 63 单（62.4%）、意向不明确 13 单、租金高 11 单、房源不合适 8 单、业态不符合 4 单、要求精装修 2 单</td></tr>
+      <tr><td>昆山金鹰</td><td>12</td><td>意向不明确（9 单）、未填原因（2 单）、租金高（1 单）</td></tr>
+      <tr><td>芜湖滨江</td><td>11</td><td>未填原因（10 单）、要求精装修（1 单）</td></tr>
+      <tr><td>丹阳金鹰天地</td><td>5</td><td>未填原因（2 单）、意向不明确（1 单）、无接待大堂（1 单）、费用接受不了（1 单）</td></tr>
+      <tr class="key-financial-row"><td>全集团分布</td><td>112</td><td>未填 68 单（60.7%）、意向不明确 13 单、租金高 11 单、房源不合适 8 单、业态不符合 4 单、要求精装修 2 单、其他 6 单</td></tr>
     </tbody>
   </table></div>
 </div>
@@ -882,7 +905,7 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="section-heading">八、财务权责与全年预测</div>
 
   <div class="conclusion">
-    1-10 月累计收入 <strong>12,113.41 万元</strong>（同比 -8.8%）、可控利润 <strong>10,731.70 万元</strong>（同比 <span class="num-red">-1,067.44 万</span>）；全年预估收入 14,536.09 万元、利润 12,878.05 万元，<strong>全年利润缺口 <span class="num-red">-2,822.65 万元</span>、收入缺口 <span class="num-red">-3,100.00 万元</span></strong>。最大拖累项目：<strong>金鹰中心（全年利润同比 -1,274.19 万元）</strong>；唯一正增长项目：金鹰世界（本期利润同比 +362.42 万元）。
+    累计收入 <strong>12,113.41 万元</strong>（同口径同比 -8.8%）、可控利润 <strong>10,731.70 万元</strong>（同口径同比 <span class="num-red">-1,067.44 万</span>）（11 月财务尚未入账，累计实际为 1-10 月）；同口径全年预估收入 14,536.09 万元、利润 12,878.05 万元，<strong>全年利润缺口 <span class="num-red">-2,822.65 万元</span>、收入缺口 <span class="num-red">-3,100.00 万元</span></strong>。最大拖累项目：<strong>金鹰中心（全年利润同比 -1,274.19 万元）</strong>；唯一正增长项目：金鹰世界（本期利润同比 +362.42 万元）。<strong>⚠️ 本期 BI 因月初口径切换（同比窗口扩至 2025 年 1-11 月、年化除数 10→11）返回失真同比与全年预估，本章主表为同口径还原值，BI 原始口径见 8.2 对照表。</strong>
   </div>
 
   <div class="chart-row">
@@ -891,7 +914,7 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   </div>
 
   <div class="table-wrap"><table>
-    <thead><tr><th>项目</th><th>本期收入(万元)</th><th>本期可控利润(万元)</th><th>利润同比(万元)</th><th>全年预估收入(万元)</th><th>全年预估利润(万元)</th><th>全年利润同比(万元)</th></tr></thead>
+    <thead><tr><th>项目</th><th>本期收入(万元)</th><th>本期可控利润(万元)</th><th>利润同比(万元·同口径)</th><th>全年预估收入(万元·同口径)</th><th>全年预估利润(万元·同口径)</th><th>全年利润同比(万元·同口径)</th></tr></thead>
     <tbody>
       <tr class="key-financial-row"><td>合计</td><td>12,113.41</td><td>10,731.70</td><td class="decrease">-1,067.44</td><td>14,536.09</td><td>12,878.05</td><td class="decrease">-2,822.65</td></tr>
       <tr><td>金鹰世界(含A、B座)</td><td>4,179.70</td><td>3,736.09</td><td class="increase">+362.42</td><td>5,015.64</td><td>4,483.30</td><td class="decrease">-530.28</td></tr>
@@ -923,19 +946,36 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="table-wrap"><table>
     <thead><tr><th>项目</th><th>全年利润缺口(万元)</th><th>占集团缺口比重</th><th>全年收入缺口(万元)</th><th>备注</th></tr></thead>
     <tbody>
-      <tr><td>新街口金鹰中心</td><td class="num-red">-1,274.19</td><td class="num-red">45.1%</td><td>-1,444.35</td><td>最大拖累：掉铺 25 单/7,680㎡，收入同比 -21.1%</td></tr>
+      <tr><td>新街口金鹰中心</td><td class="num-red">-1,274.19</td><td class="num-red">45.1%</td><td>-1,444.35</td><td>最大拖累：掉铺 29 单/9,385㎡（C 流失统计），收入同比 -21.1%</td></tr>
       <tr><td>金鹰世界(含A、B座)</td><td class="decrease">-530.28</td><td>18.8%</td><td>-602.10</td><td>本期利润同比 +362.42 为正，全年预估仍低于上年（上年高基数）</td></tr>
-      <tr><td>珠江壹号</td><td class="decrease">-521.45</td><td>18.5%</td><td>-592.56</td><td>出租率 91.2% 高位，收入自然回落</td></tr>
+      <tr><td>珠江壹号</td><td class="decrease">-521.45</td><td>18.5%</td><td>-592.56</td><td>出租率 92.6% 高位、收入达成率 100.2% 破百，收入自然回落</td></tr>
       <tr><td>芜湖滨江</td><td class="decrease">-170.96</td><td>6.1%</td><td>-94.93</td><td>⚠️ 全年预估支出 118.84 万 vs 上年全年 42.82 万（<span class="num-red">+177.5%</span>），房产税口径异动需核实</td></tr>
-      <tr><td>昆山金鹰</td><td class="decrease">-154.38</td><td>5.5%</td><td>-171.55</td><td>净流失 4,615.19㎡ 最大，储备仅 210㎡</td></tr>
+      <tr><td>昆山金鹰</td><td class="decrease">-154.38</td><td>5.5%</td><td>-171.55</td><td>净流失 3,697.19㎡ 集团最大，新签仅 4 单/986.73㎡</td></tr>
       <tr><td>丹阳金鹰天地</td><td class="decrease">-108.01</td><td>3.8%</td><td>-122.73</td><td>收入同比 -38.2%，出租率 46.6% 集团最低</td></tr>
-      <tr><td>芜湖商城</td><td class="decrease">-63.38</td><td>2.2%</td><td>-71.77</td><td>收入达成率仅 52.0%</td></tr>
+      <tr><td>芜湖商城</td><td class="decrease">-63.38</td><td>2.2%</td><td>-71.77</td><td>收入达成率仅 56.7%；可租赁口径 17,522.49㎡</td></tr>
       <tr class="key-financial-row"><td>合计</td><td>-2,822.65</td><td>100%</td><td>-3,100.00</td><td class="text-muted">—</td></tr>
     </tbody>
   </table></div>
 
   <div class="alert alert-info">
-    <strong>交叉校验：</strong>B 收入支出明细的本年累计收入（各项目合计 12,113.41 万元）、本年累计总支出（合计 1,381.70 万元）与 B 权责 R8/R9 完全一致 ✅；本年全年实际收入（合计 14,536.09 万元）与 B 权责 R18 一致 ✅。
+    <strong>交叉校验：</strong>B 收入支出明细的本年累计收入（各项目合计 12,113.41 万元）、本年累计总支出（合计 1,381.70 万元）与 B 权责 R8/R9 完全一致 ✅；B 收入支出明细"本年全年实际收入"（合计 13,214.63 万元）与 B 权责 R18 的 BI 口径一致 ✅（两者同为 ÷11 年化；本报告主表采用 ÷10 同口径还原 14,536.09 万元）。
+  </div>
+
+  <div class="topic-heading">8.2 BI 原始口径对照（月初切换失真，不用于经营判断）</div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>指标</th><th>同口径还原（本报告采用）</th><th>BI 原始口径（1-11月窗口 / ÷11 年化）</th></tr></thead>
+    <tbody>
+      <tr><td>本期收入同比</td><td class="num-green">-8.8%（基数 13,279.19 万 = 2025年1-10月）</td><td class="num-red">-19.1%（基数 14,966.72 万 = 2025年1-11月，多 1 个月）</td></tr>
+      <tr><td>本期利润同比</td><td>-1,067.44 万</td><td class="num-red">-2,583.41 万</td></tr>
+      <tr><td>全年预估收入</td><td>14,536.09 万</td><td class="num-red">13,214.63 万</td></tr>
+      <tr><td>全年预估利润</td><td>12,878.05 万</td><td class="num-red">11,707.31 万</td></tr>
+      <tr><td>全年收入缺口</td><td>-3,100.00 万</td><td class="num-red">-4,421.46 万</td></tr>
+      <tr class="key-financial-row"><td>全年利润缺口</td><td>-2,822.65 万</td><td class="num-red">-3,993.38 万（中心 -1,516.18 万，占 38.0%）</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="alert alert-warn">
+    <strong>失真机理：</strong>本期取数日为 11 月 1 日，B 权责期间标签进入「1-11月」，但 11 月财务尚未入账、累计实际仍为 1-10 月；BI 表「去年同期」按 2025 年 1-11 月取数（多 1 个月基数）、「预估全年」按 ÷11 年化（分母虚增 1 个月）。预计 11 月财务入账后（约月中旬）BI 口径自动恢复正常。
   </div>
 
   <div class="alert alert-danger">
@@ -951,37 +991,45 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="section-heading">九、风险预警</div>
 
   <div class="conclusion">
-    识别 7 项量化风险，其中<strong>丹阳出租率跌破 50%</strong>、<strong>昆山储备枯竭</strong>、<strong>全年利润缺口 2,822.65 万元</strong>为最高优先级。
+    识别 9 项量化风险，其中<strong>BI 面积口径单日翻倍异常（数据链路）</strong>、<strong>丹阳出租率跌破 50% 且酒店化意向流失</strong>、<strong>昆山净流失集团最大</strong>、<strong>全年利润缺口 2,822.65 万元（同口径）</strong>为最高优先级；经营面与上期持平（净增长 +256.15㎡ 保持正值、净流失缺口持平），10 月租费收入全月达成 83.0%（完整月）为积极信号。
   </div>
 
   <ul class="risk-list">
     <li class="risk-item">
+      <div class="risk-title"><span class="risk-badge">数据链路·口径异常</span>BI 面积段（本期新增，最高优先级）</div>
+      本期 B 权责/A 基础信息/B 出租面积明细可租赁面积合计较上期<strong class="num-red">精确翻倍</strong>（321,306.38 → 642,612.76㎡，8 个在营项目均恰好 2 倍），已出租 529,471.81㎡ ≈ 各项目「上期已出租＋上期可租赁」之和，出租率跳升至 82.4%、净增长 +321,126.15㎡；A 分月卡 202611 列同步翻倍（出租达成率 193.9%-307.8%）→ 判定为上游 11 月分区数据异常（疑似分区重复/字段错位），<strong>当日反馈数据组核查</strong>；本报告面积类指标采用 10-31 同口径过渡，恢复后以当期口径为准。
+    </li>
+    <li class="risk-item">
+      <div class="risk-title"><span class="risk-badge">口径切换</span>月初财务同比/年化失真（本期新增）</div>
+      BI 口径收入同比 <strong class="num-red">-19.1%</strong>（同口径 -8.8%）、全年利润缺口 <strong class="num-red">-3,993.38 万</strong>（同口径 -2,822.65 万），系同比窗口扩至 2025 年 1-11 月、年化除数 10→11 所致（11 月尚未入账）→ 建议 BI 侧将复杂报表期间参数锚定「最近入账月」，或月初取数按同口径还原（本报告已还原）；预计 11 月财务入账后自动恢复。
+    </li>
+    <li class="risk-item">
       <div class="risk-title"><span class="risk-badge">存量收缩</span>全集团</div>
-      较年初净增长面积 <strong class="num-red">-364.19㎡</strong> 转负，本年累计净吸纳 <strong class="num-red">-9,223.73㎡</strong>（新签 22,292.17㎡ &lt; 掉铺 31,515.90㎡），存量盘面持续收缩 → 建议将净吸纳转正列为四季度各项目一号指标。
+      本年累计净吸纳 <strong class="num-red">-6,516.38㎡</strong>（新签 24,417.38㎡ &lt; 掉铺 30,933.76㎡）仍为净流失，缺口与上期持平；积极信号是较年初净增长保持正值且增幅扩大（<strong class="num-green">+256.15㎡</strong>）→ 建议将净吸纳转正列为四季度各项目一号指标，巩固拐点。
     </li>
     <li class="risk-item">
       <div class="risk-title"><span class="risk-badge">出租率失速</span>丹阳金鹰天地</div>
-      出租率 <strong>46.6%</strong>（全集团最低，空置占比 53.4%），出租率同比 <strong class="num-red">-36.2%</strong>，收入同比 <strong class="num-red">-38.2%</strong>，年内净流失 3,314.26㎡（含美杏医疗 3,855.59㎡ 大宗退租）→ 建议启动整租/酒店（亚朵、全季意向 1,000㎡）或业态转型专项方案。
+      出租率 <strong>46.6%</strong>（全集团最低，空置占比 53.4%），出租率同比 <strong class="num-red">-36.2%</strong>，收入同比 <strong class="num-red">-38.2%</strong>，年内净流失 3,314.26㎡（含美杏医疗 3,855.59㎡ 大宗退租）；且亚朵/全季酒店（约 1,000㎡ 意向）已流失（原因：无接待大堂）→ 建议调整酒店化路径，转向解橙（1,500㎡）、莎莎舞（1,208.19㎡，已看场推位 9F）、眭明昊（1,000㎡）、平安保险（700㎡，四次看场待评估）等在谈商机，并评估增设接待大堂的投入产出。
     </li>
     <li class="risk-item">
-      <div class="risk-title"><span class="risk-badge">储备枯竭</span>昆山金鹰</div>
-      可跟进储备仅 <strong>2 单/210㎡</strong>，覆盖倍数（对空置）<strong>0.02</strong>；年内新签仅 2 单/499㎡、净流失 4,615.19㎡（集团最大）、出租率同比 -15.8%；竞品裕元新天地租金 1.1-1.3 元/㎡/天较我方（1.5-2）低 20%-35% → 建议集团层面招商资源倾斜，并评估价格体系调整空间。
+      <div class="risk-title"><span class="risk-badge">净流失最大</span>昆山金鹰</div>
+      年内净流失 <strong class="num-red">3,697.19㎡（集团最大）</strong>、新签仅 4 单/986.73㎡、出租率同比 <strong class="num-red">-15.8%</strong>；储备 12 单/6,918㎡（覆盖 0.8 倍）但转化尚待落地；竞品裕元新天地租金 1.1-1.3 元/㎡/天较我方（1.5-2）低 20%-35% → 建议集团层面招商资源倾斜，并评估价格体系调整空间。
     </li>
     <li class="risk-item">
       <div class="risk-title"><span class="risk-badge">利润缺口</span>新街口金鹰中心</div>
-      全年预估利润同比 <strong class="num-red">-1,274.19 万元</strong>，占集团缺口 45.1%；本年累计掉铺 25 单/7,680㎡（集团最多），流失主因租金高（10 单）、房源不合适（7 单）→ 建议针对 8-54F 高区制定分层租金策略与房源分割优化。
+      全年预估利润同比 <strong class="num-red">-1,274.19 万元</strong>，占集团缺口 45.1%；本年累计掉铺 29 单/9,385㎡（集团最多，C 流失统计），流失主因租金高（10 单）、房源不合适（7 单）→ 建议针对 8-54F 高区制定分层租金策略与房源分割优化。
     </li>
     <li class="risk-item">
       <div class="risk-title"><span class="risk-badge">支出异动</span>芜湖滨江</div>
-      全年预估支出 <strong>118.84 万元</strong>，较上年全年 42.82 万元 <strong class="num-red">+177.5%</strong>（本期 1-10 月已发生 99.03 万元）→ 建议财务核实房产税税源变化与全年预算，确认是否为一次性因素。
+      全年预估支出 <strong>118.84 万元</strong>，较上年全年 42.82 万元 <strong class="num-red">+177.5%</strong>（本期 1-10 月已发生 99.03 万元）→ 建议财务核实房产税税源变化与全年预算，确认是否为一次性因素；储备覆盖仅 0.1 倍（7 单/2,339.21㎡）为集团最薄弱，需同步补库。
     </li>
     <li class="risk-item">
-      <div class="risk-title"><span class="risk-badge">量收背离</span>芜湖商城</div>
-      出租率 98.1%（接近满租）但收入达成率仅 <strong>52.0%</strong>（实收 323.16 万 / 目标 621.74 万），量收严重背离 → 建议核实收入目标设定口径或实收数据完整性。
+      <div class="risk-title"><span class="risk-badge">口径调整</span>芜湖商城</div>
+      可租赁口径 <strong>17,522.49㎡</strong>（与产权面积拉齐），出租率 <strong class="num-red">50.8%</strong>、空置 <strong class="num-red">8,616.54㎡</strong> 而可跟进储备为 <strong>0 单</strong>；收入达成率仍仅 <strong>56.7%</strong>（实收 352.74 万 / 目标 621.74 万）→ 建议将商城纳入招商补库范围，明确新纳入面积的招商责任人与去化计划，并复核收入目标设定。
     </li>
     <li class="risk-item">
       <div class="risk-title"><span class="risk-badge">数据链路</span>BI 填报质量</div>
-      F 储备明细流失原因未填 63 单（62.4%）、转化分析"客户名称待补"占比高、珠江壹号"医疗公司 700,800㎡"疑似录入错误、马鞍山与盐城两项目核心数据全空 → 建议建立 BI 填报完整性周检机制，纳入项目考核。
+      F 储备明细流失原因未填 68 单（60.7%）、转化分析"客户名称待补"占比高、两条大面积疑似录入错误（珠江壹号"医疗公司"700,800㎡、金鹰世界"汉都餐饮"349,341㎡）、马鞍山与盐城两项目核心数据全空、B 固定填报表基本未维护（珠江壹号"仲量估值"出现孤立值 1，疑似误填）→ 建议建立 BI 填报完整性周检机制，纳入项目考核。
     </li>
   </ul>
 </div>
@@ -993,10 +1041,12 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="action-group ag-urgent">
     <h3><span class="ag-dot"></span>10.1 30天内（紧急措施）</h3>
     <ol class="action-list">
-      <li><strong>丹阳止损专案：</strong>一周内完成亚朵/全季酒店（1,000㎡）、平安保险（700㎡）两个重点意向的决策推进（酒店方"下周回丹阳"、平安"完成四次看场待评估"），力争四季度落地 ≥1,700㎡，遏制出租率跌破 45%。</li>
-      <li><strong>昆山储备重建：</strong>30 天内将可跟进储备从 2 单/210㎡ 恢复至 ≥10 单/3,000㎡；启动全员招商+中介渠道激励（参照竞品对抗策略），针对裕元新天地低价分流制定一事一议差异化报价机制。</li>
-      <li><strong>大宗商机攻坚：</strong>建立 ≥500㎡ 重点客户（23 条）周跟进台账，优先推进世界 8,000㎡ 互联网科技（预计 2026.12.31）、珠江壹号好房港 4,300㎡（报条件阶段）、滨江太平保险 650→800㎡（二次资料已提报）、中金财富 500㎡（分公司提报流程）四单。</li>
-      <li><strong>数据质量整改：</strong>责成各项目两周内补录 F 储备明细流失原因（未填 63 单）与转化分析客户名称；BI 侧修正珠江壹号 700,800㎡ 异常记录；补报马鞍山、盐城两项目经营数据。</li>
+      <li><strong>BI 面积口径异常当日报障（本期新增）：</strong>向数据组提交面积段异常工单（可租赁单日精确翻倍至 642,612.76㎡、A 分月卡 202611 列达成率 193.9%-307.8%），核实 11 月分区数据来源与字段映射；同步推动复杂报表期间参数锚定「最近入账月」，消除月初同比/年化失真；异常恢复前，各项目对外引用出租率一律以 10-31 同口径（64.9%）为准。</li>
+      <li><strong>丹阳止损专案：</strong>亚朵/全季酒店已流失（无接待大堂），转向推进解橙（1,500㎡，10 月 26 日电话沟通）、莎莎舞（1,208.19㎡，已看场推位 9F）、眭明昊（1,000㎡，预计年底前看场）、平安保险（700㎡，完成四次看场待评估）四个在谈商机，力争四季度落地 ≥2,400㎡，遏制出租率进一步下滑；同步评估增设接待大堂的投入产出，修复酒店化招商硬伤。</li>
+      <li><strong>昆山新签提速：</strong>年内新签仅 4 单/986.73㎡、净流失 3,697.19㎡ 为集团最大；30 天内推动储备中 680㎡ 保险客户（预计 11 月确定）、两条 2,000㎡ 专业服务商机转化签约；针对裕元新天地低价分流制定一事一议差异化报价机制。</li>
+      <li><strong>大宗商机攻坚：</strong>建立 ≥500㎡ 重点客户（33 条，含 2 条面积异常待核实）周跟进台账，优先推进珠江壹号好房港 4,300㎡（报条件阶段）、世界炜衡律所 3,000㎡（合伙人团队提报方案）、世界复星联合健康保险 1,000㎡（定制装修需求沟通中）、丹阳解橙 1,500㎡、芜湖滨江友邦保险 780㎡（集团介绍，已看房推荐 34 层）五单。</li>
+      <li><strong>商城口径核实与补库：</strong>核实芜湖商城可租赁面积口径（17,522.49㎡），明确新纳入面积的招商责任人与去化计划；商城当前可跟进储备 0 单，30 天内建立储备台账。</li>
+      <li><strong>数据质量整改：</strong>责成各项目两周内补录 F 储备明细流失原因（未填 68 单）与转化分析客户名称；BI 侧修正珠江壹号 700,800㎡、金鹰世界 349,341㎡ 两条异常记录；补报马鞍山、盐城两项目经营数据；核实 B 固定填报珠江壹号"仲量估值=1"孤立值。</li>
     </ol>
   </div>
 
@@ -1004,19 +1054,19 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
     <h3><span class="ag-dot"></span>10.2 90天内（中期策略）</h3>
     <ol class="action-list">
       <li><strong>金鹰中心利润保卫：</strong>针对全年 -1,274.19 万元利润缺口，制定高区（A 座 8-54F）分层租金方案与房源分割优化，重点承接瑞安/JLC 竞品外溢的商务接待需求中型企业；将掉铺归因中的"租金高"（10 单）转化为价格弹性测试依据。</li>
-      <li><strong>世界 A 座去化：</strong>出租率同比已修复 +27.8%，但空置仍有 49,650.02㎡（含 A/B）。落实 D 表对抗策略：大堂形象升级、A 塔高区导视与扶梯开放、精装修房源推出（滨江开艺设计等客户明确"待精装修房源再考虑"），以精装溢价对冲阿里（1.7-2.1 元/㎡/天）低价竞争。</li>
+      <li><strong>世界 A 座去化：</strong>出租率同比已修复 +27.8%，但空置仍有 49,143.02㎡（含 A/B）。落实 D 表对抗策略：大堂形象升级、A 塔高区导视与扶梯开放、精装修房源推出（滨江开艺设计等客户明确"待精装修房源再考虑"），以精装溢价对冲阿里（1.7-2.1 元/㎡/天）低价竞争。</li>
       <li><strong>芜湖滨江支出管控：</strong>完成房产税异动（+177.5%）专项审计；同时以"地标江景+尚美酒店权益"差异化对抗华邑/伟星/世茂，重点承接神山智谷政策外溢的普通企业需求。</li>
-      <li><strong>续签盘巩固：</strong>本年累计续签 99 单/37,635.20㎡ 是基本盘（中心 A 续签 19 单/11,596.37㎡ 最大）。建立到期前 6 个月预警机制，将"意向不明确"类流失（13 单）前置干预。</li>
+      <li><strong>续签盘巩固：</strong>本年累计续签 105 单/34,421.00㎡ 是基本盘（中心 A 续签 19 单/6,179.37㎡ 为最大续签盘之一）。建立到期前 6 个月预警机制，将"意向不明确"类流失（13 单）前置干预。</li>
     </ol>
   </div>
 
   <div class="action-group ag-kpi">
     <h3><span class="ag-dot"></span>10.3 考核建议</h3>
     <ol class="action-list">
-      <li><strong>净吸纳转正考核：</strong>将"季度净吸纳面积"纳入各项目总 KPI（当前 -9,223.73㎡），昆山、丹阳、珠江壹号设专项扭负目标。</li>
-      <li><strong>储备覆盖倍数下限：</strong>可跟进储备覆盖倍数 ≥0.5（对空置口径）为合格线（当前集团 0.47，昆山 0.02、滨江 0.18、中心 0.21 不达标），按月通报。</li>
-      <li><strong>数据填报完整性：</strong>流失原因填写率、客户名称完整率纳入月度考核（当前流失原因未填率 62.4%），与招商条线绩效挂钩。</li>
-      <li><strong>收入达成均衡性：</strong>对出租率高但收入达成率异常偏低的项目（芜湖商城 98.1% vs 52.0%）启动目标合理性复核，避免考核失真。</li>
+      <li><strong>净吸纳转正考核：</strong>将"季度净吸纳面积"纳入各项目总 KPI（当前 -6,516.38㎡），昆山、丹阳、金鹰中心A 设专项扭负目标；较年初净增长保持正值且增幅扩大（+256.15㎡），按项目分解巩固。</li>
+      <li><strong>储备覆盖倍数下限：</strong>可跟进储备覆盖倍数（对空置口径）≥0.5 为合格线（当前集团 0.5，滨江 0.1、中心 0.4 不达标；芜湖商城空置 8,616.54㎡ 储备为 0，口径调整后纳入考核；丹阳 0.8 达标），按月通报。</li>
+      <li><strong>数据填报完整性：</strong>流失原因填写率、客户名称完整率纳入月度考核（当前流失原因未填率 60.7%），与招商条线绩效挂钩。</li>
+      <li><strong>收入达成均衡性：</strong>对出租达成率高但收入达成率异常偏低的项目（芜湖商城出租达成 98.1% vs 收入达成 56.7%）启动目标合理性复核，避免考核失真。</li>
     </ol>
   </div>
 </div>
@@ -1029,12 +1079,13 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="table-wrap"><table>
     <thead><tr><th style="width:150px">口径项</th><th>说明</th></tr></thead>
     <tbody>
-      <tr><td>报告期间</td><td>2026年1-10月（累计）；报告截止日 2026-10-18（期间开始 2026-01-01）</td></tr>
-      <tr><td>数据来源</td><td>观远 BI（GuanData v7.3.0）自动化取数，取数时间 2026-10-19 07:19:13-07:19:34，14 个 sheet 全部成功、无警告、无分区回退</td></tr>
-      <tr><td>数据来源优先级</td><td>B权责1-10月累计分析 &gt; B收入支出明细/B出租面积明细 &gt; A基础信息(出租+收入) &gt; C合同情况(本年累计)/C流失统计 &gt; F储备转化分析/F储备明细 &gt; D办公业态竞品</td></tr>
-      <tr><td>C/F 表期间</td><td>本年累计（本期开始=2026-01-01，本期结束=2026-10-18），报告表述为"本年累计"</td></tr>
+      <tr><td>报告期间</td><td>2026年1-11月（B 权责期间标签）；报告截止日 2026-11-01（期间开始 2026-01-01）。11 月财务/租费尚未入账，收入利润累计实际为 1-10 月口径</td></tr>
+      <tr><td>数据来源</td><td>观远 BI（GuanData v7.3.0）自动化取数，取数时间 2026-11-02 08:31:58-08:32:41，13 张卡片全部成功、无警告、无分区回退</td></tr>
+      <tr><td>数据来源优先级</td><td>B权责1-11月累计分析 &gt; B收入支出明细/B出租面积明细 &gt; A基础信息(出租+收入) &gt; C合同情况(本年累计)/C流失统计 &gt; F储备转化分析/F储备明细 &gt; D办公业态竞品</td></tr>
+      <tr><td>C/F 表期间</td><td>本年累计（本期开始=2026-01-01，本期结束=2026-11-01），报告表述为"本年累计"</td></tr>
       <tr><td>单位规范</td><td>金额：万元 | 面积：㎡ | 租金：元/㎡/天 | 百分比保留1位小数</td></tr>
-      <tr><td>面积时点</td><td>B 权责 R5 已出租面积标签为"8.31"填报时点口径，与报告截止日存在时差，出租率、空置、覆盖倍数均基于该口径计算</td></tr>
+      <tr><td>面积口径（本期特殊）</td><td>本期 BI 面积段口径异常（异常 1），报告全部面积类指标采用 2026-10-31 已验证同口径（B 权责 R5 已出租面积原为"8.31"填报时点口径）</td></tr>
+      <tr><td>财务同比/预估口径（本期特殊）</td><td>同口径还原（同比基数 = 2025 年 1-10 月，取自 10-31 取数文件；年化除数 = 10），BI 原始口径（1-11 月窗口、÷11 年化）在第八章 8.2 并列对照</td></tr>
     </tbody>
   </table></div>
 
@@ -1042,23 +1093,25 @@ tbody tr:hover { background: rgba(227,202,143,.15); }
   <div class="table-wrap"><table>
     <thead><tr><th style="width:30px">序号</th><th style="width:110px">异常类型</th><th style="width:130px">涉及项目</th><th>异常描述</th><th>可能影响</th><th style="width:110px">建议</th></tr></thead>
     <tbody>
-      <tr><td>1</td><td><span class="tag tag-warn">项目无数据</span></td><td>马鞍山、盐城</td><td>B 权责表可租赁面积、已出租、财务数据全空（仅产权面积 14,089.83㎡ / 49,991.57㎡ 有值）</td><td>无法评估经营，合计不含两项目</td><td>尽快在 BI 填报卡补充数据</td></tr>
-      <tr><td>2</td><td><span class="tag tag-danger">储备面积异常</span></td><td>珠江壹号</td><td>"医疗公司"面积需求 700,800㎡，疑似 700/800 误录</td><td>含异常口径储备虚增至 749,839.1㎡</td><td>BI 侧修正；本报告采用剔除异常口径（49,039.1㎡）</td></tr>
-      <tr><td>3</td><td><span class="tag tag-warn">达成率&gt;100%</span></td><td>珠江壹号</td><td>出租达成率 110.6%（已出租 36,258.54㎡ &gt; 累计目标 32,790㎡）</td><td>达成率失去预警意义</td><td>复核目标设定是否偏保守</td></tr>
-      <tr><td>4</td><td><span class="tag tag-danger">量收背离</span></td><td>芜湖商城</td><td>出租率 98.1% 但收入达成率仅 52.0%（实收 323.16/目标 621.74 万）</td><td>收入目标或实收口径存疑</td><td>财务核实目标设定与实收完整性</td></tr>
-      <tr><td>5</td><td><span class="tag tag-warn">支出异动</span></td><td>芜湖滨江</td><td>全年预估支出 118.84 万 vs 上年全年 42.82 万（+177.5%）</td><td>利润预估可靠性</td><td>核实房产税税源与预算口径</td></tr>
-      <tr><td>6</td><td><span class="tag tag-warn">BI 字段缺失</span></td><td>全部项目</td><td>无新增/存量租户租金面价净价拆分；F 储备明细无面积列</td><td>存量 vs 新增租金对比不适用；已转化/已流失仅客户数口径</td><td>按降级方案输出，不拼凑估算</td></tr>
-      <tr><td>7</td><td><span class="tag tag-warn">填报缺失</span></td><td>全部项目</td><td>F 储备明细流失原因未填 63 单（62.4%）；转化分析客户名称多为"客户名称待补"</td><td>流失归因失真、重点客户无法具名跟进</td><td>建立填报完整性周检，纳入考核</td></tr>
-      <tr><td>8</td><td><span class="tag tag-info">两表口径差异</span></td><td>金鹰世界</td><td>F 储备转化分析可跟进 23 单 vs F 储备明细可跟进 27 单（差 4 单）</td><td>漏斗客户数与面积口径不完全对应</td><td>本报告面积用转化分析、客户数用明细，如实标注</td></tr>
-      <tr><td>9</td><td><span class="tag tag-info">竞品口径差异</span></td><td>金鹰世界、丹阳等</td><td>D 表出租率为静态填报（A 座 45.85%、丹阳 44%），与 B 权责实测口径（58.17%、46.6%）存在时点/范围差异</td><td>竞争定位对比仅作参考</td><td>第六章仅用于定性定位，不用于经营指标</td></tr>
-      <tr><td>10</td><td><span class="tag tag-warn">低基数目标</span></td><td>丹阳金鹰天地</td><td>出租达成率 99.3% 但实际出租率仅 46.6%（累计目标 6,116.42㎡ 设定偏低）</td><td>达成率不反映真实经营水平</td><td>复核年度目标合理性</td></tr>
+      <tr><td>1</td><td><span class="tag tag-danger">面积口径单日翻倍（本期新增）</span></td><td>全部 8 个在营项目</td><td>可租赁面积合计 321,306.38 → 642,612.76㎡（各项目恰好 2 倍）；已出租 529,471.81㎡ ≈ 上期已出租+上期可租赁；出租率 64.9% → 82.4%；净增长 +256.15 → +321,126.15㎡；A 分月卡 202611 列同步翻倍（出租达成率 193.9%-307.8%）；租金行同步失真（在营均价 1.91 → 0.69、平均租金 1.24 → 0.56）</td><td>出租率/空置/净增长/达成率/租金/覆盖倍数全系面积指标失真</td><td>当日反馈数据组核查 11 月分区；报告面积指标采用 10-31 同口径过渡</td></tr>
+      <tr><td>2</td><td><span class="tag tag-danger">月初口径切换失真（本期新增）</span></td><td>全部项目（财务）</td><td>同比窗口由 2025年1-10月（13,279.19 万）扩至 1-11月（14,966.72 万）、年化除数 10 → 11；BI 口径收入同比 -19.1%（同口径 -8.8%）、利润同比 -2,583.41 万（同口径 -1,067.44 万）、全年利润缺口 -3,993.38 万（同口径 -2,822.65 万）；11 月财务尚未入账</td><td>同比与全年预估在月初取数时系统性失真</td><td>BI 期间参数锚定「最近入账月」；报告采用同口径还原，11 月财务入账后自动恢复</td></tr>
+      <tr><td>3</td><td><span class="tag tag-warn">项目无数据</span></td><td>马鞍山、盐城</td><td>B 权责表可租赁面积、已出租、财务数据全空（仅产权面积 14,089.83㎡ / 49,991.57㎡ 有值）</td><td>无法评估经营，合计不含两项目</td><td>尽快在 BI 填报卡补充数据</td></tr>
+      <tr><td>4</td><td><span class="tag tag-danger">储备面积异常</span></td><td>珠江壹号、金鹰世界</td><td>"医疗公司"700,800㎡（珠江）、"汉都餐饮"349,341㎡（世界，备注现用 100 多平扩容），均疑似录入错误</td><td>含异常口径储备虚增至 1,102,392.77㎡</td><td>BI 侧修正；本报告采用剔除异常口径（52,251.77㎡）</td></tr>
+      <tr><td>5</td><td><span class="tag tag-warn">达成率&gt;100%</span></td><td>珠江壹号</td><td>珠江出租达成率 112.3%（已出租 36,813.54㎡ &gt; 累计目标 32,790㎡）、收入达成率 100.2%；昆山收入达成率 101.5%（实收 1,503.94 万 / 目标 1,482.25 万）（均同口径）</td><td>达成率失去预警意义</td><td>复核目标设定是否偏保守</td></tr>
+      <tr><td>6</td><td><span class="tag tag-danger">面积口径调整</span></td><td>芜湖商城</td><td>可租赁面积 17,522.49㎡（10 月下旬起与产权面积拉齐），出租率 50.8%；A 表出租达成率 98.1%（目标 9,075.95㎡）与收入达成率 56.7%（实收 352.74/目标 621.74 万）背离</td><td>商城空置 8,616.54㎡ 无储备覆盖</td><td>核实面积口径调整依据；商城纳入招商补库；财务核实收入目标设定</td></tr>
+      <tr><td>7</td><td><span class="tag tag-warn">支出异动</span></td><td>芜湖滨江</td><td>全年预估支出 118.84 万 vs 上年全年 42.82 万（+177.5%）</td><td>利润预估可靠性</td><td>核实房产税税源与预算口径</td></tr>
+      <tr><td>8</td><td><span class="tag tag-warn">BI 字段缺失</span></td><td>全部项目</td><td>无新增/存量租户租金面价净价拆分；F 储备明细无面积列</td><td>存量 vs 新增租金对比不适用；已转化/已流失仅客户数口径</td><td>按降级方案输出，不拼凑估算</td></tr>
+      <tr><td>9</td><td><span class="tag tag-warn">填报缺失</span></td><td>全部项目</td><td>F 储备明细流失原因未填 68 单（60.7%）；转化分析客户名称多为"客户名称待补"</td><td>流失归因失真、重点客户无法具名跟进</td><td>建立填报完整性周检，纳入考核</td></tr>
+      <tr><td>10</td><td><span class="tag tag-info">两表口径差异</span></td><td>金鹰世界</td><td>F 储备转化分析可跟进 86 条 vs F 储备明细可跟进 102 单（如金鹰世界 25 条 vs 34 单）</td><td>漏斗客户数与面积口径不完全对应</td><td>本报告面积用转化分析、客户数用明细，如实标注</td></tr>
+      <tr><td>11</td><td><span class="tag tag-info">竞品口径差异</span></td><td>金鹰世界、丹阳等</td><td>D 表出租率为静态填报（A 座 45.85%、丹阳 44%），与 B 权责实测口径（58.6%、46.6%）存在时点/范围差异</td><td>竞争定位对比仅作参考</td><td>第六章仅用于定性定位，不用于经营指标</td></tr>
+      <tr><td>12</td><td><span class="tag tag-warn">低基数目标</span></td><td>丹阳金鹰天地</td><td>出租达成率 99.3% 但实际出租率仅 46.6%（累计目标 6,116.42㎡ 设定偏低）</td><td>达成率不反映真实经营水平</td><td>复核年度目标合理性</td></tr>
     </tbody>
   </table></div>
 </div>
 
 <!-- ========== Footer ========== -->
 <div class="page-footer">
-  写字楼租赁业务经营分析报告 · 2026年1-10月（累计） · 报告截止日 2026-10-18 · 观远 BI 自动化取数（2026-10-19 07:19） · 内部资料，请勿外传
+  写字楼租赁业务经营分析报告 · 2026年1-11月（累计） · 报告截止日 2026-11-01 · 观远 BI 自动化取数（2026-11-02 08:32） · 内部资料，请勿外传
 </div>
 
 </div><!-- /page-wrap -->
@@ -1185,7 +1238,7 @@ new Chart(document.getElementById('c1'), {
 
 // C2: Occupancy by project
 var occLabels = ['金鹰世界', '新街口', '芜湖滨江', '珠江壹号', '昆山', '丹阳', '芜湖商城'];
-var occData = [58.2, 71.2, 60.1, 91.2, 67.0, 46.6, 98.1];
+var occData = [58.6, 70.4, 60.2, 92.6, 67.0, 46.6, 50.8];
 var occColors = occData.map(function(v){ return v >= 80 ? GREEN : v >= 60 ? GOLD : v >= 40 ? '#d4a017' : RED; });
 new Chart(document.getElementById('c2'), {
   type: 'bar',
@@ -1211,8 +1264,8 @@ new Chart(document.getElementById('c3'), {
   data: {
     labels: vacLabels,
     datasets: [
-      { label: '已出租面积', data: [69040.63, 40151.15, 28961.08, 36258.54, 18593.71, 6070.41, 8905.95], backgroundColor: GOLD_DEEP, borderRadius: 0, maxBarThickness: 32 },
-      { label: '空置面积', data: [49650.02, 16215.82, 19255.38, 3489.53, 9163.78, 6955.27, 173.75], backgroundColor: GOLD_LIGHT, borderRadius: 0, maxBarThickness: 32 }
+      { label: '已出租面积', data: [69547.63, 39679.73, 28990.84, 36813.54, 18593.71, 6070.41, 8905.95], backgroundColor: GOLD_DEEP, borderRadius: 0, maxBarThickness: 32 },
+      { label: '空置面积', data: [49143.02, 16687.24, 19204.19, 2934.53, 9163.78, 6955.27, 8616.54], backgroundColor: GOLD_LIGHT, borderRadius: 0, maxBarThickness: 32 }
     ]
   },
   options: Object.assign({}, chartDefaults, {
@@ -1249,9 +1302,9 @@ new Chart(document.getElementById('c4'), {
   data: {
     labels: ['金鹰世界(A+B)', '金鹰中心', '芜湖滨江', '珠江壹号', '昆山', '芜湖商城', '丹阳'],
     datasets: [
-      { label: '新签', data: [6498.67, 1559.71, 8392.61, 1784.00, 499.00, 1866.52, 1691.66], backgroundColor: GOLD_DEEP, borderRadius: 3, maxBarThickness: 18 },
-      { label: '续签', data: [6462.59, 11596.37, 5417.63, 3568.00, 5588.57, 2043.53, 2958.51], backgroundColor: GOLD, borderRadius: 3, maxBarThickness: 18 },
-      { label: '掉铺', data: [4950.32, 2720.46, 8648.13, 4022.00, 5114.19, 1054.88, 5005.92], backgroundColor: RED, borderRadius: 3, maxBarThickness: 18 }
+      { label: '新签', data: [5198.07, 2323.89, 7837.58, 4512.93, 986.73, 1866.52, 1691.66], backgroundColor: GOLD_DEEP, borderRadius: 3, maxBarThickness: 18 },
+      { label: '续签', data: [7948.80, 6179.37, 5816.22, 3568.00, 5906.57, 2043.53, 2958.51], backgroundColor: GOLD, borderRadius: 3, maxBarThickness: 18 },
+      { label: '掉铺', data: [3427.32, 2994.53, 8781.19, 4986.00, 4683.92, 1054.88, 5005.92], backgroundColor: RED, borderRadius: 3, maxBarThickness: 18 }
     ]
   },
   options: Object.assign({}, chartDefaults, {
@@ -1270,8 +1323,8 @@ new Chart(document.getElementById('c5'), {
   data: {
     labels: rentLabels,
     datasets: [
-      { label: '在营均价', data: [1.99, 2.05, 0.94, 2.84, 1.83, 0.87, 1.00], backgroundColor: GOLD_DEEP, borderRadius: 3, maxBarThickness: 18 },
-      { label: '平均租金', data: [1.16, 1.46, 0.57, 2.59, 1.22, 0.40, 0.98], backgroundColor: GOLD_LIGHT, borderRadius: 3, maxBarThickness: 18 }
+      { label: '在营均价', data: [1.98, 2.08, 0.94, 2.80, 1.83, 0.87, 1.00], backgroundColor: GOLD_DEEP, borderRadius: 3, maxBarThickness: 18 },
+      { label: '平均租金', data: [1.16, 1.46, 0.57, 2.59, 1.22, 0.40, 0.51], backgroundColor: GOLD_LIGHT, borderRadius: 3, maxBarThickness: 18 }
     ]
   },
   options: Object.assign({}, chartDefaults, {
@@ -1333,6 +1386,345 @@ new Chart(document.getElementById('c7'), {
   })
 });
 </script>
+
+<!-- ==================== 问数助手组件（写字楼租赁业务经营分析报告专用） ====================
+用法：整段注入报告 HTML 的 </body> 之前；将 {"meta": {"cutoff": "2026-11-01", "period": "2026年1-11月", "source": "观远BI", "report": "写字楼租赁业务经营分析（2026年11月）"}, "overall": {"occ": 64.9, "leased": 208601.81, "rentable": 321306.38, "vacant": 112704.57, "netAbsorb": -6516.38, "newSign": 24417.38, "newSignN": 90, "renew": 34421.0, "renewN": 105, "lost": 30933.76, "lostN": 91, "income": 12113.41, "profit": 10731.7, "profitYoY": -1067.44, "incomeLY": 13279.19, "profitLY": 11799.14, "estIncome": 14536.09, "estProfit": 12878.05, "incomeGapYear": -3100.0, "profitGapYear": -2822.65, "lastYearIncome": 17636.08, "lastYearProfit": 15700.69, "rentAvg": 1.91, "rentNet": 1.24}, "monthlyGroup": [{"m": 1, "rate": 66.7, "leased": 214222.21}, {"m": 2, "rate": 65.0, "leased": 208843.56}, {"m": 3, "rate": 65.0, "leased": 208886.18}, {"m": 4, "rate": 65.1, "leased": 209289.85}, {"m": 5, "rate": 65.3, "leased": 209889.47}, {"m": 6, "rate": 66.1, "leased": 212313.32}, {"m": 7, "rate": 65.7, "leased": 211046.82}, {"m": 8, "rate": 65.8, "leased": 211484.47}, {"m": 9, "rate": 65.0, "leased": 208968.91}, {"m": 10, "rate": 64.9, "leased": 208601.81}], "projects": [{"name": "金鹰世界(A+B)", "aka": ["金鹰世界", "世界"], "occ": 58.6, "rentable": 118690.65, "leased": 69547.63, "vacant": 49143.02, "income": 4179.7, "profit": 3736.09, "profitYoY": 362.42, "estProfit": 4483.3, "estProfitYoY": -530.28, "rentAvg": 1.98, "rentNet": 1.16, "newSign": 5198.07, "renew": 7948.8, "lost": 3427.32, "netAbsorb": 1770.75, "followN": 34, "follow": 25292.0, "cover": 0.5, "sep9": 58.2, "sep9a": "A座 44.9% / B座 90.1%", "occYoY": "A +27.8% / B +23.9%", "note": "空置 49,143㎡ 全集团最大，出租率同比大幅修复（10-31 同口径）"}, {"name": "新街口金鹰中心", "aka": ["新街口", "金鹰中心", "中心"], "occ": 70.4, "rentable": 56366.97, "leased": 39679.73, "vacant": 16687.24, "income": 2507.77, "profit": 2218.27, "profitYoY": -592.7, "estProfit": 2661.92, "estProfitYoY": -1274.19, "rentAvg": 2.08, "rentNet": 1.46, "newSign": 2323.89, "renew": 6179.37, "lost": 2994.53, "netAbsorb": -670.64, "followN": 17, "follow": 6401.0, "cover": 0.4, "sep9": 70.7, "sep9a": "", "occYoY": "-1.7%", "note": "全年利润最大拖累（同口径 -1,274.19 万），掉铺 29 单/9,385㎡ 全集团最多"}, {"name": "芜湖滨江金鹰世界", "aka": ["芜湖滨江", "滨江"], "occ": 60.2, "rentable": 48195.03, "leased": 28990.84, "vacant": 19204.19, "income": 829.19, "profit": 730.16, "profitYoY": -84.29, "estProfit": 876.19, "estProfitYoY": -170.96, "rentAvg": 0.94, "rentNet": 0.57, "newSign": 7837.58, "renew": 5816.22, "lost": 8781.19, "netAbsorb": -943.61, "followN": 12, "follow": 2339.21, "cover": 0.1, "sep9": 61.5, "sep9a": "", "occYoY": "-0.4%", "note": "储备最薄弱（覆盖 0.1 倍）；全年预估支出同比 +177.5% 待核实（同口径年化）"}, {"name": "南京金鹰珠江壹号", "aka": ["珠江壹号", "珠江"], "occ": 92.6, "rentable": 39748.07, "leased": 36813.54, "vacant": 2934.53, "income": 3134.93, "profit": 2758.73, "profitYoY": -442.07, "estProfit": 3310.48, "estProfitYoY": -521.45, "rentAvg": 2.8, "rentNet": 2.59, "newSign": 4512.93, "renew": 3568.0, "lost": 4986.0, "netAbsorb": -473.07, "followN": 9, "follow": 5665.0, "cover": 1.9, "sep9": 92.0, "sep9a": "", "occYoY": "+0.7%", "note": "量价双优（集团标杆），出租达成率 112.3%、收入达成率 100.2% 破百（同口径）"}, {"name": "昆山金鹰项目", "aka": ["昆山", "昆山金鹰"], "occ": 67.0, "rentable": 27757.49, "leased": 18593.71, "vacant": 9163.78, "income": 1032.59, "profit": 910.73, "profitYoY": -168.74, "estProfit": 1092.88, "estProfitYoY": -154.38, "rentAvg": 1.83, "rentNet": 1.22, "newSign": 986.73, "renew": 5906.57, "lost": 4683.92, "netAbsorb": -3697.19, "followN": 12, "follow": 6918.0, "cover": 0.8, "sep9": 67.0, "sep9a": "", "occYoY": "-15.8%", "note": "净流失集团最大，竞品低价分流明显；收入达成率 101.5% 破百（同口径）"}, {"name": "丹阳金鹰天地广场", "aka": ["丹阳", "丹阳金鹰天地"], "occ": 46.6, "rentable": 13025.68, "leased": 6070.41, "vacant": 6955.27, "income": 159.65, "profit": 140.49, "profitYoY": -86.84, "estProfit": 168.59, "estProfitYoY": -108.01, "rentAvg": 0.87, "rentNet": 0.4, "newSign": 1691.66, "renew": 2958.51, "lost": 5005.92, "netAbsorb": -3314.26, "followN": 17, "follow": 5636.56, "cover": 0.8, "sep9": 48.6, "sep9a": "", "occYoY": "-36.2%", "note": "出租率全集团最低；亚朵/全季酒店意向已流失（无接待大堂）"}, {"name": "芜湖商城/芜湖商业项目", "aka": ["芜湖商城", "商城"], "occ": 50.8, "rentable": 17522.49, "leased": 8905.95, "vacant": 8616.54, "income": 269.59, "profit": 237.24, "profitYoY": -55.23, "estProfit": 284.68, "estProfitYoY": -63.38, "rentAvg": 1.0, "rentNet": 0.51, "newSign": 1866.52, "renew": 2043.53, "lost": 1054.88, "netAbsorb": 811.64, "followN": 0, "follow": 0, "cover": 0, "sep9": 50.8, "sep9a": "", "occYoY": "+8.7%", "note": "可租赁口径 17,522.49㎡（与产权面积拉齐），出租率 50.8%；空置 8,616.54㎡ 储备为 0"}, {"name": "马鞍山金鹰", "aka": ["马鞍山"], "missing": true, "note": "B 权责表核心数据未填报"}, {"name": "盐城金鹰天地广场(聚龙湖)", "aka": ["盐城", "聚龙湖"], "missing": true, "note": "B 权责表核心数据未填报"}]} 替换为当期数据快照 JSON。
+快照字段口径（全部与报告同源，单位：面积㎡、金额万元、租金元/㎡/天）：
+  meta.cutoff 数据截止日 / meta.period 报告期间
+  overall: occ整体出租率(%) leased已出租 rentable可租赁 vacant空置 netAbsorb净吸纳
+           newSign/renew/lost(面积)+newSignN/renewN/lostN(单数)
+           income/profit本期收入利润 profitYoY利润同比 incomeLY/profitLY上年同期
+           estIncome/estProfit全年预估 incomeGapYear/profitGapYear全年缺口
+           lastYearIncome/lastYearProfit上年全年 rentAvg在营均价 rentNet平均租金
+  monthlyGroup: [{m:月份, rate:集团月末出租率, leased:月末已出租面积}]  （A出租率分月卡口径）
+  projects[]: name/aka别名数组/occ/rentable/leased/vacant/income/profit/profitYoY/
+              estProfit/estProfitYoY/rentAvg/rentNet/newSign/renew/lost/netAbsorb/
+              followN可跟进客户数/follow可跟进面积/cover覆盖倍数/sep9九月末出租率/
+              sep9a九月末补充说明/occYoY出租率同比/note项目备注/missing数据缺失标记
+引擎：纯前端规则引擎（无后端、无外网依赖），支持 项目×指标×月份 组合查询、排名、对比、归因问答。
+正式部署时可把 answer() 上层替换为集团 LLM 网关调用，REPORT_DATA 作为 system context 传入即可。
+====================================================================================== -->
+<style>
+.chat-launcher{position:fixed;right:22px;bottom:22px;z-index:300;width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#c9a227,#77591f);color:#fffdf8;font-size:13px;font-weight:700;box-shadow:0 6px 18px rgba(119,89,31,.38);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;transition:transform .2s;font-family:inherit}
+.chat-launcher:hover{transform:scale(1.07)}
+.chat-launcher .ico{font-size:19px;line-height:1}
+.chat-panel{position:fixed;right:22px;bottom:92px;z-index:300;width:404px;max-width:92vw;height:560px;max-height:72vh;background:#fffdf8;border:1px solid #e3d5b8;border-radius:14px;box-shadow:0 14px 44px rgba(41,37,31,.24);display:none;flex-direction:column;overflow:hidden;font-family:inherit}
+.chat-panel.open{display:flex}
+.chat-head{background:linear-gradient(135deg,#f7f0e1,#eee1c2);border-bottom:1px solid #e3d5b8;padding:12px 14px;position:relative}
+.chat-title{font-size:15px;font-weight:700;color:#77591f}
+.chat-sub{font-size:11px;color:#8a7a5c;margin-top:2px}
+.chat-close{position:absolute;right:8px;top:8px;border:none;background:none;font-size:20px;color:#8a7a5c;cursor:pointer;line-height:1;padding:4px 8px}
+.chat-close:hover{color:#77591f}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg,#fffdf8,#faf5ea)}
+.chat-msg{max-width:88%;padding:9px 12px;border-radius:10px;font-size:12.5px;line-height:1.72;white-space:normal;word-break:break-word}
+.chat-msg.bot{background:#fff;border:1px solid #e9dec6;border-top-left-radius:2px;align-self:flex-start;color:#29251f}
+.chat-msg.user{background:linear-gradient(135deg,#c9a227,#ad8833);color:#fffdf8;border-bottom-right-radius:2px;align-self:flex-end}
+.chat-msg .src{display:block;margin-top:6px;font-size:10.5px;color:#a08c62;border-top:1px dashed #e3d5b8;padding-top:4px;line-height:1.5}
+.chat-msg a{color:#77591f;font-weight:600}
+.chat-msg b{color:#77591f}
+.chat-msg.user b{color:#fffdf8}
+.chat-chips{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px;border-top:1px solid #efe6d2;background:#fbf7ee}
+.chat-chip{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid #d9c9a4;background:#fff;color:#77591f;cursor:pointer;font-family:inherit}
+.chat-chip:hover{background:#f3e9d2}
+.chat-input{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #e3d5b8;background:#fffdf8}
+.chat-input input{flex:1;border:1px solid #d9c9a6;border-radius:8px;padding:8px 10px;font-size:12.5px;background:#fff;color:#29251f;font-family:inherit;outline:none}
+.chat-input input:focus{border-color:#ad8833}
+.chat-input button{border:none;border-radius:8px;background:#ad8833;color:#fffdf8;padding:0 16px;font-size:12.5px;cursor:pointer;font-family:inherit}
+.chat-input button:hover{background:#77591f}
+@media print{.chat-launcher,.chat-panel{display:none!important}}
+</style>
+
+<button class="chat-launcher" id="chatLauncher" title="问数助手"><span class="ico">📊</span>问数</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-title">问数助手</div>
+    <div class="chat-sub" id="chatSub">数据截止 — · 与报告同源</div>
+    <button class="chat-close" id="chatClose" title="关闭">×</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs"></div>
+  <div class="chat-chips" id="chatChips"></div>
+  <div class="chat-input">
+    <input id="chatInput" type="text" placeholder="如：2026年9月30号的租赁率" autocomplete="off">
+    <button id="chatSend">发送</button>
+  </div>
+</div>
+
+<script>
+window.REPORT_DATA = {"meta": {"cutoff": "2026-11-01", "period": "2026年1-11月", "source": "观远BI", "report": "写字楼租赁业务经营分析（2026年11月）"}, "overall": {"occ": 64.9, "leased": 208601.81, "rentable": 321306.38, "vacant": 112704.57, "netAbsorb": -6516.38, "newSign": 24417.38, "newSignN": 90, "renew": 34421.0, "renewN": 105, "lost": 30933.76, "lostN": 91, "income": 12113.41, "profit": 10731.7, "profitYoY": -1067.44, "incomeLY": 13279.19, "profitLY": 11799.14, "estIncome": 14536.09, "estProfit": 12878.05, "incomeGapYear": -3100.0, "profitGapYear": -2822.65, "lastYearIncome": 17636.08, "lastYearProfit": 15700.69, "rentAvg": 1.91, "rentNet": 1.24}, "monthlyGroup": [{"m": 1, "rate": 66.7, "leased": 214222.21}, {"m": 2, "rate": 65.0, "leased": 208843.56}, {"m": 3, "rate": 65.0, "leased": 208886.18}, {"m": 4, "rate": 65.1, "leased": 209289.85}, {"m": 5, "rate": 65.3, "leased": 209889.47}, {"m": 6, "rate": 66.1, "leased": 212313.32}, {"m": 7, "rate": 65.7, "leased": 211046.82}, {"m": 8, "rate": 65.8, "leased": 211484.47}, {"m": 9, "rate": 65.0, "leased": 208968.91}, {"m": 10, "rate": 64.9, "leased": 208601.81}], "projects": [{"name": "金鹰世界(A+B)", "aka": ["金鹰世界", "世界"], "occ": 58.6, "rentable": 118690.65, "leased": 69547.63, "vacant": 49143.02, "income": 4179.7, "profit": 3736.09, "profitYoY": 362.42, "estProfit": 4483.3, "estProfitYoY": -530.28, "rentAvg": 1.98, "rentNet": 1.16, "newSign": 5198.07, "renew": 7948.8, "lost": 3427.32, "netAbsorb": 1770.75, "followN": 34, "follow": 25292.0, "cover": 0.5, "sep9": 58.2, "sep9a": "A座 44.9% / B座 90.1%", "occYoY": "A +27.8% / B +23.9%", "note": "空置 49,143㎡ 全集团最大，出租率同比大幅修复（10-31 同口径）"}, {"name": "新街口金鹰中心", "aka": ["新街口", "金鹰中心", "中心"], "occ": 70.4, "rentable": 56366.97, "leased": 39679.73, "vacant": 16687.24, "income": 2507.77, "profit": 2218.27, "profitYoY": -592.7, "estProfit": 2661.92, "estProfitYoY": -1274.19, "rentAvg": 2.08, "rentNet": 1.46, "newSign": 2323.89, "renew": 6179.37, "lost": 2994.53, "netAbsorb": -670.64, "followN": 17, "follow": 6401.0, "cover": 0.4, "sep9": 70.7, "sep9a": "", "occYoY": "-1.7%", "note": "全年利润最大拖累（同口径 -1,274.19 万），掉铺 29 单/9,385㎡ 全集团最多"}, {"name": "芜湖滨江金鹰世界", "aka": ["芜湖滨江", "滨江"], "occ": 60.2, "rentable": 48195.03, "leased": 28990.84, "vacant": 19204.19, "income": 829.19, "profit": 730.16, "profitYoY": -84.29, "estProfit": 876.19, "estProfitYoY": -170.96, "rentAvg": 0.94, "rentNet": 0.57, "newSign": 7837.58, "renew": 5816.22, "lost": 8781.19, "netAbsorb": -943.61, "followN": 12, "follow": 2339.21, "cover": 0.1, "sep9": 61.5, "sep9a": "", "occYoY": "-0.4%", "note": "储备最薄弱（覆盖 0.1 倍）；全年预估支出同比 +177.5% 待核实（同口径年化）"}, {"name": "南京金鹰珠江壹号", "aka": ["珠江壹号", "珠江"], "occ": 92.6, "rentable": 39748.07, "leased": 36813.54, "vacant": 2934.53, "income": 3134.93, "profit": 2758.73, "profitYoY": -442.07, "estProfit": 3310.48, "estProfitYoY": -521.45, "rentAvg": 2.8, "rentNet": 2.59, "newSign": 4512.93, "renew": 3568.0, "lost": 4986.0, "netAbsorb": -473.07, "followN": 9, "follow": 5665.0, "cover": 1.9, "sep9": 92.0, "sep9a": "", "occYoY": "+0.7%", "note": "量价双优（集团标杆），出租达成率 112.3%、收入达成率 100.2% 破百（同口径）"}, {"name": "昆山金鹰项目", "aka": ["昆山", "昆山金鹰"], "occ": 67.0, "rentable": 27757.49, "leased": 18593.71, "vacant": 9163.78, "income": 1032.59, "profit": 910.73, "profitYoY": -168.74, "estProfit": 1092.88, "estProfitYoY": -154.38, "rentAvg": 1.83, "rentNet": 1.22, "newSign": 986.73, "renew": 5906.57, "lost": 4683.92, "netAbsorb": -3697.19, "followN": 12, "follow": 6918.0, "cover": 0.8, "sep9": 67.0, "sep9a": "", "occYoY": "-15.8%", "note": "净流失集团最大，竞品低价分流明显；收入达成率 101.5% 破百（同口径）"}, {"name": "丹阳金鹰天地广场", "aka": ["丹阳", "丹阳金鹰天地"], "occ": 46.6, "rentable": 13025.68, "leased": 6070.41, "vacant": 6955.27, "income": 159.65, "profit": 140.49, "profitYoY": -86.84, "estProfit": 168.59, "estProfitYoY": -108.01, "rentAvg": 0.87, "rentNet": 0.4, "newSign": 1691.66, "renew": 2958.51, "lost": 5005.92, "netAbsorb": -3314.26, "followN": 17, "follow": 5636.56, "cover": 0.8, "sep9": 48.6, "sep9a": "", "occYoY": "-36.2%", "note": "出租率全集团最低；亚朵/全季酒店意向已流失（无接待大堂）"}, {"name": "芜湖商城/芜湖商业项目", "aka": ["芜湖商城", "商城"], "occ": 50.8, "rentable": 17522.49, "leased": 8905.95, "vacant": 8616.54, "income": 269.59, "profit": 237.24, "profitYoY": -55.23, "estProfit": 284.68, "estProfitYoY": -63.38, "rentAvg": 1.0, "rentNet": 0.51, "newSign": 1866.52, "renew": 2043.53, "lost": 1054.88, "netAbsorb": 811.64, "followN": 0, "follow": 0, "cover": 0, "sep9": 50.8, "sep9a": "", "occYoY": "+8.7%", "note": "可租赁口径 17,522.49㎡（与产权面积拉齐），出租率 50.8%；空置 8,616.54㎡ 储备为 0"}, {"name": "马鞍山金鹰", "aka": ["马鞍山"], "missing": true, "note": "B 权责表核心数据未填报"}, {"name": "盐城金鹰天地广场(聚龙湖)", "aka": ["盐城", "聚龙湖"], "missing": true, "note": "B 权责表核心数据未填报"}]};
+
+(function () {
+  var D = window.REPORT_DATA;
+  var CN = {'一':1,'二':2,'两':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9,'十':10};
+  var panel = document.getElementById('chatPanel');
+  var launcher = document.getElementById('chatLauncher');
+  var msgs = document.getElementById('chatMsgs');
+  var input = document.getElementById('chatInput');
+  var CHIPS = ['整体出租率', '9月30号的租赁率', '空置最多的项目', '全年利润缺口', '昆山为什么掉铺', '租金最高的项目', '出租率排名', '本年净吸纳'];
+
+  function fmt(n, d) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('zh-CN', { maximumFractionDigits: d == null ? 1 : d }); }
+  function fmtInt(n) { return fmt(n, 0); }
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function src(t) { return '<span class="src">口径：' + t + '</span>'; }
+  function link(sec, label) { return ' <a href="#' + sec + '" onclick="document.getElementById(\'chatPanel\').classList.remove(\'open\')">' + label + ' →</a>'; }
+
+  function addMsg(html, who) {
+    var d = document.createElement('div');
+    d.className = 'chat-msg ' + who;
+    d.innerHTML = html;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  /* ---------- 语义解析 ---------- */
+  function detectProjects(q) {
+    var hits = [];
+    D.projects.forEach(function (p) {
+      (p.aka || []).forEach(function (a) { if (q.indexOf(a) >= 0 && hits.indexOf(p) < 0) hits.push(p); });
+    });
+    // “芜湖”单独出现 → 滨江/商城歧义
+    if (hits.length === 0 && q.indexOf('芜湖') >= 0) {
+      D.projects.forEach(function (p) { if (p.name.indexOf('芜湖') >= 0) hits.push(p); });
+    }
+    return hits;
+  }
+  function detectMonth(q) {
+    var m = q.match(/(\d{1,2})\s*月/);
+    if (m) return parseInt(m[1], 10);
+    m = q.match(/([一二三四五六七八九十两])月/);
+    if (m) return CN[m[1]];
+    return null;
+  }
+  function detectYear(q) { var m = q.match(/(20\d{2})/); return m ? parseInt(m[1], 10) : null; }
+  function hasDay(q) { return /(\d{1,2})\s*[号日]/.test(q); }
+
+  var METRICS = [
+    { k: 'occ', pats: ['出租率', '租赁率', '入住率', '占用率'] },
+    { k: 'vacRate', pats: ['空置率'] },
+    { k: 'netAbsorb', pats: ['净吸纳', '净增长', '净流入'] },
+    { k: 'newSign', pats: ['新签'] },
+    { k: 'renew', pats: ['续签'] },
+    { k: 'lost', pats: ['掉铺', '流失', '退租'] },
+    { k: 'profitGap', pats: ['利润缺口', '缺口'] },
+    { k: 'incomeGap', pats: ['收入缺口'] },
+    { k: 'estProfit', pats: ['全年预估利润', '预估利润', '全年利润'] },
+    { k: 'estIncome', pats: ['全年预估收入', '预估收入', '全年收入'] },
+    { k: 'profit', pats: ['可控利润', '利润', 'ebitda', 'EBITDA'] },
+    { k: 'income', pats: ['收入', '营收'] },
+    { k: 'rent', pats: ['租金', '面价', '净价', '均价', '单价'] },
+    { k: 'cover', pats: ['覆盖倍数', '储备', '可跟进', '漏斗', '招商'] },
+    { k: 'rentable', pats: ['可租赁'] },
+    { k: 'leased', pats: ['已出租面积', '已出租'] },
+    { k: 'vacant', pats: ['空置'] }
+  ];
+  function detectMetric(q) {
+    for (var i = 0; i < METRICS.length; i++)
+      for (var j = 0; j < METRICS[i].pats.length; j++)
+        if (q.indexOf(METRICS[i].pats[j]) >= 0) return METRICS[i].k;
+    return null;
+  }
+
+  function valid() { return D.projects.filter(function (p) { return !p.missing; }); }
+  function rankBy(key, asc) {
+    return valid().slice().sort(function (a, b) { return asc ? a[key] - b[key] : b[key] - a[key]; });
+  }
+  var isRank = function (q) { return /(最高|最低|最多|最少|最大|最小|排名|排行|垫底|最差|最好|前几|前三|第一)/.test(q); };
+  var isWhy = function (q) { return /(为什么|原因|为啥|怎么回事|怎么了)/.test(q); };
+  var isWorst = function (q) { return /(最低|最少|垫底|最差|最大拖累|拖后腿)/.test(q); };
+
+  /* ---------- 回答生成 ---------- */
+  function ansMonthOcc(m, p, withDay) {
+    if (m > 10) return '目前经营判断以 2026 年 1-10 月同口径为准（截止 ' + D.meta.cutoff + '）；BI 自 11 月起面积分区口径异常（单日翻倍，已报数据组核查），' + m + ' 月数据暂缓提供。';
+    var g = null;
+    D.monthlyGroup.forEach(function (x) { if (x.m === m) g = x; });
+    if (!g) return m + ' 月数据未采集到。';
+    var dayNote = withDay ? '（BI 数据粒度为月末快照，给 ' + m + ' 月末值）' : '';
+    if (p) {
+      if (p.missing) return '<b>' + p.name + '</b> 尚未在 BI 填报数据，' + m + ' 月末出租率无法提供（报告第十一章已列为异常）。';
+      if (m === 9 && p.sep9 != null)
+        return '<b>' + p.name + '</b> 2026年9月末出租率 <b>' + p.sep9 + '%</b>' + (p.sep9a ? '（' + p.sep9a + '）' : '') + '。'
+          + src('A出租率分月卡：月末已出租面积 ÷ 最新可租赁面积') + link('s3', '查看出租率章节');
+      return p.name + ' 的 ' + m + ' 月末时点值暂未入库（分项目月末快照目前核到 9 月末）；该月集团整体为 <b>' + g.rate + '%</b>。' + src('A出租率分月卡');
+    }
+    var t = '2026年' + m + '月末' + dayNote + '，集团整体出租率 <b>' + g.rate + '%</b>（已出租约 ' + fmtInt(g.leased) + '㎡ ÷ 可租赁 ' + fmtInt(D.overall.rentable) + '㎡）。';
+    if (m === 9) t += '<br>当月分项目：珠江壹号 92.0%、新街口金鹰中心 70.7% 居前；金鹰世界A座 44.9%、丹阳 48.6% 居末。';
+    if (m === 10) t += '<br>与报告当前口径一致。';
+    return t + src('A出租率分月卡口径；与 B权责填报时点口径差异 <0.5pct') + link('s3', '查看出租率章节');
+  }
+
+  function ansLatestOcc(p) {
+    if (p) {
+      if (p.missing) return '<b>' + p.name + '</b> 尚未在 BI 填报数据，出租率无法提供（报告第十一章已列为异常）。';
+      return '<b>' + p.name + '</b> 当前出租率 <b>' + p.occ + '%</b>（已出租 ' + fmtInt(p.leased) + '㎡ / 可租赁 ' + fmtInt(p.rentable) + '㎡，空置 ' + fmtInt(p.vacant) + '㎡）。'
+        + src('B权责口径，数据截止 ' + D.meta.cutoff) + link('s3', '查看出租率章节');
+    }
+    return '截至 ' + D.meta.cutoff + '，集团整体出租率 <b>' + D.overall.occ + '%</b>（已出租 ' + fmtInt(D.overall.leased) + '㎡ / 可租赁 ' + fmtInt(D.overall.rentable) + '㎡），较 9 月末（65.0%）微降 0.1 个百分点。<br>分项目最高：珠江壹号 92.6%；最低：丹阳 46.6%。⚠️ 本期 BI 面积段口径异常（可租赁单日翻倍至 64.26 万㎡、出租率跳升至 82.4%），判定为上游分区异常、待数据组核实；本助手数值均为 2026-10-31 已验证同口径。'
+      + src('B权责口径') + link('s3', '查看出租率章节');
+  }
+
+  function ansVacant(p, rank, worst) {
+    if (p && !p.missing) return '<b>' + p.name + '</b> 空置面积 <b>' + fmtInt(p.vacant) + '㎡</b>（空置占比 ' + (100 - p.occ).toFixed(1) + '%）。' + src('B权责口径') + link('s3', '查看出租率章节');
+    if (p && p.missing) return p.name + ' 数据未提供。';
+    var arr = rankBy('vacant');
+    if (rank) {
+      var list = (worst ? arr.slice(0, 3) : arr.slice(-3).reverse()).map(function (x) { return x.name + ' ' + fmtInt(x.vacant) + '㎡'; }).join('；');
+      return (worst ? '空置最多的三个项目：' : '空置最少的三个项目：') + '<br>' + list + '。' + src('B权责口径') + link('s3', '查看出租率章节');
+    }
+    return '集团合计空置 <b>' + fmtInt(D.overall.vacant) + '㎡</b>（空置占比 35.1%）。空置最大：金鹰世界 ' + fmtInt(49143.02) + '㎡（41.4%），其次芜湖滨江 19,204㎡、新街口金鹰中心 16,687㎡。' + src('B权责口径') + link('s3', '查看出租率章节');
+  }
+
+  function ansMetric(p, k) {
+    var o = D.overall;
+    if (p && p.missing) return '<b>' + p.name + '</b> 尚未在 BI 填报数据，该指标无法提供（报告第十一章已列为异常）。';
+    switch (k) {
+      case 'netAbsorb':
+        if (p) return '<b>' + p.name + '</b> 本年净吸纳 <b>' + (p.netAbsorb > 0 ? '+' : '') + fmtInt(p.netAbsorb) + '㎡</b>（新签 ' + fmtInt(p.newSign) + '㎡ / 掉铺 ' + fmtInt(p.lost) + '㎡）。' + src('C合同情况·本年累计') + link('s4', '查看合同章节');
+        return '本年净吸纳 <b>' + fmtInt(o.netAbsorb) + '㎡</b>（新签 ' + fmtInt(o.newSign) + '㎡/' + o.newSignN + ' 单 vs 掉铺 ' + fmtInt(o.lost) + '㎡/' + o.lostN + ' 单）。<br>净流入为正：金鹰世界(A+B) +1,771㎡、芜湖商城 +812㎡；流失最大：昆山 -3,697㎡、丹阳 -3,314㎡、芜湖滨江 -944㎡。' + src('C合同情况·本年累计') + link('s4', '查看合同章节');
+      case 'newSign':
+        if (p) return '<b>' + p.name + '</b> 本年新签 <b>' + fmtInt(p.newSign) + '㎡</b>。' + src('C合同情况') + link('s4', '查看合同章节');
+        return '本年累计新签 <b>' + fmtInt(o.newSign) + '㎡</b>（' + o.newSignN + ' 单）；单项目最多：芜湖滨江 7,838㎡、金鹰世界(A+B) 5,198㎡、珠江壹号 4,513㎡。' + src('C合同情况') + link('s4', '查看合同章节');
+      case 'renew':
+        if (p) return '<b>' + p.name + '</b> 本年续签 <b>' + fmtInt(p.renew) + '㎡</b>。' + src('C合同情况') + link('s4', '查看合同章节');
+        return '本年累计续签 <b>' + fmtInt(o.renew) + '㎡</b>（' + o.renewN + ' 单），续签面积为新签的 1.4 倍，存量租户稳定性尚可。' + src('C合同情况') + link('s4', '查看合同章节');
+      case 'lost':
+        if (p) return '<b>' + p.name + '</b> 本年掉铺 <b>' + fmtInt(p.lost) + '㎡</b>。' + (p.note ? '<br>' + p.note + '。' : '') + src('C合同情况 / C流失统计') + link('s4', '查看合同章节');
+        return '本年累计掉铺 <b>' + fmtInt(o.lost) + '㎡</b>（' + o.lostN + ' 单）。掉铺面积前三：芜湖滨江 8,781㎡、丹阳 5,006㎡、珠江壹号 4,986㎡。' + src('C合同情况') + link('s4', '查看合同章节');
+      case 'income':
+        if (p) return '<b>' + p.name + '</b> 本期（' + D.meta.period + '）收入 <b>' + fmt(p.income, 2) + ' 万元</b>。' + src('B权责') + link('s8', '查看财务章节');
+        return '本期（' + D.meta.period + '）收入 <b>' + fmt(o.income, 2) + ' 万元</b>，上年同期 ' + fmt(o.incomeLY, 2) + ' 万元，同比 -8.8%。收入前三：金鹰世界 4,179.70 万、珠江壹号 3,134.93 万、新街口 2,507.77 万。' + src('B权责') + link('s8', '查看财务章节');
+      case 'profit':
+        if (p) return '<b>' + p.name + '</b> 本期可控利润 <b>' + fmt(p.profit, 2) + ' 万元</b>（同比 ' + (p.profitYoY > 0 ? '+' : '') + fmt(p.profitYoY, 2) + ' 万元）。' + src('B权责') + link('s8', '查看财务章节');
+        return '本期可控利润 <b>' + fmt(o.profit, 2) + ' 万元</b>（同比 ' + fmt(o.profitYoY, 2) + ' 万元）；EBITDA 与可控利润同值。金鹰世界 +362.42 万为唯一正增长项目。' + src('B权责') + link('s8', '查看财务章节');
+      case 'estProfit':
+        if (p) return '<b>' + p.name + '</b> 全年预估可控利润 <b>' + fmt(p.estProfit, 2) + ' 万元</b>（同比 ' + (p.estProfitYoY > 0 ? '+' : '') + fmt(p.estProfitYoY, 2) + ' 万元）。' + src('B权责') + link('s8', '查看财务章节');
+        return '全年预估可控利润 <b>' + fmt(o.estProfit, 2) + ' 万元</b>，上年全年 ' + fmt(o.lastYearProfit, 2) + ' 万元。' + src('B权责') + link('s8', '查看财务章节');
+      case 'estIncome':
+        return '全年预估收入 <b>' + fmt(o.estIncome, 2) + ' 万元</b>，上年全年 ' + fmt(o.lastYearIncome, 2) + ' 万元。' + src('B权责') + link('s8', '查看财务章节');
+      case 'profitGap':
+        if (p) return '<b>' + p.name + '</b> 全年利润同比缺口 <b>' + fmt(p.estProfitYoY, 2) + ' 万元</b>。' + (p.note ? '<br>' + p.note + '。' : '') + src('B权责') + link('s8', '查看财务章节');
+        return '全年利润缺口 <b>' + fmt(o.profitGapYear, 2) + ' 万元（-18.0%）</b>：全年预估可控利润 ' + fmt(o.estProfit, 2) + ' 万 vs 上年 ' + fmt(o.lastYearProfit, 2) + ' 万。<br>最大拖累：新街口金鹰中心 -1,274.19 万（占 45.1%），其次金鹰世界 -530.28 万、珠江壹号 -521.45 万。' + src('B权责') + link('s8', '查看财务章节');
+      case 'incomeGap':
+        return '全年收入缺口 <b>' + fmt(o.incomeGapYear, 2) + ' 万元</b>（预估 ' + fmt(o.estIncome, 2) + ' 万 vs 上年 ' + fmt(o.lastYearIncome, 2) + ' 万，达成率 82.4%）。' + src('B权责') + link('s8', '查看财务章节');
+      case 'rent':
+        if (p) return '<b>' + p.name + '</b> 在营均价 <b>' + p.rentAvg + ' 元/㎡/天</b>、平均租金 ' + p.rentNet + ' 元/㎡/天。' + (p.note ? '<br>' + p.note + '。' : '') + src('B权责存量在营口径') + link('s5', '查看租金章节');
+        return '全租户在营均价 <b>' + o.rentAvg + ' 元/㎡/天</b>、平均租金 ' + o.rentNet + ' 元/㎡/天。最高：珠江壹号 2.80；最低：丹阳 0.87（平均租金仅 0.40）。' + src('B权责存量在营口径') + link('s5', '查看租金章节');
+      case 'cover':
+        if (p) return '<b>' + p.name + '</b> 可跟进 ' + p.followN + ' 单 / ' + fmtInt(p.follow) + '㎡（剔除异常口径），覆盖倍数（对空置）<b>' + p.cover + ' 倍</b>。' + src('F储备转化分析 / F储备明细') + link('s7', '查看储备章节');
+        return '全集团可跟进 <b>84 条 / 52,252㎡</b>（剔除异常口径），覆盖倍数（对空置）0.5 倍。珠江壹号 1.9 倍最高；芜湖滨江 0.1 倍、新街口金鹰中心 0.4 倍偏低；芜湖商城空置 8,617㎡ 储备为 0。' + src('F储备转化分析 / F储备明细') + link('s7', '查看储备章节');
+      case 'rentable':
+        if (p) return '<b>' + p.name + '</b> 可租赁面积 <b>' + fmtInt(p.rentable) + '㎡</b>。' + src('A基础信息·已开放口径');
+        return '集团合计可租赁面积 <b>' + fmtInt(o.rentable) + '㎡</b>（8 个已填报项目；马鞍山、盐城未填报）。' + src('A基础信息·已开放口径');
+      case 'leased':
+        if (p) return '<b>' + p.name + '</b> 已出租面积 <b>' + fmtInt(p.leased) + '㎡</b>。' + src('B权责口径');
+        return '集团合计已出租 <b>' + fmtInt(o.leased) + '㎡</b>。' + src('B权责口径');
+      case 'vacRate':
+        if (p) return '<b>' + p.name + '</b> 空置率 <b>' + (100 - p.occ).toFixed(1) + '%</b>（空置 ' + fmtInt(p.vacant) + '㎡）。' + src('1-出租率');
+        return '集团空置率 <b>35.1%</b>（空置 ' + fmtInt(o.vacant) + '㎡）。' + src('1-出租率');
+    }
+    return null;
+  }
+
+  function ansRank(k, worst) {
+    var label = { occ: '出租率', vacant: '空置面积', rentAvg: '租金（在营均价）', netAbsorb: '净吸纳', estProfitYoY: '全年利润同比' }[k] || '出租率';
+    var key = k === 'occ' ? 'occ' : k;
+    var arr = rankBy(key, !!worst);
+    var top = arr.slice(0, 3).map(function (x, i) {
+      var v = key === 'occ' ? x.occ + '%' : (key === 'rentAvg' ? x.rentAvg + ' 元/㎡/天' : (key === 'netAbsorb' || key === 'estProfitYoY' ? (x[key] > 0 ? '+' : '') + fmtInt(x[key]) : fmtInt(x[key])));
+      return (i + 1) + '. ' + x.name + ' ' + v;
+    }).join('<br>');
+    return label + '排' + (worst ? '名末三位' : '名前三') + '：<br>' + top + '。' + src('报告同源数据') + link(k === 'rentAvg' ? 's5' : (k === 'estProfitYoY' ? 's8' : 's3'), '查看对应章节');
+  }
+
+  function ansWhy(p) {
+    if (p && /昆山/.test(p.name)) return '<b>昆山金鹰</b>本年掉铺 10 单 / 4,683.92㎡，净流失 <b>-3,697.19㎡（集团最大）</b>。<br>主因：① 意向不明确（9 单）、租金高（1 单）；② 竞品分流——裕元新天地租金 1.1-1.3 元/㎡/天、万象汇 1.2-1.6，较我方（在营均价 1.83）低 20%-35%，且精装拎包+免费车位；③ 储备 12 单/6,918㎡（覆盖 0.8 倍）转化尚待落地。' + src('C流失统计 / D竞品') + link('s9', '查看风险章节');
+    if (p && /新街口|金鹰中心/.test(p.name)) return '<b>新街口金鹰中心</b>是全年利润最大拖累（缺口 -1,274.19 万，占集团 45.1%）。<br>主因：掉铺 29 单 / 9,385㎡（C 流失统计口径，集团最多），流失归因集中在租金高（10 单）、房源不合适（7 单）；收入同比 -21.1%。' + src('C流失统计 / B权责') + link('s8', '查看财务章节');
+    if (p && /丹阳/.test(p.name)) return '<b>丹阳金鹰天地</b>出租率 46.6% 集团最低、出租率同比 -36.2%。<br>主因：吾悦写字楼租金仅 0.4-0.6 元/㎡/天（约我方一半）低价冲击，且竞品商业配套 20 万方。' + src('D竞品') + link('s6', '查看竞品章节');
+    if (p) return '<b>' + p.name + '</b>：' + (p.note || '暂无疑似归因记录，可查看报告风险与异常章节。') + link('s9', '查看风险章节');
+    return '全集团本年流失 112 单，主因分布：未填原因 68 单（60.7%，归因填报严重缺失）、意向不明确 13 单、租金高 11 单、房源不合适 8 单、业态不符合 4 单。' + src('F储备明细·流失原因') + link('s9', '查看风险章节');
+  }
+
+  function answer(raw) {
+    var q = raw.trim();
+    if (!q) return '';
+    if (/^(你好|您好|hi|hello|在吗|在？)/i.test(q))
+      return '你好，我是本报告的问数助手。数据与报告同源（截止 ' + D.meta.cutoff + '），可以按「项目 + 指标 + 月份」问我，例如：<br>· 2026年9月30号的租赁率<br>· 昆山为什么掉铺<br>· 全年利润缺口多少';
+    var year = detectYear(q);
+    if (year && year !== 2026) return '目前仅有 2026 年数据（' + D.meta.period + '，截止 ' + D.meta.cutoff + '），暂无法回答 ' + year + ' 年的问题。';
+    var projs = detectProjects(q);
+    var p = projs[0] || null;
+    var month = detectMonth(q);
+    var metric = detectMetric(q);
+    var rank = isRank(q), why = isWhy(q), worst = isWorst(q);
+
+    if (why) return ansWhy(p);
+    if (month) {
+      if (metric && metric !== 'occ' && metric !== 'vacRate' && metric !== 'leased') {
+        if (p) return ansMetric(p, metric);
+        return ansMetric(null, metric);
+      }
+      return ansMonthOcc(month, p, hasDay(q) && !/月\s*(28|29|30|31)\s*[号日]/.test(q));
+    }
+    if (rank) {
+      if (metric === 'vacant' || metric === 'vacRate') return ansVacant(null, true, true);
+      if (metric === 'rent') return ansRank('rentAvg', worst);
+      if (metric === 'netAbsorb') return ansRank('netAbsorb', worst);
+      if (metric === 'profitGap' || metric === 'estProfit') return ansRank('estProfitYoY', true);
+      return ansRank('occ', worst);
+    }
+    if (projs.length > 1 && /(比|对比|和|与)/.test(q)) {
+      var kk = metric || 'occ';
+      return projs.map(function (x) {
+        if (x.missing) return x.name + '：数据未提供';
+        if (kk === 'occ') return '<b>' + x.name + '</b> 出租率 <b>' + x.occ + '%</b>';
+        return '<b>' + x.name + '</b>：' + ansMetric(x, kk);
+      }).join('<br>') + src('报告同源数据');
+    }
+    if (metric === 'vacant' || metric === 'vacRate') return ansVacant(p, false, false);
+    if (metric && metric !== 'occ') return ansMetric(p, metric);
+    return ansLatestOcc(p);
+  }
+
+  /* ---------- 交互 ---------- */
+  function send(text) {
+    var q = (text || input.value).trim();
+    if (!q) return;
+    addMsg(esc(q), 'user');
+    input.value = '';
+    setTimeout(function () {
+      var a = '';
+      try { a = answer(q); } catch (e) { a = ''; }
+      if (!a) a = '这个问题我暂时答不了。先行版覆盖：出租率/空置/净吸纳/新签/续签/掉铺/收入/利润/缺口/租金/储备，支持按项目（金鹰世界、新街口、珠江壹号、昆山、芜湖滨江、丹阳、芜湖商城…）和月份提问。<br>试试：「9月30号的租赁率」「空置最多的项目」「全年利润缺口」。';
+      addMsg(a, 'bot');
+    }, 120);
+  }
+
+  launcher.addEventListener('click', function () {
+    panel.classList.toggle('open');
+    if (panel.classList.contains('open') && !msgs.children.length) {
+      addMsg('你好，我是本报告的<b>问数助手</b>，数据与报告同源（截止 ' + D.meta.cutoff + '）。<br>可以直接问我，比如：<br>· 2026年9月30号的租赁率<br>· 空置最多的项目<br>· 全年利润缺口<br>· 昆山为什么掉铺', 'bot');
+      input.focus();
+    }
+  });
+  window.openReportChat = function () {
+    if (!panel.classList.contains('open')) launcher.click();
+    else input.focus();
+  };
+  var topbarAsk = document.getElementById('topbarAsk');
+  if (topbarAsk) topbarAsk.addEventListener('click', function (e) { e.preventDefault(); window.openReportChat(); });
+  document.getElementById('chatClose').addEventListener('click', function () { panel.classList.remove('open'); });
+  document.getElementById('chatSend').addEventListener('click', function () { send(); });
+  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
+
+  var chipsBox = document.getElementById('chatChips');
+  CHIPS.forEach(function (c) {
+    var b = document.createElement('button');
+    b.className = 'chat-chip';
+    b.textContent = c;
+    b.addEventListener('click', function () { panel.classList.add('open'); send(c); });
+    chipsBox.appendChild(b);
+  });
+  document.getElementById('chatSub').textContent = '数据截止 ' + D.meta.cutoff + ' · ' + D.meta.period + ' · 与报告同源';
+})();
+</script>
+
 </body>
 </html>
-

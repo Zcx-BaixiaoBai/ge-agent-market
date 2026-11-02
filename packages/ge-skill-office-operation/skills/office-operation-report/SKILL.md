@@ -6,8 +6,9 @@ agent_created: true
 
 # 办公业态报告总控
 
-> **市场版说明**：本包包含「报告总控」技能、知识库、BI 取数/认证/PDF 脚本和示例报告；六个子技能不在包内。
-> 若当前环境未安装子技能，直接按本文件与 `references/knowledge_base/` 的规则逐章完成。
+> **市场版说明**：本包包含「报告总控」技能、六个专项子技能、知识库、BI 取数/认证/PDF 脚本、
+> 问数助手组件和 2026 年 11 月示例报告。总控按 `subskills/` 下的子技能逐章生成；
+> 若运行环境未注册子技能，直接读取对应 `subskills/*.SKILL.md` 并按其规则完成该章节。
 
 统筹写字楼经营分析报告的全流程：读取 Excel → 调用六个子 Skill → 汇总十一个章节 → 自检 → 输出管理层报告。
 
@@ -55,13 +56,27 @@ Windows PowerShell 用 `$env:BI_BASE = "..."` 形式；正式部署建议把同�
 | `references/knowledge_base/口径规则.md` | 期间口径、数据来源优先级、计算口径、缺失处理、结论输出规范 |
 | `references/knowledge_base/异常规则.md` | 10 类异常识别条件、标注方式、汇总输出格式 |
 | `references/knowledge_base/报告模板.md` | 固定十一个章节 Markdown 骨架 |
-| `references/knowledge_base/报告样式-财务风.md` | HTML 报告固定视觉规范（金鹰暖色财务风：米色纸张质感、金色主色、深棕表头、宋体封面标题、模块化分析卡片、Chart.js 带数据标签、PDF 5mm 边距章节不强制分页） |
+| `references/knowledge_base/报告样式-财务风.md` | HTML 报告固定视觉规范（金鹰暖色财务风：米色纸张质感、金色主色、深棕表头、宋体封面标题、模块化分析卡片、Chart.js 带数据标签、PDF 5mm 边距章节不强制分页、问数助手组件） |
+
+## 子技能清单
+
+本包注册 1 个总控 + 6 个专项子技能，子技能与总控共用资源根目录，知识库路径均为 `references/knowledge_base/`：
+
+| 技能名 | 标题 | 文件 | 输出章节 |
+|---|---|---|---|
+| `office-operation-occupancy` | 出租率与空置分析 | `subskills/occupancy.SKILL.md` | 第三章 |
+| `office-operation-contracts` | 合同动态与净吸纳 | `subskills/contracts.SKILL.md` | 第四章 |
+| `office-operation-rent-price` | 租金与量价分析 | `subskills/rent-price.SKILL.md` | 第五章 |
+| `office-operation-finance-forecast` | 财务权责与全年预测 | `subskills/finance-forecast.SKILL.md` | 第八章 |
+| `office-operation-competitors` | 竞品对标 | `subskills/competitors.SKILL.md` | 第六章 |
+| `office-operation-pipeline` | 租户储备与招商漏斗 | `subskills/pipeline.SKILL.md` | 第七章 |
 
 ## 示例与模板
 
-- `frontend/办公业态经营分析_2026年10月_金鹰版.html`：现行报告样例，作为视觉/结构基准（含真实经营数据，仅内部使用）。
+- `frontend/办公业态经营分析_2026年11月_金鹰版.html`：现行报告样例（截止 2026-11-01），作为视觉/结构基准（含真实经营数据，仅内部使用）。
 - `frontend/金鹰版-内网部署模板.html` + `frontend/vendor/`：内网无外网时可整目录托管。
-- `scripts/gen_pdf_jinying.js <input.html> <output.pdf>`：按 A4 / 5mm 边距 / 封面独占页导出 PDF；`CHROME_BIN` 可指定浏览器。
+- `scripts/chat_widget.html`：问数助手组件源文件（纯前端规则引擎，注入报告 HTML 时把 `__REPORT_DATA__` 替换为当期数据快照）。
+- `scripts/gen_pdf_jinying.js <input.html> <output.pdf>`：按 A4 / 5mm 边距 / 封面独占页导出 PDF；`CHROME_BIN`（或 `CHROME_PATH`）可指定浏览器。
 
 ## 十一个章节骨架
 
@@ -115,14 +130,14 @@ Windows PowerShell 用 `$env:BI_BASE = "..."` 形式；正式部署建议把同�
 
 ## 子 Skill 调用顺序
 
-按以下顺序依次调用六个子 Skill，每个子 Skill 输出对应章节内容；若当前环境没有这些子技能，直接按 `references/knowledge_base/` 的规则完成对应章节：
+按以下顺序依次调用六个子技能（技能名与文件见上表），每个子技能输出对应章节内容；若当前环境没有注册这些子技能，直接读取 `subskills/*.SKILL.md` 并按 `references/knowledge_base/` 的规则完成对应章节：
 
-1. **出租率与空置分析** → 输出第三章（出租率与空置表 + 空置排名）
-2. **合同动态与净吸纳** → 输出第四章（合同动态表 + 净流失排名）
-3. **租金与量价分析** → 输出第五章（量价判断 + 存量/新增租金对比）
-4. **财务权责与全年预测** → 输出第八章（财务表 + 缺口计算）
-5. **竞品对标** → 输出第六章（竞品对比表 + 竞争定位判断）
-6. **租户储备与招商漏斗** → 输出第七章（漏斗表 + 重点客户表）
+1. **office-operation-occupancy（出租率与空置分析）** → 输出第三章（出租率与空置表 + 空置排名）
+2. **office-operation-contracts（合同动态与净吸纳）** → 输出第四章（合同动态表 + 净流失排名）
+3. **office-operation-rent-price（租金与量价分析）** → 输出第五章（量价判断 + 存量/新增租金对比）
+4. **office-operation-finance-forecast（财务权责与全年预测）** → 输出第八章（财务表 + 缺口计算）
+5. **office-operation-competitors（竞品对标）** → 输出第六章（竞品对比表 + 竞争定位判断）
+6. **office-operation-pipeline（租户储备与招商漏斗）** → 输出第七章（漏斗表 + 重点客户表）
 
 调用后汇总为完整报告，补充第一章（管理层摘要）、第二章（关键指标总览）、第九章（风险预警）、第十章（行动建议）、第十一章（数据口径与异常说明）。
 
@@ -151,7 +166,7 @@ Windows PowerShell 用 `$env:BI_BASE = "..."` 形式；正式部署建议把同�
 读取 `references/knowledge_base/` 下的指标字典、口径规则、异常规则、报告模板、报告样式-财务风、数据源映射（BI sheet 结构），获取指标定义、口径规则、异常规则、报告模板。
 
 ### 3. 调用子 Skill
-按顺序调用 6 个子 Skill，每个子 Skill 从数据文件按前缀匹配定位 sheet、按「数据源映射.md 一·D」的行号布局读取数据，执行计算，输出对应章节 Markdown。
+按顺序调用 6 个子技能（或读取 `subskills/*.SKILL.md`），每个子技能从数据文件按前缀匹配定位 sheet、按 `references/knowledge_base/数据源映射.md`「一·D」的行号布局读取数据，执行计算，输出对应章节 Markdown。
 
 ### 4. 汇总与补充章节
 汇总 6 个子 Skill 输出，补充第一章（管理层摘要）、第二章（关键指标总览）、第九章（风险预警）、第十章（行动建议）、第十一章（数据口径与异常说明）。
@@ -162,7 +177,11 @@ Windows PowerShell 用 `$env:BI_BASE = "..."` 形式；正式部署建议把同�
 ### 6. 输出
 将最终报告保存为 Markdown 文件到 `output/` 目录，文件名格式：`办公业态经营分析_YYYY年MM月.md`，并把文件路径交付给用户。
 
-如需输出 HTML 版本，必须按 `references/knowledge_base/报告样式-财务风.md` 的设计令牌与元素规范生成（金鹰暖色财务风：米色纸张质感背景、金色主色、深棕表头、宋体封面标题、顶部毛玻璃导航 + 左侧默认展开浮动目录、简要分析/结论/问题/建议四类分析卡片、Chart.js 图表必须带数据标签），不得使用其他风格。PDF 用 `scripts/gen_pdf_jinying.js <input.html> <output.pdf>` 生成：A4 纵向、四边 5mm 页边距、封面独占一页、章节间不强制分页；浏览器路径可用 `CHROME_BIN` 指定。
+如需输出 HTML 版本，必须按 `references/knowledge_base/报告样式-财务风.md` 的设计令牌与元素规范生成（金鹰暖色财务风：米色纸张质感背景、金色主色、深棕表头、宋体封面标题、顶部毛玻璃导航 + 左侧默认展开浮动目录、简要分析/结论/问题/建议四类分析卡片、Chart.js 图表必须带数据标签），不得使用其他风格。
+
+每期 HTML 还必须在 `</body>` 前注入**问数助手**：复制 `scripts/chat_widget.html` 全部内容，把 `__REPORT_DATA__` 替换为当期数据快照 JSON（字段口径见该文件头部注释），并在顶部导航追加「问数」入口。快照只能使用报告已展示的同源数据；快照外的问题由组件回复「暂未入库」，严禁编造或补数。
+
+PDF 用 `scripts/gen_pdf_jinying.js <input.html> <output.pdf>` 生成：A4 纵向、四边 5mm 页边距、封面独占一页、章节间不强制分页；脚本会自动隐藏问数助手；浏览器路径可用 `CHROME_BIN` 或 `CHROME_PATH` 指定。
 
 ## 维护知识库
 

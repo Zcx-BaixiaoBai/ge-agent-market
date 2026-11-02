@@ -1,0 +1,338 @@
+<!-- ==================== 问数助手组件（写字楼租赁业务经营分析报告专用） ====================
+用法：整段注入报告 HTML 的 </body> 之前；将 __REPORT_DATA__ 替换为当期数据快照 JSON。
+快照字段口径（全部与报告同源，单位：面积㎡、金额万元、租金元/㎡/天）：
+  meta.cutoff 数据截止日 / meta.period 报告期间
+  overall: occ整体出租率(%) leased已出租 rentable可租赁 vacant空置 netAbsorb净吸纳
+           newSign/renew/lost(面积)+newSignN/renewN/lostN(单数)
+           income/profit本期收入利润 profitYoY利润同比 incomeLY/profitLY上年同期
+           estIncome/estProfit全年预估 incomeGapYear/profitGapYear全年缺口
+           lastYearIncome/lastYearProfit上年全年 rentAvg在营均价 rentNet平均租金
+  monthlyGroup: [{m:月份, rate:集团月末出租率, leased:月末已出租面积}]  （A出租率分月卡口径）
+  projects[]: name/aka别名数组/occ/rentable/leased/vacant/income/profit/profitYoY/
+              estProfit/estProfitYoY/rentAvg/rentNet/newSign/renew/lost/netAbsorb/
+              followN可跟进客户数/follow可跟进面积/cover覆盖倍数/sep9九月末出租率/
+              sep9a九月末补充说明/occYoY出租率同比/note项目备注/missing数据缺失标记
+引擎：纯前端规则引擎（无后端、无外网依赖），支持 项目×指标×月份 组合查询、排名、对比、归因问答。
+正式部署时可把 answer() 上层替换为集团 LLM 网关调用，REPORT_DATA 作为 system context 传入即可。
+====================================================================================== -->
+<style>
+.chat-launcher{position:fixed;right:22px;bottom:22px;z-index:300;width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#c9a227,#77591f);color:#fffdf8;font-size:13px;font-weight:700;box-shadow:0 6px 18px rgba(119,89,31,.38);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;transition:transform .2s;font-family:inherit}
+.chat-launcher:hover{transform:scale(1.07)}
+.chat-launcher .ico{font-size:19px;line-height:1}
+.chat-panel{position:fixed;right:22px;bottom:92px;z-index:300;width:404px;max-width:92vw;height:560px;max-height:72vh;background:#fffdf8;border:1px solid #e3d5b8;border-radius:14px;box-shadow:0 14px 44px rgba(41,37,31,.24);display:none;flex-direction:column;overflow:hidden;font-family:inherit}
+.chat-panel.open{display:flex}
+.chat-head{background:linear-gradient(135deg,#f7f0e1,#eee1c2);border-bottom:1px solid #e3d5b8;padding:12px 14px;position:relative}
+.chat-title{font-size:15px;font-weight:700;color:#77591f}
+.chat-sub{font-size:11px;color:#8a7a5c;margin-top:2px}
+.chat-close{position:absolute;right:8px;top:8px;border:none;background:none;font-size:20px;color:#8a7a5c;cursor:pointer;line-height:1;padding:4px 8px}
+.chat-close:hover{color:#77591f}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg,#fffdf8,#faf5ea)}
+.chat-msg{max-width:88%;padding:9px 12px;border-radius:10px;font-size:12.5px;line-height:1.72;white-space:normal;word-break:break-word}
+.chat-msg.bot{background:#fff;border:1px solid #e9dec6;border-top-left-radius:2px;align-self:flex-start;color:#29251f}
+.chat-msg.user{background:linear-gradient(135deg,#c9a227,#ad8833);color:#fffdf8;border-bottom-right-radius:2px;align-self:flex-end}
+.chat-msg .src{display:block;margin-top:6px;font-size:10.5px;color:#a08c62;border-top:1px dashed #e3d5b8;padding-top:4px;line-height:1.5}
+.chat-msg a{color:#77591f;font-weight:600}
+.chat-msg b{color:#77591f}
+.chat-msg.user b{color:#fffdf8}
+.chat-chips{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px;border-top:1px solid #efe6d2;background:#fbf7ee}
+.chat-chip{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid #d9c9a4;background:#fff;color:#77591f;cursor:pointer;font-family:inherit}
+.chat-chip:hover{background:#f3e9d2}
+.chat-input{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #e3d5b8;background:#fffdf8}
+.chat-input input{flex:1;border:1px solid #d9c9a6;border-radius:8px;padding:8px 10px;font-size:12.5px;background:#fff;color:#29251f;font-family:inherit;outline:none}
+.chat-input input:focus{border-color:#ad8833}
+.chat-input button{border:none;border-radius:8px;background:#ad8833;color:#fffdf8;padding:0 16px;font-size:12.5px;cursor:pointer;font-family:inherit}
+.chat-input button:hover{background:#77591f}
+@media print{.chat-launcher,.chat-panel{display:none!important}}
+</style>
+
+<button class="chat-launcher" id="chatLauncher" title="问数助手"><span class="ico">📊</span>问数</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="chat-title">问数助手</div>
+    <div class="chat-sub" id="chatSub">数据截止 — · 与报告同源</div>
+    <button class="chat-close" id="chatClose" title="关闭">×</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs"></div>
+  <div class="chat-chips" id="chatChips"></div>
+  <div class="chat-input">
+    <input id="chatInput" type="text" placeholder="如：2026年9月30号的租赁率" autocomplete="off">
+    <button id="chatSend">发送</button>
+  </div>
+</div>
+
+<script>
+window.REPORT_DATA = __REPORT_DATA__;
+
+(function () {
+  var D = window.REPORT_DATA;
+  var CN = {'一':1,'二':2,'两':2,'三':3,'四':4,'五':5,'六':6,'七':7,'八':8,'九':9,'十':10};
+  var panel = document.getElementById('chatPanel');
+  var launcher = document.getElementById('chatLauncher');
+  var msgs = document.getElementById('chatMsgs');
+  var input = document.getElementById('chatInput');
+  var CHIPS = ['整体出租率', '9月30号的租赁率', '空置最多的项目', '全年利润缺口', '昆山为什么掉铺', '租金最高的项目', '出租率排名', '本年净吸纳'];
+
+  function fmt(n, d) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('zh-CN', { maximumFractionDigits: d == null ? 1 : d }); }
+  function fmtInt(n) { return fmt(n, 0); }
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function src(t) { return '<span class="src">口径：' + t + '</span>'; }
+  function link(sec, label) { return ' <a href="#' + sec + '" onclick="document.getElementById(\'chatPanel\').classList.remove(\'open\')">' + label + ' →</a>'; }
+
+  function addMsg(html, who) {
+    var d = document.createElement('div');
+    d.className = 'chat-msg ' + who;
+    d.innerHTML = html;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  /* ---------- 语义解析 ---------- */
+  function detectProjects(q) {
+    var hits = [];
+    D.projects.forEach(function (p) {
+      (p.aka || []).forEach(function (a) { if (q.indexOf(a) >= 0 && hits.indexOf(p) < 0) hits.push(p); });
+    });
+    // “芜湖”单独出现 → 滨江/商城歧义
+    if (hits.length === 0 && q.indexOf('芜湖') >= 0) {
+      D.projects.forEach(function (p) { if (p.name.indexOf('芜湖') >= 0) hits.push(p); });
+    }
+    return hits;
+  }
+  function detectMonth(q) {
+    var m = q.match(/(\d{1,2})\s*月/);
+    if (m) return parseInt(m[1], 10);
+    m = q.match(/([一二三四五六七八九十两])月/);
+    if (m) return CN[m[1]];
+    return null;
+  }
+  function detectYear(q) { var m = q.match(/(20\d{2})/); return m ? parseInt(m[1], 10) : null; }
+  function hasDay(q) { return /(\d{1,2})\s*[号日]/.test(q); }
+
+  var METRICS = [
+    { k: 'occ', pats: ['出租率', '租赁率', '入住率', '占用率'] },
+    { k: 'vacRate', pats: ['空置率'] },
+    { k: 'netAbsorb', pats: ['净吸纳', '净增长', '净流入'] },
+    { k: 'newSign', pats: ['新签'] },
+    { k: 'renew', pats: ['续签'] },
+    { k: 'lost', pats: ['掉铺', '流失', '退租'] },
+    { k: 'profitGap', pats: ['利润缺口', '缺口'] },
+    { k: 'incomeGap', pats: ['收入缺口'] },
+    { k: 'estProfit', pats: ['全年预估利润', '预估利润', '全年利润'] },
+    { k: 'estIncome', pats: ['全年预估收入', '预估收入', '全年收入'] },
+    { k: 'profit', pats: ['可控利润', '利润', 'ebitda', 'EBITDA'] },
+    { k: 'income', pats: ['收入', '营收'] },
+    { k: 'rent', pats: ['租金', '面价', '净价', '均价', '单价'] },
+    { k: 'cover', pats: ['覆盖倍数', '储备', '可跟进', '漏斗', '招商'] },
+    { k: 'rentable', pats: ['可租赁'] },
+    { k: 'leased', pats: ['已出租面积', '已出租'] },
+    { k: 'vacant', pats: ['空置'] }
+  ];
+  function detectMetric(q) {
+    for (var i = 0; i < METRICS.length; i++)
+      for (var j = 0; j < METRICS[i].pats.length; j++)
+        if (q.indexOf(METRICS[i].pats[j]) >= 0) return METRICS[i].k;
+    return null;
+  }
+
+  function valid() { return D.projects.filter(function (p) { return !p.missing; }); }
+  function rankBy(key, asc) {
+    return valid().slice().sort(function (a, b) { return asc ? a[key] - b[key] : b[key] - a[key]; });
+  }
+  var isRank = function (q) { return /(最高|最低|最多|最少|最大|最小|排名|排行|垫底|最差|最好|前几|前三|第一)/.test(q); };
+  var isWhy = function (q) { return /(为什么|原因|为啥|怎么回事|怎么了)/.test(q); };
+  var isWorst = function (q) { return /(最低|最少|垫底|最差|最大拖累|拖后腿)/.test(q); };
+
+  /* ---------- 回答生成 ---------- */
+  function ansMonthOcc(m, p, withDay) {
+    if (m > 10) return '目前经营判断以 2026 年 1-10 月同口径为准（截止 ' + D.meta.cutoff + '）；BI 自 11 月起面积分区口径异常（单日翻倍，已报数据组核查），' + m + ' 月数据暂缓提供。';
+    var g = null;
+    D.monthlyGroup.forEach(function (x) { if (x.m === m) g = x; });
+    if (!g) return m + ' 月数据未采集到。';
+    var dayNote = withDay ? '（BI 数据粒度为月末快照，给 ' + m + ' 月末值）' : '';
+    if (p) {
+      if (p.missing) return '<b>' + p.name + '</b> 尚未在 BI 填报数据，' + m + ' 月末出租率无法提供（报告第十一章已列为异常）。';
+      if (m === 9 && p.sep9 != null)
+        return '<b>' + p.name + '</b> 2026年9月末出租率 <b>' + p.sep9 + '%</b>' + (p.sep9a ? '（' + p.sep9a + '）' : '') + '。'
+          + src('A出租率分月卡：月末已出租面积 ÷ 最新可租赁面积') + link('s3', '查看出租率章节');
+      return p.name + ' 的 ' + m + ' 月末时点值暂未入库（分项目月末快照目前核到 9 月末）；该月集团整体为 <b>' + g.rate + '%</b>。' + src('A出租率分月卡');
+    }
+    var t = '2026年' + m + '月末' + dayNote + '，集团整体出租率 <b>' + g.rate + '%</b>（已出租约 ' + fmtInt(g.leased) + '㎡ ÷ 可租赁 ' + fmtInt(D.overall.rentable) + '㎡）。';
+    if (m === 9) t += '<br>当月分项目：珠江壹号 92.0%、新街口金鹰中心 70.7% 居前；金鹰世界A座 44.9%、丹阳 48.6% 居末。';
+    if (m === 10) t += '<br>与报告当前口径一致。';
+    return t + src('A出租率分月卡口径；与 B权责填报时点口径差异 <0.5pct') + link('s3', '查看出租率章节');
+  }
+
+  function ansLatestOcc(p) {
+    if (p) {
+      if (p.missing) return '<b>' + p.name + '</b> 尚未在 BI 填报数据，出租率无法提供（报告第十一章已列为异常）。';
+      return '<b>' + p.name + '</b> 当前出租率 <b>' + p.occ + '%</b>（已出租 ' + fmtInt(p.leased) + '㎡ / 可租赁 ' + fmtInt(p.rentable) + '㎡，空置 ' + fmtInt(p.vacant) + '㎡）。'
+        + src('B权责口径，数据截止 ' + D.meta.cutoff) + link('s3', '查看出租率章节');
+    }
+    return '截至 ' + D.meta.cutoff + '，集团整体出租率 <b>' + D.overall.occ + '%</b>（已出租 ' + fmtInt(D.overall.leased) + '㎡ / 可租赁 ' + fmtInt(D.overall.rentable) + '㎡），较 9 月末（65.0%）微降 0.1 个百分点。<br>分项目最高：珠江壹号 92.6%；最低：丹阳 46.6%。⚠️ 本期 BI 面积段口径异常（可租赁单日翻倍至 64.26 万㎡、出租率跳升至 82.4%），判定为上游分区异常、待数据组核实；本助手数值均为 2026-10-31 已验证同口径。'
+      + src('B权责口径') + link('s3', '查看出租率章节');
+  }
+
+  function ansVacant(p, rank, worst) {
+    if (p && !p.missing) return '<b>' + p.name + '</b> 空置面积 <b>' + fmtInt(p.vacant) + '㎡</b>（空置占比 ' + (100 - p.occ).toFixed(1) + '%）。' + src('B权责口径') + link('s3', '查看出租率章节');
+    if (p && p.missing) return p.name + ' 数据未提供。';
+    var arr = rankBy('vacant');
+    if (rank) {
+      var list = (worst ? arr.slice(0, 3) : arr.slice(-3).reverse()).map(function (x) { return x.name + ' ' + fmtInt(x.vacant) + '㎡'; }).join('；');
+      return (worst ? '空置最多的三个项目：' : '空置最少的三个项目：') + '<br>' + list + '。' + src('B权责口径') + link('s3', '查看出租率章节');
+    }
+    return '集团合计空置 <b>' + fmtInt(D.overall.vacant) + '㎡</b>（空置占比 35.1%）。空置最大：金鹰世界 ' + fmtInt(49143.02) + '㎡（41.4%），其次芜湖滨江 19,204㎡、新街口金鹰中心 16,687㎡。' + src('B权责口径') + link('s3', '查看出租率章节');
+  }
+
+  function ansMetric(p, k) {
+    var o = D.overall;
+    if (p && p.missing) return '<b>' + p.name + '</b> 尚未在 BI 填报数据，该指标无法提供（报告第十一章已列为异常）。';
+    switch (k) {
+      case 'netAbsorb':
+        if (p) return '<b>' + p.name + '</b> 本年净吸纳 <b>' + (p.netAbsorb > 0 ? '+' : '') + fmtInt(p.netAbsorb) + '㎡</b>（新签 ' + fmtInt(p.newSign) + '㎡ / 掉铺 ' + fmtInt(p.lost) + '㎡）。' + src('C合同情况·本年累计') + link('s4', '查看合同章节');
+        return '本年净吸纳 <b>' + fmtInt(o.netAbsorb) + '㎡</b>（新签 ' + fmtInt(o.newSign) + '㎡/' + o.newSignN + ' 单 vs 掉铺 ' + fmtInt(o.lost) + '㎡/' + o.lostN + ' 单）。<br>净流入为正：金鹰世界(A+B) +1,771㎡、芜湖商城 +812㎡；流失最大：昆山 -3,697㎡、丹阳 -3,314㎡、芜湖滨江 -944㎡。' + src('C合同情况·本年累计') + link('s4', '查看合同章节');
+      case 'newSign':
+        if (p) return '<b>' + p.name + '</b> 本年新签 <b>' + fmtInt(p.newSign) + '㎡</b>。' + src('C合同情况') + link('s4', '查看合同章节');
+        return '本年累计新签 <b>' + fmtInt(o.newSign) + '㎡</b>（' + o.newSignN + ' 单）；单项目最多：芜湖滨江 7,838㎡、金鹰世界(A+B) 5,198㎡、珠江壹号 4,513㎡。' + src('C合同情况') + link('s4', '查看合同章节');
+      case 'renew':
+        if (p) return '<b>' + p.name + '</b> 本年续签 <b>' + fmtInt(p.renew) + '㎡</b>。' + src('C合同情况') + link('s4', '查看合同章节');
+        return '本年累计续签 <b>' + fmtInt(o.renew) + '㎡</b>（' + o.renewN + ' 单），续签面积为新签的 1.4 倍，存量租户稳定性尚可。' + src('C合同情况') + link('s4', '查看合同章节');
+      case 'lost':
+        if (p) return '<b>' + p.name + '</b> 本年掉铺 <b>' + fmtInt(p.lost) + '㎡</b>。' + (p.note ? '<br>' + p.note + '。' : '') + src('C合同情况 / C流失统计') + link('s4', '查看合同章节');
+        return '本年累计掉铺 <b>' + fmtInt(o.lost) + '㎡</b>（' + o.lostN + ' 单）。掉铺面积前三：芜湖滨江 8,781㎡、丹阳 5,006㎡、珠江壹号 4,986㎡。' + src('C合同情况') + link('s4', '查看合同章节');
+      case 'income':
+        if (p) return '<b>' + p.name + '</b> 本期（' + D.meta.period + '）收入 <b>' + fmt(p.income, 2) + ' 万元</b>。' + src('B权责') + link('s8', '查看财务章节');
+        return '本期（' + D.meta.period + '）收入 <b>' + fmt(o.income, 2) + ' 万元</b>，上年同期 ' + fmt(o.incomeLY, 2) + ' 万元，同比 -8.8%。收入前三：金鹰世界 4,179.70 万、珠江壹号 3,134.93 万、新街口 2,507.77 万。' + src('B权责') + link('s8', '查看财务章节');
+      case 'profit':
+        if (p) return '<b>' + p.name + '</b> 本期可控利润 <b>' + fmt(p.profit, 2) + ' 万元</b>（同比 ' + (p.profitYoY > 0 ? '+' : '') + fmt(p.profitYoY, 2) + ' 万元）。' + src('B权责') + link('s8', '查看财务章节');
+        return '本期可控利润 <b>' + fmt(o.profit, 2) + ' 万元</b>（同比 ' + fmt(o.profitYoY, 2) + ' 万元）；EBITDA 与可控利润同值。金鹰世界 +362.42 万为唯一正增长项目。' + src('B权责') + link('s8', '查看财务章节');
+      case 'estProfit':
+        if (p) return '<b>' + p.name + '</b> 全年预估可控利润 <b>' + fmt(p.estProfit, 2) + ' 万元</b>（同比 ' + (p.estProfitYoY > 0 ? '+' : '') + fmt(p.estProfitYoY, 2) + ' 万元）。' + src('B权责') + link('s8', '查看财务章节');
+        return '全年预估可控利润 <b>' + fmt(o.estProfit, 2) + ' 万元</b>，上年全年 ' + fmt(o.lastYearProfit, 2) + ' 万元。' + src('B权责') + link('s8', '查看财务章节');
+      case 'estIncome':
+        return '全年预估收入 <b>' + fmt(o.estIncome, 2) + ' 万元</b>，上年全年 ' + fmt(o.lastYearIncome, 2) + ' 万元。' + src('B权责') + link('s8', '查看财务章节');
+      case 'profitGap':
+        if (p) return '<b>' + p.name + '</b> 全年利润同比缺口 <b>' + fmt(p.estProfitYoY, 2) + ' 万元</b>。' + (p.note ? '<br>' + p.note + '。' : '') + src('B权责') + link('s8', '查看财务章节');
+        return '全年利润缺口 <b>' + fmt(o.profitGapYear, 2) + ' 万元（-18.0%）</b>：全年预估可控利润 ' + fmt(o.estProfit, 2) + ' 万 vs 上年 ' + fmt(o.lastYearProfit, 2) + ' 万。<br>最大拖累：新街口金鹰中心 -1,274.19 万（占 45.1%），其次金鹰世界 -530.28 万、珠江壹号 -521.45 万。' + src('B权责') + link('s8', '查看财务章节');
+      case 'incomeGap':
+        return '全年收入缺口 <b>' + fmt(o.incomeGapYear, 2) + ' 万元</b>（预估 ' + fmt(o.estIncome, 2) + ' 万 vs 上年 ' + fmt(o.lastYearIncome, 2) + ' 万，达成率 82.4%）。' + src('B权责') + link('s8', '查看财务章节');
+      case 'rent':
+        if (p) return '<b>' + p.name + '</b> 在营均价 <b>' + p.rentAvg + ' 元/㎡/天</b>、平均租金 ' + p.rentNet + ' 元/㎡/天。' + (p.note ? '<br>' + p.note + '。' : '') + src('B权责存量在营口径') + link('s5', '查看租金章节');
+        return '全租户在营均价 <b>' + o.rentAvg + ' 元/㎡/天</b>、平均租金 ' + o.rentNet + ' 元/㎡/天。最高：珠江壹号 2.80；最低：丹阳 0.87（平均租金仅 0.40）。' + src('B权责存量在营口径') + link('s5', '查看租金章节');
+      case 'cover':
+        if (p) return '<b>' + p.name + '</b> 可跟进 ' + p.followN + ' 单 / ' + fmtInt(p.follow) + '㎡（剔除异常口径），覆盖倍数（对空置）<b>' + p.cover + ' 倍</b>。' + src('F储备转化分析 / F储备明细') + link('s7', '查看储备章节');
+        return '全集团可跟进 <b>84 条 / 52,252㎡</b>（剔除异常口径），覆盖倍数（对空置）0.5 倍。珠江壹号 1.9 倍最高；芜湖滨江 0.1 倍、新街口金鹰中心 0.4 倍偏低；芜湖商城空置 8,617㎡ 储备为 0。' + src('F储备转化分析 / F储备明细') + link('s7', '查看储备章节');
+      case 'rentable':
+        if (p) return '<b>' + p.name + '</b> 可租赁面积 <b>' + fmtInt(p.rentable) + '㎡</b>。' + src('A基础信息·已开放口径');
+        return '集团合计可租赁面积 <b>' + fmtInt(o.rentable) + '㎡</b>（8 个已填报项目；马鞍山、盐城未填报）。' + src('A基础信息·已开放口径');
+      case 'leased':
+        if (p) return '<b>' + p.name + '</b> 已出租面积 <b>' + fmtInt(p.leased) + '㎡</b>。' + src('B权责口径');
+        return '集团合计已出租 <b>' + fmtInt(o.leased) + '㎡</b>。' + src('B权责口径');
+      case 'vacRate':
+        if (p) return '<b>' + p.name + '</b> 空置率 <b>' + (100 - p.occ).toFixed(1) + '%</b>（空置 ' + fmtInt(p.vacant) + '㎡）。' + src('1-出租率');
+        return '集团空置率 <b>35.1%</b>（空置 ' + fmtInt(o.vacant) + '㎡）。' + src('1-出租率');
+    }
+    return null;
+  }
+
+  function ansRank(k, worst) {
+    var label = { occ: '出租率', vacant: '空置面积', rentAvg: '租金（在营均价）', netAbsorb: '净吸纳', estProfitYoY: '全年利润同比' }[k] || '出租率';
+    var key = k === 'occ' ? 'occ' : k;
+    var arr = rankBy(key, !!worst);
+    var top = arr.slice(0, 3).map(function (x, i) {
+      var v = key === 'occ' ? x.occ + '%' : (key === 'rentAvg' ? x.rentAvg + ' 元/㎡/天' : (key === 'netAbsorb' || key === 'estProfitYoY' ? (x[key] > 0 ? '+' : '') + fmtInt(x[key]) : fmtInt(x[key])));
+      return (i + 1) + '. ' + x.name + ' ' + v;
+    }).join('<br>');
+    return label + '排' + (worst ? '名末三位' : '名前三') + '：<br>' + top + '。' + src('报告同源数据') + link(k === 'rentAvg' ? 's5' : (k === 'estProfitYoY' ? 's8' : 's3'), '查看对应章节');
+  }
+
+  function ansWhy(p) {
+    if (p && /昆山/.test(p.name)) return '<b>昆山金鹰</b>本年掉铺 10 单 / 4,683.92㎡，净流失 <b>-3,697.19㎡（集团最大）</b>。<br>主因：① 意向不明确（9 单）、租金高（1 单）；② 竞品分流——裕元新天地租金 1.1-1.3 元/㎡/天、万象汇 1.2-1.6，较我方（在营均价 1.83）低 20%-35%，且精装拎包+免费车位；③ 储备 12 单/6,918㎡（覆盖 0.8 倍）转化尚待落地。' + src('C流失统计 / D竞品') + link('s9', '查看风险章节');
+    if (p && /新街口|金鹰中心/.test(p.name)) return '<b>新街口金鹰中心</b>是全年利润最大拖累（缺口 -1,274.19 万，占集团 45.1%）。<br>主因：掉铺 29 单 / 9,385㎡（C 流失统计口径，集团最多），流失归因集中在租金高（10 单）、房源不合适（7 单）；收入同比 -21.1%。' + src('C流失统计 / B权责') + link('s8', '查看财务章节');
+    if (p && /丹阳/.test(p.name)) return '<b>丹阳金鹰天地</b>出租率 46.6% 集团最低、出租率同比 -36.2%。<br>主因：吾悦写字楼租金仅 0.4-0.6 元/㎡/天（约我方一半）低价冲击，且竞品商业配套 20 万方。' + src('D竞品') + link('s6', '查看竞品章节');
+    if (p) return '<b>' + p.name + '</b>：' + (p.note || '暂无疑似归因记录，可查看报告风险与异常章节。') + link('s9', '查看风险章节');
+    return '全集团本年流失 112 单，主因分布：未填原因 68 单（60.7%，归因填报严重缺失）、意向不明确 13 单、租金高 11 单、房源不合适 8 单、业态不符合 4 单。' + src('F储备明细·流失原因') + link('s9', '查看风险章节');
+  }
+
+  function answer(raw) {
+    var q = raw.trim();
+    if (!q) return '';
+    if (/^(你好|您好|hi|hello|在吗|在？)/i.test(q))
+      return '你好，我是本报告的问数助手。数据与报告同源（截止 ' + D.meta.cutoff + '），可以按「项目 + 指标 + 月份」问我，例如：<br>· 2026年9月30号的租赁率<br>· 昆山为什么掉铺<br>· 全年利润缺口多少';
+    var year = detectYear(q);
+    if (year && year !== 2026) return '目前仅有 2026 年数据（' + D.meta.period + '，截止 ' + D.meta.cutoff + '），暂无法回答 ' + year + ' 年的问题。';
+    var projs = detectProjects(q);
+    var p = projs[0] || null;
+    var month = detectMonth(q);
+    var metric = detectMetric(q);
+    var rank = isRank(q), why = isWhy(q), worst = isWorst(q);
+
+    if (why) return ansWhy(p);
+    if (month) {
+      if (metric && metric !== 'occ' && metric !== 'vacRate' && metric !== 'leased') {
+        if (p) return ansMetric(p, metric);
+        return ansMetric(null, metric);
+      }
+      return ansMonthOcc(month, p, hasDay(q) && !/月\s*(28|29|30|31)\s*[号日]/.test(q));
+    }
+    if (rank) {
+      if (metric === 'vacant' || metric === 'vacRate') return ansVacant(null, true, true);
+      if (metric === 'rent') return ansRank('rentAvg', worst);
+      if (metric === 'netAbsorb') return ansRank('netAbsorb', worst);
+      if (metric === 'profitGap' || metric === 'estProfit') return ansRank('estProfitYoY', true);
+      return ansRank('occ', worst);
+    }
+    if (projs.length > 1 && /(比|对比|和|与)/.test(q)) {
+      var kk = metric || 'occ';
+      return projs.map(function (x) {
+        if (x.missing) return x.name + '：数据未提供';
+        if (kk === 'occ') return '<b>' + x.name + '</b> 出租率 <b>' + x.occ + '%</b>';
+        return '<b>' + x.name + '</b>：' + ansMetric(x, kk);
+      }).join('<br>') + src('报告同源数据');
+    }
+    if (metric === 'vacant' || metric === 'vacRate') return ansVacant(p, false, false);
+    if (metric && metric !== 'occ') return ansMetric(p, metric);
+    return ansLatestOcc(p);
+  }
+
+  /* ---------- 交互 ---------- */
+  function send(text) {
+    var q = (text || input.value).trim();
+    if (!q) return;
+    addMsg(esc(q), 'user');
+    input.value = '';
+    setTimeout(function () {
+      var a = '';
+      try { a = answer(q); } catch (e) { a = ''; }
+      if (!a) a = '这个问题我暂时答不了。先行版覆盖：出租率/空置/净吸纳/新签/续签/掉铺/收入/利润/缺口/租金/储备，支持按项目（金鹰世界、新街口、珠江壹号、昆山、芜湖滨江、丹阳、芜湖商城…）和月份提问。<br>试试：「9月30号的租赁率」「空置最多的项目」「全年利润缺口」。';
+      addMsg(a, 'bot');
+    }, 120);
+  }
+
+  launcher.addEventListener('click', function () {
+    panel.classList.toggle('open');
+    if (panel.classList.contains('open') && !msgs.children.length) {
+      addMsg('你好，我是本报告的<b>问数助手</b>，数据与报告同源（截止 ' + D.meta.cutoff + '）。<br>可以直接问我，比如：<br>· 2026年9月30号的租赁率<br>· 空置最多的项目<br>· 全年利润缺口<br>· 昆山为什么掉铺', 'bot');
+      input.focus();
+    }
+  });
+  window.openReportChat = function () {
+    if (!panel.classList.contains('open')) launcher.click();
+    else input.focus();
+  };
+  var topbarAsk = document.getElementById('topbarAsk');
+  if (topbarAsk) topbarAsk.addEventListener('click', function (e) { e.preventDefault(); window.openReportChat(); });
+  document.getElementById('chatClose').addEventListener('click', function () { panel.classList.remove('open'); });
+  document.getElementById('chatSend').addEventListener('click', function () { send(); });
+  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
+
+  var chipsBox = document.getElementById('chatChips');
+  CHIPS.forEach(function (c) {
+    var b = document.createElement('button');
+    b.className = 'chat-chip';
+    b.textContent = c;
+    b.addEventListener('click', function () { panel.classList.add('open'); send(c); });
+    chipsBox.appendChild(b);
+  });
+  document.getElementById('chatSub').textContent = '数据截止 ' + D.meta.cutoff + ' · ' + D.meta.period + ' · 与报告同源';
+})();
+</script>

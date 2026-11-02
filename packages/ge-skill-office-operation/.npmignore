@@ -1,0 +1,5 @@
+**/.mimosa/
+**/__pycache__/
+**/*.pyc
+**/.DS_Store
+**/.oa_credentials.json
