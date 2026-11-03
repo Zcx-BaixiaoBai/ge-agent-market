@@ -93,6 +93,68 @@
           "bytes": 191567
         }
       ]
+    },
+    {
+      "id": "zcx-baixiaobai/ge-workbench-task-assistant",
+      "owner": "zcx-baixiaobai",
+      "repository": "ge-workbench-task-assistant",
+      "url": "https://github.com/zcx-baixiaobai/ge-workbench-task-assistant",
+      "name": "任务助手",
+      "category": "productivity",
+      "author": "BaiXiaoBai-Zcx",
+      "version": "0.6.6",
+      "license": "MIT",
+      "description": {
+        "zh": "任务助手：汇总金鹰PLAN、巡检维保、金鹰安全与工单系统的任务，突出未完成、72 小时内到期与已过期，支持按项目筛选和让 AI 分析。创作者：BaiXiaoBai-Zcx。",
+        "en": "Task assistant: aggregates tasks from Jinying PLAN, IPMS inspections, Jinying Safety and the work-order system, highlighting unfinished, due-soon and overdue items, with project filters and AI analysis. Creator: BaiXiaoBai-Zcx."
+      },
+      "distribution": {
+        "type": "github-release",
+        "version": "0.6.6",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-task-assistant/ge-workbench-task-assistant-0.6.6.tgz",
+        "sha256": "51c90d1139a78d9e896536299f167d1c46a2bfaf1c1f950a006961a03ecc57b8"
+      },
+      "screenshots": [
+        {
+          "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-task-assistant/docs/screenshots/overview.png",
+          "alt": "任务助手总览：四个任务系统的未完成/即将到期/已过期统计、到期分布与优先处理清单（演示数据）",
+          "sha256": "9408a4264a54a2bcbc4ca3031e7256e88a8380fb49ba8af06c89c7716da90e03",
+          "width": 1600,
+          "height": 1000,
+          "bytes": 174235
+        }
+      ]
+    },
+    {
+      "id": "zcx-baixiaobai/ge-workbench-engineering-progress",
+      "owner": "zcx-baixiaobai",
+      "repository": "ge-workbench-engineering-progress",
+      "url": "https://github.com/zcx-baixiaobai/ge-workbench-engineering-progress",
+      "name": "工程进度追踪",
+      "category": "engineering",
+      "author": "BaiXiaoBai-Zcx",
+      "version": "0.1.3",
+      "license": "UNLICENSED",
+      "description": {
+        "zh": "工程进度追踪：整页嵌入金鹰工程进度系统（jyplan），汇总 38 个公司、1800+ 计划节点的实时状态，提供驾驶舱、横道图、明细表与日报视图。创作者：BaiXiaoBai-Zcx。",
+        "en": "Engineering progress tracking: embeds the Jinying engineering progress system (jyplan), summarizing live status across 38 companies and 1,800+ plan nodes, with dashboard, Gantt, detail and daily-report views. Creator: BaiXiaoBai-Zcx."
+      },
+      "distribution": {
+        "type": "github-release",
+        "version": "0.1.3",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-engineering-progress/ge-workbench-engineering-progress-0.1.3.tgz",
+        "sha256": "a630ac50414614d7ef7589302787c2c4fe8d1db64df7eb8d3b82ca75a96482de"
+      },
+      "screenshots": [
+        {
+          "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-engineering-progress/docs/screenshots/overview.png",
+          "alt": "工程进度追踪驾驶舱：计划节点、完成/逾期/预警统计与总进度横道图",
+          "sha256": "a494be857e6f9b6eda287c40f4638cd3818a8247818d18471671e538190b1272",
+          "width": 1400,
+          "height": 1000,
+          "bytes": 312764
+        }
+      ]
     }
   ]
 }
