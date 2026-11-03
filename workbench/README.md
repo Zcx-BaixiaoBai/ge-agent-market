@@ -12,3 +12,13 @@
 - 每个目录内的 `ARCHIVE.json` 记录市场条目 ID、版本、安装包相对路径、sha256 与截图。
 - 安装包与截图仍放在 `packages/<name>/`；市场安装走自托管的 github-release tgz，不依赖本目录。
 - 本目录用于在仓库内直接查看和审计已发布包内容，不作为安装源。
+
+## 预览
+
+| 数据管理中心 | 用电安全助手 |
+|---|---|
+| ![数据管理中心](../packages/ge-workbench-datacenter/docs/screenshots/overview.png) | ![用电安全助手](../packages/ge-workbench-electric-safety/docs/screenshots/overview.png) |
+
+| 任务助手 | 工程进度追踪 |
+|---|---|
+| ![任务助手](../packages/ge-workbench-task-assistant/docs/screenshots/overview.png) | ![工程进度追踪](../packages/ge-workbench-engineering-progress/docs/screenshots/overview.png) |
