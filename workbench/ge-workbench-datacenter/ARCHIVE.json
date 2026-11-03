@@ -1,0 +1,11 @@
+{
+  "id": "zcx-baixiaobai/ge-agent-market",
+  "name": "数据管理中心",
+  "version": "0.4.0",
+  "package": "ge-workbench-datacenter",
+  "tarball": "../../packages/ge-workbench-datacenter/ge-workbench-datacenter-0.4.0.tgz",
+  "sha256": "625c114fdb840f661725ca9435ba50469b5c338a600e7e83905a265bc00f7356",
+  "screenshot": "../../packages/ge-workbench-datacenter/docs/screenshots/overview.png",
+  "archivedAt": "2026-11-03",
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。"
+}

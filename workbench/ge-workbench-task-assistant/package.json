@@ -1,0 +1,55 @@
+{
+  "name": "ge-workbench-task-assistant",
+  "version": "0.6.6",
+  "description": "任务助手：汇总金鹰PLAN、巡检维保、金鹰安全与新工单系统的任务，突出未完成、即将到期与已过期",
+  "type": "module",
+  "main": "dsh/index.js",
+  "exports": {
+    ".": "./dsh/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "files": [
+    "dsh",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "BaiXiaoBai-Zcx (https://github.com/Zcx-BaixiaoBai)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zcx-BaixiaoBai/ge-workbench-task-assistant"
+  },
+  "engines": {
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "dsh-desktop-workbenches",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/schemastery": ">=3.18.0 <4.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  },
+  "dependencies": {
+    "sm-crypto": "^0.5.8"
+  },
+  "scripts": {
+    "build": "esbuild src/entry.jsx --bundle --format=iife --target=es2022 --outfile=lib/client.js --jsx-factory=h",
+    "test": "node --test test/server.test.mjs test/client.test.mjs",
+    "check": "npm run build && npm test"
+  }
+}

@@ -1,0 +1,10 @@
+# 工程进度追踪工作台（ge-workbench-engineering-progress）
+#
+# 服务端入口注册在 /api/engineering-progress/ 下，负责把上游系统的只读状态接口
+# 转成工作台顶栏可直接使用的数据（带超时与缓存）；$baseUrl 可在 profile 的
+# cordis.patch.yml 中覆盖，用于换域名或指向测试环境。
+- insert:
+    - id: ge-workbench-engineering-progress
+      name: ge-workbench-engineering-progress
+      config:
+        root: !!js dshHomePath('engineering-progress')

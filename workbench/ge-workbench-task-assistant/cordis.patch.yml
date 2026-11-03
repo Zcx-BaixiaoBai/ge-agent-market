@@ -1,0 +1,10 @@
+# 任务助手（ge-workbench-task-assistant）
+#
+# 服务端入口注册在本机接口前缀 /api/task-assistant/ 下，
+# 负责连接四个任务系统、拉取任务并生成汇总；连接配置保存在
+# dshHomePath('task-assistant') 目录内，卸载工作台不会删除该目录。
+- insert:
+    - id: ge-workbench-task-assistant
+      name: ge-workbench-task-assistant
+      config:
+        root: !!js dshHomePath('task-assistant')

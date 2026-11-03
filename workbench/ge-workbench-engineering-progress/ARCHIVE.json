@@ -1,0 +1,11 @@
+{
+  "id": "zcx-baixiaobai/ge-workbench-engineering-progress",
+  "name": "工程进度追踪",
+  "version": "0.1.3",
+  "package": "ge-workbench-engineering-progress",
+  "tarball": "../../packages/ge-workbench-engineering-progress/ge-workbench-engineering-progress-0.1.3.tgz",
+  "sha256": "a630ac50414614d7ef7589302787c2c4fe8d1db64df7eb8d3b82ca75a96482de",
+  "screenshot": "../../packages/ge-workbench-engineering-progress/docs/screenshots/overview.png",
+  "archivedAt": "2026-11-03",
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。"
+}

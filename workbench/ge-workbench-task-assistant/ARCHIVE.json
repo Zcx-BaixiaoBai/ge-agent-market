@@ -1,0 +1,11 @@
+{
+  "id": "zcx-baixiaobai/ge-workbench-task-assistant",
+  "name": "任务助手",
+  "version": "0.6.6",
+  "package": "ge-workbench-task-assistant",
+  "tarball": "../../packages/ge-workbench-task-assistant/ge-workbench-task-assistant-0.6.6.tgz",
+  "sha256": "51c90d1139a78d9e896536299f167d1c46a2bfaf1c1f950a006961a03ecc57b8",
+  "screenshot": "../../packages/ge-workbench-task-assistant/docs/screenshots/overview.png",
+  "archivedAt": "2026-11-03",
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。"
+}

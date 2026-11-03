@@ -1,0 +1,11 @@
+{
+  "id": "zcx-baixiaobai/ge-workbench-electric-safety",
+  "name": "用电安全助手",
+  "version": "0.2.0",
+  "package": "ge-workbench-electric-safety",
+  "tarball": "../../packages/ge-workbench-electric-safety/ge-workbench-electric-safety-0.2.0.tgz",
+  "sha256": "d536e1079c54ed896e009d1a6296f5cc6c0039df49533e54511111f1561817c3",
+  "screenshot": "../../packages/ge-workbench-electric-safety/docs/screenshots/overview.png",
+  "archivedAt": "2026-11-03",
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。"
+}
