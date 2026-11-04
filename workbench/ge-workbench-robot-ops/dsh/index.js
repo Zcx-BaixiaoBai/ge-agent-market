@@ -213,10 +213,9 @@ export function apply(ctx, config) {
     // 子进程的 stdout/stderr 全部写进日志，失败时界面能直接显示原因。
     await ensureReady()
     const fd = openSync(loginLog, 'a')
-    const nodeBin = process.env.GE_MCP_NODE || process.execPath
     let child
     try {
-      child = spawn(nodeBin, [cli], {
+      child = spawn(process.execPath, [cli], {
         env: {
           ...process.env,
           ELECTRON_RUN_AS_NODE: '1',
