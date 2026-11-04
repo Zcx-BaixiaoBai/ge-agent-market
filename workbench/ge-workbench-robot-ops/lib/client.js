@@ -113,6 +113,7 @@
       const [loginBusy, setLoginBusy] = useState(false);
       const [loginHint, setLoginHint] = useState("");
       const [loginTried, setLoginTried] = useState(false);
+      const [loginLog, setLoginLog] = useState("");
       const [alertLoading, setAlertLoading] = useState(false);
       const [deviceLoading, setDeviceLoading] = useState(false);
       const [chatOpen, setChatOpen] = useState(false);
@@ -194,13 +195,28 @@
       }, [error, loginTried, startLogin]);
       useEffect(() => {
         if (!loginTried) return void 0;
+        let ticks = 0;
         const timer = setInterval(async () => {
+          ticks += 1;
+          if (ticks > 40) {
+            clearInterval(timer);
+            setLoginHint("\u8FD8\u6CA1\u6709\u68C0\u6D4B\u5230\u767B\u5F55\u5B8C\u6210\u3002\u7A97\u53E3\u53EF\u80FD\u5DF2\u88AB\u5173\u95ED\uFF0C\u53EF\u4EE5\u70B9\u300C\u6253\u5F00\u767B\u5F55\u7A97\u53E3\u300D\u91CD\u65B0\u8BD5\u4E00\u6B21\u3002");
+            return;
+          }
           try {
             const status = await request("/api/robot-ops/status");
             if (status.hasSession) {
               clearInterval(timer);
               setLoginHint("\u767B\u5F55\u6210\u529F\uFF0C\u6B63\u5728\u8BFB\u53D6\u6570\u636E\u2026");
               load(true);
+              return;
+            }
+            const run = status.login;
+            if (run && !run.running && run.exitCode !== null) {
+              clearInterval(timer);
+              const tail = (run.logTail || "").split("\n").slice(-4).join("\n");
+              setLoginLog(tail);
+              setLoginHint(run.exitCode === 0 ? "\u767B\u5F55\u7A97\u53E3\u5DF2\u5173\u95ED\uFF0C\u4F46\u6CA1\u6709\u62FF\u5230\u767B\u5F55\u72B6\u6001\u3002\u8BF7\u91CD\u65B0\u6253\u5F00\u7A97\u53E3\uFF0C\u767B\u5F55\u5B8C\u6210\u540E\u4E0D\u8981\u63D0\u524D\u5173\u95ED\u3002" : `\u767B\u5F55\u7A97\u53E3\u6CA1\u80FD\u5B8C\u6210\uFF08\u9000\u51FA\u7801 ${run.exitCode}\uFF09\u3002${run.spawnError || ""}`);
             }
           } catch {
           }
@@ -746,7 +762,8 @@
               missingSession ? h("button", { type: "button", className: "roBtn roBtn--primary", onClick: startLogin, disabled: loginBusy }, loginBusy ? "\u6B63\u5728\u6253\u5F00\u2026" : "\u6253\u5F00\u767B\u5F55\u7A97\u53E3") : null,
               h("button", { type: "button", className: "roBtn", onClick: () => load(true) }, COPY.refresh)
             ),
-            loginHint ? h("div", { className: "roEmptyText", role: "status" }, loginHint) : null
+            loginHint ? h("div", { className: "roEmptyText", role: "status" }, loginHint) : null,
+            loginLog ? h("pre", { className: "roLog" }, loginLog) : null
           );
         }
         return h(
@@ -1418,6 +1435,23 @@
 .roEmptyTitle { font-size: 15px; font-weight: 600; color: var(--ro-text); margin-bottom: 6px; }
 .roEmptyText { font-size: 13px; max-width: 46ch; margin: 0 auto 12px; }
 .roEmptyCode { display: inline-block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; background: var(--ro-chip); border: 1px solid var(--ro-line-soft); border-radius: 6px; padding: 6px 10px; margin: 6px 0; color: var(--ro-text); overflow-wrap: anywhere; }
+.roLog {
+  text-align: left;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ro-muted);
+  background: var(--ro-sub);
+  border: 1px solid var(--ro-line-soft);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin: 10px auto 0;
+  max-width: 100%;
+  max-height: 120px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 .roEmptyActions { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
 
 .roAlertGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }

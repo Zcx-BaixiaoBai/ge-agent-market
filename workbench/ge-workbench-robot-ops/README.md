@@ -27,7 +27,7 @@
 安装并重启 金鹰 Agent 后，展开左侧栏，点击左上角「工作台」右侧的当前工作台名称，
 选择「高仙机器人助手」。
 
-首次使用会自动弹出高仙平台的浏览器登录窗口（与高仙 MCP 同一套登录工具，账号密码不经过工作台）；
+首次使用会自动弹出高仙平台的浏览器登录窗口（工作台自带登录器，不要求先装高仙 MCP；账号密码不经过工作台）；
 登录完成后会话保存在本机 `~/.robot-partner/session.json`，界面会自动刷新。登录窗口 10 分钟内有效，
 没有会话时界面会给出「打开登录窗口」按钮，不会把空数据当成正常结果。
 
@@ -37,6 +37,7 @@
 |---|---|---|
 | `ROBOT_PARTNER_SESSION_FILE` | 登录会话文件 | `~/.robot-partner/session.json` |
 | `ROBOT_PARTNER_API_BASE` | 业务接口网关 | `https://bot.gs-robot.com` |
+| `ROBOT_PARTNER_BROWSER_PATH` | 登录窗口用的 Chrome/Edge 路径 | 自动探测 |
 | `ROBOT_PARTNER_HTTP_TIMEOUT` | 单次请求超时（毫秒） | `20000` |
 
 快照缓存在 DSH 数据目录的 `robot-ops/snapshot.json`，默认 5 分钟内复用，

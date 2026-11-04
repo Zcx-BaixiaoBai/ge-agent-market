@@ -1,21 +1,14 @@
-// 高仙机器人助手 —— 服务端入口
-//
-// 提供本机只读接口（/api/robot-ops/...）：
-//   GET /status    当前登录状态、数据时间、接口地址
-//   GET /snapshot  集团汇总快照（项目排行 + 设备清单），带缓存与手动刷新
-//   GET /device    单台设备的 7 天趋势与最新告警
-//
-// 数据来自高仙机器人合作伙伴平台的只读查询接口，登录会话与高仙 MCP 共用。
-// 这里不写任何业务系统，也不会创建、删除或改动平台上的数据。
-
 import Schema from '@deepseek-ai/schemastery'
+import { closeSync, openSync } from 'node:fs'
 import { access, mkdir, readFile, rename, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
 import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { spawn } from 'node:child_process'
 
 import { buildDeviceWindow, buildSnapshot, buildTrend, dayRange, DEFAULT_THRESHOLD } from './aggregate.js'
 import { PlatformClient, PlatformError, resolveApiBase, resolveSessionFile } from './platform.js'
+
 
 export const name = 'ge-workbench-robot-ops'
 export const inject = ['connection']
@@ -94,25 +87,32 @@ async function collectTrend(client, startDate, endDate) {
   return buildTrend(rows)
 }
 
-// 登录沿用高仙 MCP 自带的浏览器登录工具：打开独立窗口扫码/登录，成功后写回同一份会话文件。
-// 账号密码不经过工作台。
-export async function resolveAuthCli() {
-  const candidates = []
+// 登录窗口：优先用本包自带的 login-cli.js（不依赖是否装了高仙 MCP），
+// 找不到浏览器或缺依赖时再回退到 MCP 自带的那份。
+const OWN_LOGIN_CLI = fileURLToPath(new URL('./login-cli.js', import.meta.url))
+
+async function exists(file) {
+  try {
+    await access(file)
+    return true
+  } catch {
+    return false
+  }
+}
+
+export async function resolveLoginCli() {
   const override = (process.env.ROBOT_PARTNER_AUTH_CLI || '').trim()
-  if (override) candidates.push(override)
+  if (override && await exists(override)) return override
+  if (await exists(OWN_LOGIN_CLI)) return OWN_LOGIN_CLI
   const entry = (process.env.GE_MCP_ROBOT_PARTNER_ENTRY || '').trim()
-  if (entry) candidates.push(join(dirname(entry), 'auth-cli.js'))
+  if (entry) {
+    const sibling = join(dirname(entry), 'auth-cli.js')
+    if (await exists(sibling)) return sibling
+  }
   const home = process.env.DSH_HOME || join(homedir(), '.dsh')
   for (const profile of ['web', 'tui']) {
-    candidates.push(join(home, 'profiles', profile, 'node_modules', 'ge-mcp-robot-partner', 'dist', 'auth-cli.js'))
-  }
-  for (const candidate of candidates) {
-    try {
-      await access(candidate)
-      return candidate
-    } catch {
-      // 继续找下一个位置
-    }
+    const candidate = join(home, 'profiles', profile, 'node_modules', 'ge-mcp-robot-partner', 'dist', 'auth-cli.js')
+    if (await exists(candidate)) return candidate
   }
   return null
 }
@@ -193,28 +193,52 @@ export function apply(ctx, config) {
     }
   }
 
-  let loginProcess = null
+  const loginLog = join(root, 'login.log')
+  let loginRun = { child: null, startedAt: 0, exitCode: null, logFile: loginLog }
+
+  async function loginLogTail(limit = 800) {
+    try {
+      const raw = await readFile(loginLog, 'utf8')
+      return raw.slice(-limit).trim()
+    } catch {
+      return ''
+    }
+  }
 
   registerJson(ctx, `${API}/login`, ['POST'], async () => {
-    if (loginProcess) return { started: true, already: true }
-    const cli = await resolveAuthCli()
-    if (!cli) {
-      throw fail('没有找到本机的高仙登录工具，请先安装高仙 MCP 插件（ge-mcp-robot-partner）后再试。', 501, 'NO_AUTH_CLI')
-    }
+    if (loginRun.child) return { started: true, already: true, logFile: loginRun.logFile }
+    const cli = await resolveLoginCli()
+    if (!cli) throw fail('没有找到登录器，请重新安装工作台后再试。', 501, 'NO_AUTH_CLI')
+
+    // 子进程的 stdout/stderr 全部写进日志，失败时界面能直接显示原因。
+    await ensureReady()
+    const fd = openSync(loginLog, 'a')
     const nodeBin = process.env.GE_MCP_NODE || process.execPath
-    const child = spawn(nodeBin, [cli], {
-      env: {
-        ...process.env,
-        ELECTRON_RUN_AS_NODE: '1',
-        ROBOT_PARTNER_SESSION_FILE: resolveSessionFile(),
-      },
-      detached: true,
-      stdio: 'ignore',
-    })
+    let child
+    try {
+      child = spawn(nodeBin, [cli], {
+        env: {
+          ...process.env,
+          ELECTRON_RUN_AS_NODE: '1',
+          ROBOT_PARTNER_SESSION_FILE: resolveSessionFile(),
+        },
+        detached: true,
+        stdio: ['ignore', fd, fd],
+      })
+    } catch (error) {
+      closeSync(fd)
+      throw fail(`无法启动登录窗口：${error instanceof Error ? error.message : String(error)}`, 500, 'LOGIN_SPAWN_FAILED')
+    }
+    closeSync(fd)
     child.unref()
-    loginProcess = child
-    child.on('exit', () => { loginProcess = null })
-    return { started: true, already: false }
+    loginRun = { child, startedAt: Date.now(), exitCode: null, logFile: loginLog, cli }
+    child.on('exit', (code) => {
+      loginRun = { ...loginRun, child: null, exitCode: typeof code === 'number' ? code : 0 }
+    })
+    child.on('error', (error) => {
+      loginRun = { ...loginRun, child: null, exitCode: -1, spawnError: error instanceof Error ? error.message : String(error) }
+    })
+    return { started: true, already: false, logFile: loginLog }
   })
 
   registerJson(ctx, `${API}/status`, ['GET'], async () => {
@@ -227,6 +251,13 @@ export function apply(ctx, config) {
       thresholds: current?.thresholds ?? { completionRate: DEFAULT_THRESHOLD },
       error: lastError ? (lastError instanceof Error ? lastError.message : String(lastError)) : null,
       refreshing: Boolean(refreshing),
+      login: {
+        running: Boolean(loginRun.child),
+        startedAt: loginRun.startedAt || null,
+        exitCode: loginRun.exitCode,
+        spawnError: loginRun.spawnError ?? null,
+        logTail: await loginLogTail(),
+      },
     }
   })
 
