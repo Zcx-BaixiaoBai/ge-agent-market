@@ -155,6 +155,37 @@
           "bytes": 312764
         }
       ]
+    },
+    {
+      "id": "zcx-baixiaobai/ge-workbench-robot-ops",
+      "owner": "zcx-baixiaobai",
+      "repository": "ge-workbench-robot-ops",
+      "url": "https://github.com/zcx-baixiaobai/ge-workbench-robot-ops",
+      "name": "高仙机器人助手",
+      "category": "operations",
+      "author": "颜政、张宸熙",
+      "version": "0.3.2",
+      "license": "MIT",
+      "description": {
+        "zh": "高仙机器人助手：汇总各项目清洁机器人的在线、任务、面积与达标情况，支持项目与单台设备下钻、近 7 天趋势和待处理告警。开发者：颜政、张宸熙。",
+        "en": "Gaussian robot assistant: summarizes online status, tasks, cleaned area and target attainment for cleaning robots across projects, with project/device drill-down, 7-day trends and pending alerts. Developers: 颜政、张宸熙."
+      },
+      "distribution": {
+        "type": "github-release",
+        "version": "0.3.2",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.3.2.tgz",
+        "sha256": "6e1e24ab254059740acd1d417c61707fce2712c2517eabac2031f9b71bffecad"
+      },
+      "screenshots": [
+        {
+          "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/docs/screenshots/overview.jpg",
+          "alt": "高仙机器人助手总览：设备在线率、近 7 天作业产出、未达标与告警风险卡、面积趋势与项目排行",
+          "sha256": "b790a6d477c1ec842eef000ba874a19f6f97a28b4e4f19a29a0fd046665ea6b6",
+          "width": 2880,
+          "height": 2000,
+          "bytes": 541980
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,10 @@
+# 高仙机器人助手（ge-workbench-robot-ops）
+#
+# 服务端入口注册在本机接口前缀 /api/robot-ops/ 下，只读查询高仙机器人
+# 合作伙伴平台的设备、任务、告警与达标数据；不提供任务下发或设备写操作。
+# 登录会话沿用本机已有的 ~/.robot-partner/session.json，与高仙 MCP 共用。
+- insert:
+    - id: ge-workbench-robot-ops
+      name: ge-workbench-robot-ops
+      config:
+        root: !!js dshHomePath('robot-ops')
