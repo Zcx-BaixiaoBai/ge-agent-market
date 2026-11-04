@@ -117,6 +117,15 @@ export async function resolveLoginCli() {
   return null
 }
 
+async function pluginVersion() {
+  try {
+    const raw = await readFile(new URL('../package.json', import.meta.url), 'utf8')
+    return JSON.parse(raw).version ?? ''
+  } catch {
+    return ''
+  }
+}
+
 export function apply(ctx, config) {
   const root = config.root
   const snapshotFile = join(root, 'snapshot.json')
@@ -205,7 +214,7 @@ export function apply(ctx, config) {
     }
   }
 
-  registerJson(ctx, `${API}/login`, ['POST'], async () => {
+  registerJson(ctx, `${API}/login`, ['GET', 'POST'], async () => {
     if (loginRun.child) return { started: true, already: true, logFile: loginRun.logFile }
     const cli = await resolveLoginCli()
     if (!cli) throw fail('没有找到登录器，请重新安装工作台后再试。', 501, 'NO_AUTH_CLI')
@@ -248,6 +257,8 @@ export function apply(ctx, config) {
       hasSession: await client.hasSession(),
       updatedAt: current?.fetchedAt ?? null,
       thresholds: current?.thresholds ?? { completionRate: DEFAULT_THRESHOLD },
+      version: await pluginVersion(),
+      routes: ['/login', '/status', '/snapshot', '/device', '/alerts'].map((suffix) => `${API}${suffix}`),
       error: lastError ? (lastError instanceof Error ? lastError.message : String(lastError)) : null,
       refreshing: Boolean(refreshing),
       login: {
@@ -264,7 +275,7 @@ export function apply(ctx, config) {
     const url = new URL(request.url)
     const force = url.searchParams.get('refresh') === '1'
     const result = await snapshot({ force })
-    return result
+    return { ...result, version: await pluginVersion() }
   })
 
   const alertsCache = { at: 0, payload: null }

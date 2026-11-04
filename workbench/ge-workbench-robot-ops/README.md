@@ -51,6 +51,15 @@
 - `GET /api/robot-ops/snapshot`：汇总快照（`?refresh=1` 强制刷新）
 - `GET /api/robot-ops/device?sn=…`：单台设备的 7 天趋势与告警
 
+## 排查：界面能打开但接口 404
+
+说明只加载了前端，插件层没启用。按顺序检查：
+
+1. 完整退出金鹰 Agent（关闭窗口不等于退出），重新打开；
+2. 在「工作台市场 → 已安装」确认该工作台是启用状态；
+3. 在 profile 的 `package.json` 里确认 `dsh.profile.bundles` 含 `ge-workbench-robot-ops`；
+4. 用 `dsh --profile web --dump-config` 应能看到 `# == ge-workbench-robot-ops` 这一段。
+
 ## 开发
 
 ```bash

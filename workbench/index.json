@@ -164,7 +164,7 @@
       "name": "高仙机器人助手",
       "category": "operations",
       "author": "颜政、张宸熙",
-      "version": "0.3.4",
+      "version": "0.3.5",
       "license": "MIT",
       "description": {
         "zh": "高仙机器人助手：汇总各项目清洁机器人的在线、任务、面积与达标情况，支持项目与单台设备下钻、近 7 天趋势和待处理告警。开发者：颜政、张宸熙。",
@@ -172,9 +172,9 @@
       },
       "distribution": {
         "type": "github-release",
-        "version": "0.3.4",
-        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.3.4.tgz",
-        "sha256": "8347f8ce1b5bd05fb75d2bb57605a1777ac745d4779e7ea691eef263d4994fc6"
+        "version": "0.3.5",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.3.5.tgz",
+        "sha256": "b94365736edcb39efb9f1d08798324126d91c71fd44b05219cd5a628cc45d0a6"
       },
       "screenshots": [
         {

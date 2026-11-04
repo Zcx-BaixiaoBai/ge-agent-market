@@ -114,6 +114,7 @@
       const [loginHint, setLoginHint] = useState("");
       const [loginTried, setLoginTried] = useState(false);
       const [loginLog, setLoginLog] = useState("");
+      const [serverVersion, setServerVersion] = useState("");
       const [alertLoading, setAlertLoading] = useState(false);
       const [deviceLoading, setDeviceLoading] = useState(false);
       const [chatOpen, setChatOpen] = useState(false);
@@ -121,7 +122,7 @@
       const [query, setQuery] = useState("");
       const [onlyLow, setOnlyLow] = useState(false);
       const [sortKey, setSortKey] = useState("completeness");
-      const request = useCallback(async (path) => {
+      const request = useCallback(async (path, options = {}) => {
         const response = await fetch(path, { credentials: "same-origin", cache: "no-store" });
         let body2 = {};
         try {
@@ -130,7 +131,8 @@
           body2 = {};
         }
         if (!response.ok) {
-          const failure = new Error(body2?.error || `\u8BF7\u6C42\u5931\u8D25\uFF08HTTP ${response.status}\uFF09`);
+          const method = String(options?.method || "GET").toUpperCase();
+          const failure = new Error(body2?.error || `\u8BF7\u6C42\u5931\u8D25\uFF08${method} ${path} \u2192 HTTP ${response.status}\uFF09`);
           failure.code = body2?.code;
           throw failure;
         }
@@ -142,6 +144,7 @@
         try {
           const result = await request(`/api/robot-ops/snapshot${force ? "?refresh=1" : ""}`);
           setData(result.snapshot);
+          if (result.version) setServerVersion(result.version);
           if (result.error) {
             setNotice({ tone: "warn", text: `\u8FD9\u6B21\u5237\u65B0\u6CA1\u6709\u6210\u529F\uFF0C\u9875\u9762\u663E\u793A\u7684\u662F ${timeText(result.snapshot?.fetchedAt)} \u7684\u6570\u636E\uFF1A${result.error}` });
           } else {
@@ -178,10 +181,17 @@
         setLoginBusy(true);
         setLoginHint("");
         try {
-          const result = await request("/api/robot-ops/login", { method: "POST" });
+          let result;
+          try {
+            result = await request("/api/robot-ops/login", { method: "POST" });
+          } catch (postError) {
+            if (!/HTTP 40[45]/.test(postError.message)) throw postError;
+            result = await request("/api/robot-ops/login");
+          }
           setLoginHint(result.already ? "\u767B\u5F55\u7A97\u53E3\u5DF2\u7ECF\u6253\u5F00\uFF0C\u8BF7\u5728\u90A3\u8FB9\u7684\u6D4F\u89C8\u5668\u91CC\u5B8C\u6210\u767B\u5F55\u3002" : "\u5DF2\u6253\u5F00\u767B\u5F55\u7A97\u53E3\uFF0C\u8BF7\u5728\u5F39\u51FA\u7684\u6D4F\u89C8\u5668\u91CC\u767B\u5F55\uFF1B\u5B8C\u6210\u540E\u8FD9\u91CC\u4F1A\u81EA\u52A8\u5237\u65B0\u3002");
         } catch (failure) {
-          setLoginHint(failure.message);
+          setLoginHint(/HTTP 404/.test(failure.message) ? `${failure.message}\u3002\u8FD9\u8BF4\u660E\u5DE5\u4F5C\u53F0\u670D\u52A1\u6CA1\u6709\u52A0\u8F7D\uFF1A\u8BF7\u5B8C\u6574\u9000\u51FA\u91D1\u9E70 Agent\uFF08\u2318Q\uFF0C\u4E0D\u662F\u53EA\u5173\u7A97\u53E3\uFF09\u540E\u91CD\u65B0\u6253\u5F00\u3002` : failure.message);
+          setLoginLog(failure.message);
         } finally {
           setLoginBusy(false);
         }
@@ -432,7 +442,8 @@
         h(
           "div",
           { className: "roBarRight" },
-          h("span", { className: "roStamp" }, data?.fetchedAt ? `${timeText(data.fetchedAt)} \u66F4\u65B0` : "\u5C1A\u672A\u53D6\u6570"),
+          h("span", { className: "roStamp", title: serverVersion ? `\u5DE5\u4F5C\u53F0\u7248\u672C ${serverVersion}` : "" }, data?.fetchedAt ? `${timeText(data.fetchedAt)} \u66F4\u65B0` : "\u5C1A\u672A\u53D6\u6570"),
+          serverVersion ? h("span", { className: "roStamp" }, `v${serverVersion}`) : null,
           h("button", { type: "button", className: "roBtn", onClick: () => load(true), disabled: loading, title: "\u91CD\u65B0\u62C9\u53D6\u5E73\u53F0\u6570\u636E" }, loading ? COPY.refreshing : COPY.refresh),
           h("button", { type: "button", className: "roBtn", onClick: startAi, disabled: aiBusy }, aiBusy ? COPY.aiBusy : COPY.ai),
           chatOpen ? h("button", { type: "button", className: "roBtn roBtn--ghost", onClick: () => setChatOpen(false) }, "\u6536\u8D77\u5BF9\u8BDD") : null
@@ -749,6 +760,22 @@
           return h("div", { className: "roEmpty" }, h("div", { className: "roEmptyTitle" }, "\u6B63\u5728\u8BFB\u53D6\u673A\u5668\u4EBA\u8FD0\u884C\u6570\u636E\u2026"));
         }
         if (!data) {
+          const serverMissing = Boolean(error && /HTTP 404/.test(error.message));
+          if (serverMissing) {
+            return h(
+              "div",
+              { className: "roEmpty" },
+              h("div", { className: "roEmptyTitle" }, "\u5DE5\u4F5C\u53F0\u670D\u52A1\u6CA1\u6709\u542F\u7528"),
+              h("div", { className: "roEmptyText" }, "\u754C\u9762\u5DF2\u7ECF\u52A0\u8F7D\uFF0C\u4F46\u540E\u53F0\u63A5\u53E3\u8FD4\u56DE 404\uFF0C\u8BF4\u660E\u8FD9\u4E2A\u5305\u53EA\u52A0\u8F7D\u4E86\u524D\u7AEF\u3001\u6CA1\u6709\u542F\u7528\u63D2\u4EF6\u5C42\u3002\u5E38\u89C1\u539F\u56E0\uFF1A\u5B89\u88C5\u540E\u6CA1\u6709\u628A ge-workbench-robot-ops \u52A0\u5165\u63D2\u4EF6\u5217\u8868\uFF0C\u6216\u5E94\u7528\u6CA1\u6709\u5B8C\u6574\u91CD\u542F\u3002"),
+              h("pre", { className: "roLog" }, error.message),
+              h("div", { className: "roEmptyText" }, "\u5904\u7406\u987A\u5E8F\uFF1A\u2460 \u5B8C\u6574\u9000\u51FA\u91D1\u9E70 Agent\uFF08\u4E0D\u662F\u53EA\u5173\u7A97\u53E3\uFF09\uFF1B\u2461 \u5728\u300C\u5DE5\u4F5C\u53F0\u5E02\u573A \u2192 \u5DF2\u5B89\u88C5\u300D\u91CC\u786E\u8BA4\u5B83\u662F\u542F\u7528\u72B6\u6001\u5E76\u91CD\u65B0\u52A0\u8F7D\uFF1B\u2462 \u4ECD\u4E0D\u884C\u65F6\uFF0C\u5728 profile \u7684 package.json \u91CC\u786E\u8BA4 dsh.profile.bundles \u542B ge-workbench-robot-ops\uFF0C\u518D\u91CD\u542F\u3002"),
+              h(
+                "div",
+                { className: "roEmptyActions" },
+                h("button", { type: "button", className: "roBtn", onClick: () => load(true) }, COPY.refresh)
+              )
+            );
+          }
           const missingSession = error?.code === "NO_SESSION" || error?.code === "BAD_SESSION" || error?.code === "SESSION_EXPIRED";
           return h(
             "div",

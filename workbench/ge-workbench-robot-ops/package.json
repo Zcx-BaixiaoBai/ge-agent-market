@@ -1,6 +1,6 @@
 {
   "name": "ge-workbench-robot-ops",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "高仙机器人助手：汇总各项目清洁机器人的在线、任务、面积与达标情况，可下钻到项目与单台设备",
   "type": "module",
   "main": "dsh/index.js",

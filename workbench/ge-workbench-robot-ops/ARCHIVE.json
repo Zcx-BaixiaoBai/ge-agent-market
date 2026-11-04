@@ -1,11 +1,11 @@
 {
   "id": "zcx-baixiaobai/ge-workbench-robot-ops",
   "name": "高仙机器人助手",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "package": "ge-workbench-robot-ops",
-  "tarball": "../../packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.3.4.tgz",
-  "sha256": "8347f8ce1b5bd05fb75d2bb57605a1777ac745d4779e7ea691eef263d4994fc6",
+  "tarball": "../../packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.3.5.tgz",
+  "sha256": "b94365736edcb39efb9f1d08798324126d91c71fd44b05219cd5a628cc45d0a6",
   "screenshot": "../../packages/ge-workbench-robot-ops/docs/screenshots/overview.jpg",
   "archivedAt": "2026-11-04",
-  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.3.3 修复登录窗口无法弹出的问题，0.3.4 将登录子进程固定为 process.execPath。"
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.3.4 将登录子进程固定为 process.execPath；0.3.5 增加登录接口 GET 回退、工作台版本号与登录日志回显，便于定位 Windows 端不弹窗的原因。"
 }
