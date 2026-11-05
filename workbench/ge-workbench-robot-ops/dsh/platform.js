@@ -110,6 +110,34 @@ export class PlatformClient {
     return this.#store.exists()
   }
 
+  // 少数平台接口只接受 GET（排班版本等）。
+  async get(path) {
+    let session = await this.#store.read()
+    let response = await this.#sendGet(path, session.accessToken)
+    if (response.status === 401) {
+      session = await this.#refresh(session)
+      response = await this.#sendGet(path, session.accessToken)
+    }
+    const payload = await safeJson(response)
+    if (!response.ok) {
+      throw new PlatformError(`平台请求失败（HTTP ${response.status}）`, { code: 'HTTP_ERROR', status: 502 })
+    }
+    if (payload && typeof payload === 'object' && 'data' in payload && !('code' in payload)) return payload.data
+    return payload
+  }
+
+  async #sendGet(path, token) {
+    try {
+      return await this.#fetch(`${this.#baseUrl}${path}`, {
+        method: 'GET',
+        headers: { Accept: 'application/json', Authorization: `Bearer ${token}` },
+        signal: AbortSignal.timeout(this.#timeoutMs),
+      })
+    } catch (error) {
+      throw new PlatformError(`无法连接高仙平台：${error instanceof Error ? error.message : String(error)}`, { code: 'NETWORK', status: 502 })
+    }
+  }
+
   async request(path, body) {
     let session = await this.#store.read()
     let response = await this.#send(path, body, session.accessToken)
@@ -227,6 +255,39 @@ export class PlatformClient {
       currentViewDate: endDate,
       orderBy: 'completeness desc',
     })
+  }
+
+  // 单机视图：平台实时页用的同一组只读接口
+  async viewRobot(productId) {
+    return this.request('/gs-robot/rest/cloud/robot/viewRobot', { productId })
+  }
+
+  async currentSite(robotSn) {
+    return this.request('/site/v1/getCurrentRobotSiteForWeb', { robotSn })
+  }
+
+  async scheduleVersion(robotSn) {
+    return this.get(`/sch-tasks/v1alpha1/robots/${robotSn}/schTasksVersion`)
+  }
+
+  async workModes(robotSn) {
+    return this.request('/robot-task/fusionTask/web/app/workMode/v1/robot/queryWorkModes', { robotSn })
+  }
+
+  async taskTimeline(robotSn, startTime, endTime, pageSize = 120) {
+    return this.request('/timeline/v1/taskTimeline/listWithEvents', {
+      robotSn,
+      startTime,
+      endTime,
+      pageSize,
+      direction: 'down',
+      pageToken: '',
+      abnormalOnly: false,
+    })
+  }
+
+  async listDailyTasks(robotSn, date, measureType = 1) {
+    return this.request('/webbff/v1/task/listCleaningDailyTasks', { robotSn, date, measureType })
   }
 
   async getTaskPanel(robotSn, startDate, endDate, measureType = 1) {

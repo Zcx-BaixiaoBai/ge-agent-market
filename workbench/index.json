@@ -164,26 +164,26 @@
       "name": "高仙机器人助手",
       "category": "operations",
       "author": "颜政、张宸熙",
-      "version": "0.3.5",
+      "version": "0.11.2",
       "license": "MIT",
       "description": {
-        "zh": "高仙机器人助手：汇总各项目清洁机器人的在线、任务、面积与达标情况，支持项目与单台设备下钻、近 7 天趋势和待处理告警。开发者：颜政、张宸熙。",
-        "en": "Gaussian robot assistant: summarizes online status, tasks, cleaned area and target attainment for cleaning robots across projects, with project/device drill-down, 7-day trends and pending alerts. Developers: 颜政、张宸熙."
+        "zh": "高仙机器人助手：调度台以单台设备为中心查看机型、运行数据与调度信息，集团总览汇总各项目机器人的在线、任务、面积与达标情况。开发者：颜政、张宸熙。",
+        "en": "Gaussian robot assistant: a device-centric dispatch console showing model, runtime and scheduling details, plus a group overview of online status, tasks, cleaned area and target attainment across projects. Developers: 颜政、张宸熙."
       },
       "distribution": {
         "type": "github-release",
-        "version": "0.3.5",
-        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.3.5.tgz",
-        "sha256": "b94365736edcb39efb9f1d08798324126d91c71fd44b05219cd5a628cc45d0a6"
+        "version": "0.11.2",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.11.2.tgz",
+        "sha256": "9ade6f04b54731743d6b9a30008a31f1b6702229354f4078034cdeb0b4fd554b"
       },
       "screenshots": [
         {
-          "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/docs/screenshots/overview.jpg",
-          "alt": "高仙机器人助手总览：设备在线率、近 7 天作业产出、未达标与告警风险卡、面积趋势与项目排行",
-          "sha256": "b790a6d477c1ec842eef000ba874a19f6f97a28b4e4f19a29a0fd046665ea6b6",
-          "width": 2880,
-          "height": 2000,
-          "bytes": 541980
+          "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/docs/screenshots/overview.png",
+          "alt": "调度台：单台设备的机型图、近 7 天完成率与在线率、所在地图与排班、近 24 小时事件与今日任务",
+          "sha256": "abd002a5aeb3aaf9a356a19614dfb7cc76eb3c9ce931683efd36c3b26a7e7da5",
+          "width": 1302,
+          "height": 805,
+          "bytes": 312813
         }
       ]
     }

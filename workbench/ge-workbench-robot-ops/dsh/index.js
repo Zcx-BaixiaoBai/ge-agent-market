@@ -278,6 +278,98 @@ export function apply(ctx, config) {
     return { ...result, version: await pluginVersion() }
   })
 
+  registerJson(ctx, `${API}/console`, ['GET'], async (request) => {
+    const url = new URL(request.url)
+    const sn = (url.searchParams.get('sn') || '').trim()
+    if (!sn) throw fail('缺少设备编号 sn', 400, 'BAD_REQUEST')
+
+    const { snapshot: latest } = await snapshot()
+    const device = (latest?.devices ?? []).find((entry) => entry.sn === sn)
+    if (!device) throw fail('没有找到这台设备，请刷新后再试。', 404, 'NOT_FOUND')
+
+    const now = Date.now()
+    const dayStart = now - 24 * 60 * 60 * 1000
+
+    const [view, site, schedule, modes, timeline] = await Promise.all([
+      client.viewRobot(sn).catch(() => null),
+      client.currentSite(sn).catch(() => null),
+      client.scheduleVersion(sn).catch(() => null),
+      client.workModes(sn).catch(() => null),
+      client.taskTimeline(sn, dayStart, now).catch(() => null),
+    ])
+
+    const events = (Array.isArray(timeline?.taskTimelines) ? timeline.taskTimelines : []).map((entry) => {
+      const metas = entry?.metas ?? {}
+      const system = metas.systemContext ?? {}
+      const siteContext = metas.siteContext ?? {}
+      return {
+        id: entry?.id ?? '',
+        time: Number(entry?.timestamp) || null,
+        type: typeof entry?.eventTypeName === 'string' ? entry.eventTypeName : '',
+        category: typeof entry?.eventCategory === 'string' ? entry.eventCategory : '',
+        map: typeof system.currentMapName === 'string' ? system.currentMapName : (siteContext.mapName ?? ''),
+        cleanWater: Number(system.cleanWaterPercent) || 0,
+        dirtyWater: Number(system.dirtyWaterPercent) || 0,
+        station: typeof system.stationState === 'string' ? system.stationState : '',
+        navigation: Number(system.naviStatus) || 0,
+      }
+    })
+
+    const workModes = (Array.isArray(modes?.data) ? modes.data : Array.isArray(modes) ? modes : []).map((mode) => ({
+      id: mode?.id ?? '',
+      mode: typeof mode?.mode === 'string' ? mode.mode : '',
+      subType: typeof mode?.subType === 'string' ? mode.subType : '',
+      recommended: mode?.recommended === true,
+      strengthOptions: Array.isArray(mode?.strengthOptions) ? mode.strengthOptions : [],
+      defaultStrength: typeof mode?.defaultStrength === 'string' ? mode.defaultStrength : '',
+    }))
+
+    return {
+      device: {
+        ...device,
+        modelType: typeof view?.modelType === 'string' ? view.modelType : '',
+        softwareVersion: typeof view?.softwareVersion === 'string' ? view.appVersion || view.softwareVersion : '',
+        scene: typeof view?.scene === 'string' ? view.scene : '',
+        warrantyExpireTime: typeof view?.warrantyExpireTime === 'string' ? view.warrantyExpireTime : '',
+        customerName: typeof view?.customerName === 'string' ? view.customerName : '',
+      },
+      site: {
+        name: typeof site?.siteName === 'string' ? site.siteName : (typeof site?.name === 'string' ? site.name : ''),
+        raw: site ?? null,
+      },
+      schedule: {
+        version: typeof schedule?.robotSchTaskVersion === 'string' ? schedule.robotSchTaskVersion : '',
+        semesters: Array.isArray(schedule?.robotSemester) ? schedule.robotSemester : [],
+      },
+      workModes,
+      events,
+      fetchedAt: new Date().toISOString(),
+    }
+  })
+
+  registerJson(ctx, `${API}/tasks`, ['GET'], async (request) => {
+    const url = new URL(request.url)
+    const sn = (url.searchParams.get('sn') || '').trim()
+    if (!sn) throw fail('缺少设备编号 sn', 400, 'BAD_REQUEST')
+    const date = (url.searchParams.get('date') || dayRange(1).endDate).slice(0, 10)
+    const payload = await client.listDailyTasks(sn, date).catch((error) => {
+      throw fail(`读取当日任务失败：${error instanceof Error ? error.message : String(error)}`, 502, 'TASKS_FAILED')
+    })
+    const tasks = (Array.isArray(payload?.tasks) ? payload.tasks : []).map((task) => ({
+      name: typeof task?.taskName === 'string' ? task.taskName : '',
+      map: typeof task?.mapName === 'string' ? task.mapName : '',
+      mode: typeof task?.cleaningMode === 'string' ? task.cleaningMode : '',
+      startTime: typeof task?.startTime === 'string' ? task.startTime : '',
+      endTime: typeof task?.endTime === 'string' ? task.endTime : '',
+      area: Number(task?.totalArea) || 0,
+      coverage: Number(task?.coverageArea) || 0,
+      completeness: Number(task?.completeness) || 0,
+      compliant: task?.isCompliant === true,
+      status: task?.taskEndStatus ?? null,
+    }))
+    return { date, tasks, fetchedAt: new Date().toISOString() }
+  })
+
   const alertsCache = { at: 0, payload: null }
 
   registerJson(ctx, `${API}/alerts`, ['GET'], async (request) => {

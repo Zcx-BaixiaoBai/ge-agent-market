@@ -1,7 +1,7 @@
 {
   "name": "ge-workbench-robot-ops",
-  "version": "0.3.5",
-  "description": "高仙机器人助手：汇总各项目清洁机器人的在线、任务、面积与达标情况，可下钻到项目与单台设备",
+  "version": "0.11.2",
+  "description": "高仙机器人助手：调度台以设备为中心查看机型、运行数据与调度信息，集团总览汇总各项目机器人的在线、任务、面积与达标情况",
   "type": "module",
   "main": "dsh/index.js",
   "exports": {
@@ -13,8 +13,8 @@
   "files": [
     "dsh",
     "lib/client.js",
+    "docs/screenshots/overview.png",
     "cordis.patch.yml",
-    "docs/screenshots",
     "README.md",
     "LICENSE"
   ],
@@ -43,8 +43,8 @@
     "@deepseek-ai/schemastery": ">=3.18.0 <4.0.0"
   },
   "scripts": {
-    "build": "esbuild src/entry.jsx --bundle --format=iife --target=es2022 --outfile=lib/client.js --jsx-factory=h",
-    "pretest": "esbuild src/panel.jsx --format=esm --outfile=test/.panel.mjs --jsx-factory=h",
+    "build": "esbuild src/entry.jsx --bundle --format=iife --target=es2022 --outfile=lib/client.js --jsx-factory=h --loader:.png=dataurl --loader:.jpg=dataurl",
+    "pretest": "esbuild src/panel.jsx --bundle --format=esm --outfile=test/.panel.mjs --jsx-factory=h --loader:.png=dataurl --loader:.jpg=dataurl",
     "test": "node --test test/aggregate.test.mjs test/server.test.mjs test/client.test.mjs test/render.test.mjs",
     "check": "npm run build && npm test"
   },

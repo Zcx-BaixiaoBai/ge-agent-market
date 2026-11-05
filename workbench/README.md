@@ -8,7 +8,7 @@
 | `ge-workbench-electric-safety/` | 用电安全助手 | 0.2.0 | operations | `packages/ge-workbench-electric-safety/ge-workbench-electric-safety-0.2.0.tgz` |
 | `ge-workbench-task-assistant/` | 任务助手 | 0.6.6 | productivity | `packages/ge-workbench-task-assistant/ge-workbench-task-assistant-0.6.6.tgz` |
 | `ge-workbench-engineering-progress/` | 工程进度追踪 | 0.1.3 | engineering | `packages/ge-workbench-engineering-progress/ge-workbench-engineering-progress-0.1.3.tgz` |
-| `ge-workbench-robot-ops/` | 高仙机器人助手 | 0.3.5 | operations | `packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.3.5.tgz` |
+| `ge-workbench-robot-ops/` | 高仙机器人助手 | 0.11.2 | operations | `packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.11.2.tgz` |
 
 - 每个目录内的 `ARCHIVE.json` 记录市场条目 ID、版本、安装包相对路径、sha256 与截图。
 - 安装包与截图仍放在 `packages/<name>/`；市场安装走自托管的 github-release tgz，不依赖本目录。
@@ -26,4 +26,4 @@
 
 | 高仙机器人助手 |
 |---|
-| ![高仙机器人助手](../packages/ge-workbench-robot-ops/docs/screenshots/overview.jpg) |
+| ![高仙机器人助手](../packages/ge-workbench-robot-ops/docs/screenshots/overview.png) |
