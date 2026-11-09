@@ -1,11 +1,11 @@
 {
   "id": "zcx-baixiaobai/ge-workbench-robot-ops",
   "name": "高仙机器人助手",
-  "version": "0.11.2",
+  "version": "0.14.0",
   "package": "ge-workbench-robot-ops",
-  "tarball": "../../packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.11.2.tgz",
-  "sha256": "9ade6f04b54731743d6b9a30008a31f1b6702229354f4078034cdeb0b4fd554b",
+  "tarball": "../../packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.14.0.tgz",
+  "sha256": "7d34bdcd5ae61caf21d6437eee037f1628d5a44e757084c387487f6e8f8a4f2f",
   "screenshot": "../../packages/ge-workbench-robot-ops/docs/screenshots/overview.png",
-  "archivedAt": "2026-11-05",
-  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.11.2 新增以单台设备为中心的调度台默认首页与集团总览切换，机型图已内联进 lib/client.js，发布包不再附带 assets/ 原始图（安装器上限 8 MiB）。"
+  "archivedAt": "2026-11-09",
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.14.0 增加设备实时状态与点云地图（dsh/live.js，socket.io 只订阅状态），新增 socket.io-client 运行时依赖；发布包 4.9 MB，低于安装器 8 MiB 上限。"
 }

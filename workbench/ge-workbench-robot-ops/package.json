@@ -1,6 +1,6 @@
 {
   "name": "ge-workbench-robot-ops",
-  "version": "0.11.2",
+  "version": "0.14.0",
   "description": "高仙机器人助手：调度台以设备为中心查看机型、运行数据与调度信息，集团总览汇总各项目机器人的在线、任务、面积与达标情况",
   "type": "module",
   "main": "dsh/index.js",
@@ -56,6 +56,7 @@
     "react-dom": "^18.3.1"
   },
   "dependencies": {
-    "playwright-core": "^1.64.1"
+    "playwright-core": "^1.64.1",
+    "socket.io-client": "^4.8.4"
   }
 }

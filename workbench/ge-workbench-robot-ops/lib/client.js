@@ -91,6 +91,36 @@
     if (typeof date !== "string" || date.length < 10) return date || "";
     return `${Number(date.slice(5, 7))}/${Number(date.slice(8, 10))}`;
   }
+  function liveStateLabel(device, live) {
+    if (device && device.online === false) return "\u79BB\u7EBF";
+    if (live) {
+      if (live.emergency) return "\u6025\u505C";
+      if (live.charging) return "\u5145\u7535\u4E2D";
+      if (live.cleaning) return "\u4F5C\u4E1A\u4E2D";
+      if (live.autoMode) return "\u5F85\u673A";
+      return "\u7A7A\u95F2";
+    }
+    const text = String(device?.statusText || "");
+    if (/任务|作业|导航|乘梯/.test(text)) return "\u8FD0\u884C\u4E2D";
+    if (/充电/.test(text)) return "\u5145\u7535\u4E2D";
+    if (/暂停/.test(text)) return "\u6682\u505C";
+    if (/低功耗|休息/.test(text)) return "\u5F85\u673A";
+    if (/空闲/.test(text)) return "\u7A7A\u95F2";
+    return text || "\u672A\u77E5";
+  }
+  function deviceTone(device, live) {
+    if (device && device.online === false) return "off";
+    if (live) {
+      if (live.emergency) return "off";
+      if (live.charging) return "charge";
+      if (live.cleaning) return "on";
+      return "idle";
+    }
+    const text = String(device?.statusText || "");
+    if (/任务|作业|导航|乘梯/.test(text)) return "on";
+    if (/充电/.test(text)) return "charge";
+    return "idle";
+  }
   var EVENT_LABELS = {
     WARNING_TRIGGER: "\u544A\u8B66\u89E6\u53D1",
     WARNING_RECOVER: "\u544A\u8B66\u6062\u590D",
@@ -161,6 +191,10 @@
       const [selectedSn, setSelectedSn] = useState("");
       const [consoleData, setConsoleData] = useState(null);
       const [dispatch, setDispatch] = useState(null);
+      const [mapData, setMapData] = useState(null);
+      const [mapBusy, setMapBusy] = useState(false);
+      const [mapZoom, setMapZoom] = useState(false);
+      const [liveState, setLiveState] = useState(null);
       const [consoleTasks, setConsoleTasks] = useState(null);
       const [consoleBusy, setConsoleBusy] = useState(false);
       const [tasksOpen, setTasksOpen] = useState(false);
@@ -316,8 +350,43 @@
       useEffect(() => {
         if (!selectedSn || view.name !== "console") return;
         if (consoleData?.device?.sn === selectedSn) return;
+        if (consoleBusy) return;
         loadConsole(selectedSn);
-      }, [view.name, selectedSn, consoleData, loadConsole]);
+      }, [view.name, selectedSn, consoleData, consoleBusy, loadConsole]);
+      useEffect(() => {
+        if (!selectedSn || view.name !== "console") return void 0;
+        let alive = true;
+        let timer = null;
+        const pull = async () => {
+          try {
+            const payload = await request(`/api/robot-ops/live?sn=${encodeURIComponent(selectedSn)}`);
+            if (alive && payload?.state) setLiveState(payload.state);
+          } catch {
+          }
+        };
+        pull();
+        timer = setInterval(pull, 5e3);
+        return () => {
+          alive = false;
+          if (timer) clearInterval(timer);
+        };
+      }, [selectedSn, view.name, request]);
+      useEffect(() => {
+        if (!selectedSn || view.name !== "console") return void 0;
+        if (mapData?.sn === selectedSn) return void 0;
+        let alive = true;
+        setMapBusy(true);
+        request(`/api/robot-ops/map?sn=${encodeURIComponent(selectedSn)}`).then((payload) => {
+          if (alive) setMapData({ ...payload, sn: selectedSn });
+        }).catch(() => {
+          if (alive) setMapData({ sn: selectedSn, image: null });
+        }).finally(() => {
+          if (alive) setMapBusy(false);
+        });
+        return () => {
+          alive = false;
+        };
+      }, [selectedSn, view.name, mapData, request]);
       const openDevice = useCallback(async (sn) => {
         setView({ name: "device", sn });
         setDevice(null);
@@ -869,6 +938,7 @@
         const days = consoleData?.window?.days ?? [];
         const maxArea = Math.max(1, ...days.map((day) => day.area));
         const tasks = consoleTasks?.tasks ?? [];
+        const live = dispatch?.live ?? null;
         const today = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
         const activeTask = tasks.find((task) => !task.endTime || task.endTime.slice(0, 10) >= today);
         const doneTasks = tasks.length - (activeTask ? 1 : 0);
@@ -908,6 +978,42 @@
           ),
           hint ? h("div", { className: "roMeterHint" }, hint) : null
         );
+        const mapBlock = () => {
+          const grid = mapData?.grid;
+          return h(
+            "div",
+            { className: "roMapBlock" },
+            h(
+              "div",
+              { className: "roMapHead" },
+              h("span", { className: "roCardLabel" }, "\u70B9\u4E91\u5730\u56FE"),
+              h("span", { className: "roCardTag", title: mapData?.name || "" }, mapBusy ? "\u8BFB\u53D6\u4E2D\u2026" : mapData?.name || "\u6682\u65E0")
+            ),
+            mapData?.image ? h(
+              "div",
+              {
+                className: "roMapViewport",
+                role: "button",
+                tabIndex: 0,
+                title: "\u70B9\u51FB\u67E5\u770B\u5927\u56FE",
+                onClick: () => setMapZoom(true),
+                onKeyDown: (event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setMapZoom(true);
+                  }
+                }
+              },
+              h("img", { className: "roMapImage", src: mapData.image, alt: mapData.name || "\u5730\u56FE" })
+            ) : h("div", { className: "roMapEmpty" }, mapBusy ? "\u6B63\u5728\u52A0\u8F7D\u5730\u56FE\u2026" : "\u8FD9\u53F0\u8BBE\u5907\u6682\u65E0\u53EF\u7528\u5730\u56FE"),
+            h(
+              "div",
+              { className: "roMapMeta" },
+              h("span", null, grid?.resolution ? `\u7CBE\u5EA6 ${Number(grid.resolution).toFixed(2)} m/px` : "\u2014"),
+              h("span", null, liveState ? liveState.located ? "\u5DF2\u5B9A\u4F4D" : "\u672A\u5B9A\u4F4D" : "\u2014")
+            )
+          );
+        };
         const dispatchPanel = () => {
           if (!dispatch) return h("div", { className: "roCardEmpty" }, "\u6B63\u5728\u8BFB\u53D6\u8C03\u5EA6\u4FE1\u606F\u2026");
           const latest = dispatch.events?.[0] ?? null;
@@ -1064,23 +1170,37 @@
               h("i", null)
             ),
             h(
-              "section",
-              { className: "roFloatCard", "aria-label": "\u8BBE\u5907\u8FD0\u884C\u6570\u636E" },
-              h("div", { className: "roFloatLabel" }, "\u673A\u578B\u5C55\u793A"),
-              h("div", { className: "roFloatModel" }, model),
-              h("div", { className: "roFloatSub" }, "\u8BBE\u5907\u8FD0\u884C\u6570\u636E"),
+              "div",
+              { className: "roLeftCol" },
               h(
-                "div",
-                { className: "roFloatRows" },
-                h("div", { className: "roFloatRow" }, h("span", null, "\u5F53\u524D\u8BBE\u5907"), h("b", { title: device2.alias }, device2.alias)),
-                h("div", { className: "roFloatRow" }, h("span", null, "\u6240\u5728\u5730\u56FE"), h("b", { title: device2.map || "\u2014" }, device2.map || "\u2014")),
-                h("div", { className: "roFloatRow" }, h("span", null, "\u4EFB\u52A1\u72B6\u6001"), h("b", { title: activeTask?.name ?? "" }, activeTask ? "\u6267\u884C\u4E2D" : tasks.length ? `\u5DF2\u5B8C\u6210 ${doneTasks} \u4E2A` : "\u65E0\u4EFB\u52A1"))
-              ),
-              h("div", { className: "roFloatDivider" }),
-              meter("\u8FD1 7 \u5929\u5B8C\u6210\u7387", pct(avgCompletion), avgCompletion),
-              meter("\u8BE5\u578B\u53F7\u5728\u7EBF\u7387", pct(modelOnlineRate), modelOnlineRate),
-              meter("\u4ECA\u65E5\u4EFB\u52A1", `${tasks.length} \u4E2A`, tasks.length ? Math.min(1, tasks.length / 8) : 0, activeTask ? "\u6267\u884C\u4E2D 1 \u4E2A" : tasks.length ? `\u5DF2\u5B8C\u6210 ${doneTasks} \u4E2A` : "\u4ECA\u5929\u6682\u65E0\u4EFB\u52A1"),
-              h("button", { type: "button", className: "roFloatLink", onClick: () => openDevice(device2.sn) }, "\u8FDB\u5165\u8BBE\u5907\u8BE6\u60C5 \u203A")
+                "section",
+                { className: "roFloatCard", "aria-label": "\u8BBE\u5907\u5F53\u524D\u72B6\u6001" },
+                h("div", { className: "roFloatLabel" }, "\u673A\u578B\u5C55\u793A"),
+                h("div", { className: "roFloatModel" }, model),
+                h(
+                  "div",
+                  { className: "roStatBadgeRow" },
+                  h("span", { className: `roStateBadge roStateBadge--${deviceTone(device2, liveState)}` }, liveStateLabel(device2, liveState)),
+                  liveState?.battery != null ? h("span", { className: "roStateBadge roStateBadge--muted" }, `\u7535\u91CF ${liveState.battery}%`) : null
+                ),
+                liveState?.battery != null ? h(
+                  "div",
+                  { className: "roBattery" },
+                  h("span", { className: "roBatteryFill", style: { width: `${Math.max(0, Math.min(100, liveState.battery))}%` } })
+                ) : null,
+                h(
+                  "div",
+                  { className: "roFloatRows" },
+                  h("div", { className: "roFloatRow" }, h("span", null, "\u5F53\u524D\u4EFB\u52A1"), h("b", { title: activeTask?.name ?? "" }, liveState ? liveState.cleaning ? "\u4F5C\u4E1A\u4E2D" : "\u2014" : activeTask ? "\u6267\u884C\u4E2D" : tasks.length ? `\u5DF2\u5B8C\u6210 ${doneTasks} \u4E2A` : "\u65E0\u4EFB\u52A1")),
+                  h("div", { className: "roFloatRow" }, h("span", null, "\u6240\u5728\u5730\u56FE"), h("b", { title: device2.map || live?.mapName || "" }, device2.map || live?.mapName || "\u2014")),
+                  h("div", { className: "roFloatRow" }, h("span", null, "\u5B9A\u4F4D"), h("b", null, liveState ? liveState.located ? "\u5DF2\u5B9A\u4F4D" : "\u672A\u5B9A\u4F4D" : "\u2014")),
+                  liveState?.charging ? h("div", { className: "roFloatRow" }, h("span", null, "\u5145\u7535\u7535\u6D41"), h("b", null, `${liveState.chargerCurrent.toFixed(2)} A`)) : h("div", { className: "roFloatRow" }, h("span", null, "\u6E05\u626B\u72B6\u6001"), h("b", null, liveState ? liveState.cleaning ? "\u4F5C\u4E1A\u4E2D" : "\u672A\u4F5C\u4E1A" : "\u2014")),
+                  h("div", { className: "roFloatRow" }, h("span", null, "\u4E0A\u62A5\u65F6\u95F4"), h("b", null, liveState?.receivedAt ? clockText(liveState.receivedAt).slice(6) : live?.reportedAt ? new Date(live.reportedAt).toLocaleDateString("zh-CN") : "\u2014"))
+                ),
+                h("div", { className: "roFloatDivider" }),
+                mapBlock(),
+                h("button", { type: "button", className: "roFloatLink", onClick: () => openDevice(device2.sn) }, "\u8FDB\u5165\u8BBE\u5907\u8BE6\u60C5 \u203A")
+              )
             ),
             h(
               "section",
@@ -1104,6 +1224,18 @@
                   rel: "noreferrer"
                 }, "\u53BB\u5E73\u53F0 \u2197")
               ),
+              tasksOpen ? h(
+                "div",
+                { className: "roTaskInline" },
+                h("div", { className: "roTaskInlineHead" }, `${tasks.length} \u4E2A\u4EFB\u52A1 \xB7 ${consoleTasks?.date || dayRangeLabel()}`),
+                tasks.length ? tasks.map((task, index) => h(
+                  "div",
+                  { className: "roTaskInlineRow", key: `${task.name}-${index}` },
+                  h("span", { className: "roTaskInlineTime" }, (task.startTime || "").slice(11, 16) || "\u2014"),
+                  h("span", { className: "roTaskInlineName", title: `${task.name}${task.map ? ` \xB7 ${task.map}` : ""}` }, task.name),
+                  h("span", { className: `roTaskInlineRate${task.compliant ? "" : " roWarn"}` }, pct(task.completeness))
+                )) : h("div", { className: "roTaskInlineEmpty" }, "\u4ECA\u5929\u8FD8\u6CA1\u6709\u4EFB\u52A1\u8BB0\u5F55")
+              ) : null,
               h("div", { className: "roActionHint" }, "\u8FD9\u91CC\u5C55\u793A\u5E73\u53F0\u5DF2\u6709\u7684\u8C03\u5EA6\u4FE1\u606F\uFF1B\u4E0B\u53D1\u4EFB\u52A1\u8BF7\u5230\u5E73\u53F0\u64CD\u4F5C\u3002")
             )
           ),
@@ -1126,31 +1258,7 @@
               numbered(5, "\u7EDF\u8BA1\u5929\u6570", `${days.length || 7} \u5929`, "\u6EDA\u52A8\u7A97\u53E3")
             ),
             days.length ? lineChart(days) : h("div", { className: "roCardEmpty" }, "\u5E73\u53F0\u6CA1\u6709\u8FD4\u56DE\u8FD1 7 \u5929\u7684\u9010\u65E5\u6570\u636E\u3002")
-          ),
-          tasksOpen ? h(
-            "section",
-            { className: "roCard roConsoleTasks", "aria-label": "\u4ECA\u65E5\u4EFB\u52A1" },
-            h(
-              "div",
-              { className: "roCardHead" },
-              h("span", { className: "roCardLabel" }, "\u4ECA\u65E5\u4EFB\u52A1"),
-              h("span", { className: "roCardTag" }, consoleTasks?.date || dayRangeLabel())
-            ),
-            tasks.length ? h(
-              "div",
-              { className: "roTaskList" },
-              tasks.map((task, index) => h(
-                "div",
-                { className: "roTaskRow", key: `${task.name}-${index}` },
-                h("span", { className: "roTaskTime" }, (task.startTime || "").slice(11, 16) || "\u2014"),
-                h("span", { className: "roTaskName", title: task.name }, task.name),
-                h("span", { className: "roTaskMap", title: task.map }, task.map || "\u2014"),
-                h("span", { className: "roTaskArea" }, compactArea(task.area), h("small", null, "\u33A1")),
-                h("span", { className: `roTaskRate${task.compliant ? "" : " roWarn"}` }, pct(task.completeness))
-              ))
-            ) : h("div", { className: "roCardEmpty" }, "\u4ECA\u5929\u8FD8\u6CA1\u6709\u4EFB\u52A1\u8BB0\u5F55\u3002"),
-            h("div", { className: "roActionHint" }, "\u8FD9\u91CC\u53EA\u5C55\u793A\u5E73\u53F0\u5DF2\u6709\u7684\u4EFB\u52A1\u8BB0\u5F55\uFF1B\u65B0\u5EFA\u6216\u4E0B\u53D1\u4EFB\u52A1\u8BF7\u7528\u300C\u53BB\u5E73\u53F0\u300D\u3002")
-          ) : null
+          )
         );
       };
       const dayRangeLabel = () => (/* @__PURE__ */ new Date()).toLocaleDateString("zh-CN", { month: "numeric", day: "numeric" });
@@ -1558,6 +1666,34 @@
       };
       const content = view.name === "console" ? renderConsole() : view.name === "overview" ? renderOverview() : view.name === "projects" ? renderProjects() : view.name === "alerts" ? renderAlerts() : view.name === "project" ? renderProject() : renderDevice();
       const body = h("div", { className: "roScroll" }, content);
+      const mapOverlay = mapZoom && mapData?.image ? h(
+        "div",
+        {
+          className: "roMapModal",
+          role: "dialog",
+          "aria-label": "\u70B9\u4E91\u5730\u56FE\u5927\u56FE",
+          onClick: () => setMapZoom(false)
+        },
+        h(
+          "div",
+          { className: "roMapModalInner" },
+          h(
+            "div",
+            { className: "roMapModalHead" },
+            h("span", null, mapData.name || "\u70B9\u4E91\u5730\u56FE"),
+            h("span", { className: "roMapModalHint" }, "\u70B9\u51FB\u4EFB\u610F\u5904\u5173\u95ED")
+          ),
+          h(
+            "div",
+            { className: "roMapModalViewport" },
+            h(
+              "div",
+              { className: "roMapModalCanvas" },
+              h("img", { className: "roMapImage", src: mapData.image, alt: mapData.name || "\u5730\u56FE" })
+            )
+          )
+        )
+      ) : null;
       const chatArea = chatOpen ? h(
         "aside",
         { className: "roChat", "aria-label": "AI \u534F\u52A9" },
@@ -1574,7 +1710,8 @@
         "div",
         { className: `roRoot${dark ? " roDark" : ""}` },
         toolbar,
-        chatOpen ? h("div", { className: "roSplit" }, h("div", { className: "roSplitMain" }, body), chatArea) : body
+        chatOpen ? h("div", { className: "roSplit" }, h("div", { className: "roSplitMain" }, body), chatArea) : body,
+        mapOverlay
       );
     }
     function apply(ctx) {
@@ -2078,6 +2215,77 @@
 }
 
 /* \u5DE6\u4E0A\u6D6E\u52A8\u5361\uFF1A\u53E0\u5728\u56FE\u4E0A\uFF0C\u4E0D\u5360\u6805\u683C */
+.roLeftCol {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  max-height: calc(100% - 36px);
+  width: 268px;
+  max-width: calc(100% - 36px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;
+  z-index: 3;
+  scrollbar-width: thin;
+}
+.roLeftCol > * { flex: 0 0 auto; }
+.roLeftCol > .roFloatCard { position: static; width: auto; max-height: none; overflow: visible; z-index: auto; }
+
+.roStatBadgeRow { display: flex; gap: 6px; flex-wrap: wrap; }
+.roStateBadge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--ro-chip);
+  color: var(--ro-muted);
+  white-space: nowrap;
+}
+.roStateBadge--on { background: rgba(31, 122, 77, 0.12); color: var(--ro-green); }
+.roStateBadge--charge { background: rgba(181, 138, 43, 0.14); color: var(--ro-gold-deep, #8a5c0c); }
+.roStateBadge--off { background: rgba(178, 59, 48, 0.1); color: var(--ro-red); }
+.roStateBadge--idle { background: var(--ro-chip); color: var(--ro-muted); }
+.roStateBadge--muted { background: var(--ro-chip); }
+.roBattery { height: 4px; border-radius: 2px; background: var(--ro-track); overflow: hidden; }
+.roBatteryFill { display: block; height: 100%; background: var(--ro-gold); }
+
+.roMapBlock { display: flex; flex-direction: column; gap: 6px; }
+.roMapHead { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.roMapHead .roCardTag { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 62%; }
+.roMapEmpty { font-size: 11px; color: var(--ro-faint); padding: 12px 0; text-align: center; }
+.roMapViewport {
+  position: relative;
+  border: 1px solid var(--ro-line-soft);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f4f2ec;
+  height: clamp(84px, 12vh, 112px);
+}
+.roMapImage { display: block; width: 100%; height: 100%; object-fit: contain; }
+.roMapMarker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #e0b055;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 3px rgba(224, 176, 85, 0.35);
+}
+.roMapMarker i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 12px solid #e0b055;
+  transform-origin: 50% 100%;
+  transform: translate(-50%, -100%);
+}
+.roMapMeta { display: flex; gap: 10px; flex-wrap: wrap; font-size: 10px; color: var(--ro-faint); font-variant-numeric: tabular-nums; }
+
 .roFloatCard {
   position: absolute;
   left: 18px;
@@ -2090,22 +2298,22 @@
   background: var(--ro-panel);
   border: 1px solid var(--ro-line);
   border-radius: 12px;
-  padding: 14px 16px 16px;
+  padding: 12px 14px 12px;
   box-shadow: 0 10px 30px rgba(16, 24, 40, 0.10);
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 7px;
 }
 .roFloatLabel { font-size: 11px; color: var(--ro-faint); }
-.roFloatModel { font-size: 26px; font-weight: 660; line-height: 1.15; letter-spacing: -0.01em; }
+.roFloatModel { font-size: 23px; font-weight: 660; line-height: 1.12; letter-spacing: -0.01em; }
 .roFloatSub { font-size: 12px; color: var(--ro-muted); }
-.roFloatRows { display: flex; flex-direction: column; gap: 7px; }
+.roFloatRows { display: flex; flex-direction: column; gap: 5px; }
 .roFloatRow { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 12px; min-width: 0; }
 .roFloatRow span { color: var(--ro-faint); white-space: nowrap; }
 .roFloatRow b { font-weight: 560; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .roFloatDivider { height: 1px; background: var(--ro-line-soft); margin: 2px 0; }
 
-.roMeter { display: flex; flex-direction: column; gap: 4px; }
+.roMeter { display: flex; flex-direction: column; gap: 3px; }
 .roMeterTop { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 12px; }
 .roMeterLabel { color: var(--ro-futed, var(--ro-faint)); white-space: nowrap; }
 .roMeterValue { font-variant-numeric: tabular-nums; font-weight: 560; }
@@ -2179,6 +2387,54 @@
 .roLineAxis { display: flex; justify-content: space-between; margin-top: 4px; font-size: 10px; color: var(--ro-faint); }
 .roLineTip { position: absolute; font-size: 10px; color: var(--ro-muted); background: var(--ro-panel); border: 1px solid var(--ro-line); border-radius: 5px; padding: 1px 5px; transform: translate(-50%, -120%); white-space: nowrap; pointer-events: none; }
 
+
+/* \u5730\u56FE\u5927\u56FE\u5F39\u5C42 */
+.roMapModal {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  background: rgba(16, 24, 40, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.roMapModalInner {
+  background: var(--ro-panel);
+  border-radius: 14px;
+  padding: 12px 14px 14px;
+  max-width: 94%;
+  max-height: 94%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 24px 60px rgba(16, 24, 40, 0.28);
+}
+.roMapModalHead { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; font-size: 13px; }
+.roMapModalHint { font-size: 11px; color: var(--ro-faint); }
+.roMapModalViewport {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f2ec;
+  border-radius: 8px;
+  padding: 8px;
+}
+.roMapModalCanvas { position: relative; display: inline-block; line-height: 0; }
+.roMapModalCanvas .roMapImage {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 78vw;
+  max-height: 74vh;
+  object-fit: contain;
+}
+.roMapMarker--lg { width: 16px; height: 16px; box-shadow: 0 0 0 4px rgba(224, 176, 85, 0.4); }
+.roMapMarker--lg i { border-left-width: 7px; border-right-width: 7px; border-bottom-width: 16px; }
+
 /* \u5E95\u90E8\u7F16\u53F7\u5F0F\u7EDF\u8BA1 */
 .roConsoleStats { border: 1px solid var(--ro-line); border-radius: 12px; background: var(--ro-panel); padding: 14px 18px 18px; }
 .roStatsHead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
@@ -2193,6 +2449,26 @@
 .roTrend--console { min-height: 110px; height: 120px; margin-top: 14px; }
 
 .roConsoleTasks { gap: 8px; }
+.roTaskInline {
+  flex: 0 0 auto;
+  min-height: 0;
+  border-top: 1px solid var(--ro-line-soft);
+  margin-top: 4px;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 132px;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+.roTaskInlineHead { font-size: 11px; color: var(--ro-faint); margin-bottom: 2px; }
+.roTaskInlineRow { display: grid; grid-template-columns: 40px minmax(0, 1fr) 42px; gap: 8px; align-items: baseline; font-size: 12px; }
+.roTaskInlineTime { color: var(--ro-faint); font-variant-numeric: tabular-nums; }
+.roTaskInlineName { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.roTaskInlineRate { text-align: right; font-variant-numeric: tabular-nums; color: var(--ro-muted); }
+.roTaskInlineEmpty { font-size: 11px; color: var(--ro-faint); padding: 6px 0; }
+
 .roTaskList { display: flex; flex-direction: column; }
 .roTaskRow {
   display: grid;

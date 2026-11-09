@@ -106,6 +106,12 @@ export class PlatformClient {
     return this.#baseUrl
   }
 
+  // 供实时通道取用 accessToken
+  async sessionToken() {
+    const session = await this.#store.read()
+    return session.accessToken
+  }
+
   async hasSession() {
     return this.#store.exists()
   }
@@ -283,6 +289,32 @@ export class PlatformClient {
       direction: 'down',
       pageToken: '',
       abnormalOnly: false,
+    })
+  }
+
+  // 点云地图：先按设备当前地图定位版本，再取元数据与 map.png
+  async mapInfo(robotSn, map) {
+    return this.request('/atlas/v1/mapVersion/getInfo', {
+      timestampMs: String(Date.now()),
+      robotSn,
+      mapDisplayName: map?.name ?? '',
+      localMapUuid: map?.mapId ?? '',
+      mapVersion: map?.version ?? '',
+    })
+  }
+
+  // 机器人当前绑定的地图（官方实时页用的就是这张）
+  async robotMaps(robotSn) {
+    return this.request('/atlas/v1/web/robotMap/listPage', { robotSn, pageSize: 20, pageNumber: 1 })
+  }
+
+  async mapMeta(mapId, mapVersionId) {
+    return this.get(`/atlas/v1alpha1/maps/${mapId}/mapContent:fetchMapMetaData?mapVersionId=${encodeURIComponent(mapVersionId)}`)
+  }
+
+  async mapVisualFiles(mapId, mapVersionId) {
+    return this.request(`/atlas/v1alpha1/maps/${mapId}:downloadMapVisualFiles`, {
+      mapVersion: `maps/${mapId}/versions/${mapVersionId}`,
     })
   }
 

@@ -8,6 +8,7 @@ import { spawn } from 'node:child_process'
 
 import { buildDeviceWindow, buildSnapshot, buildTrend, dayRange, DEFAULT_THRESHOLD } from './aggregate.js'
 import { PlatformClient, PlatformError, resolveApiBase, resolveSessionFile } from './platform.js'
+import { LiveFeed } from './live.js'
 
 
 export const name = 'ge-workbench-robot-ops'
@@ -324,7 +325,32 @@ export function apply(ctx, config) {
       defaultStrength: typeof mode?.defaultStrength === 'string' ? mode.defaultStrength : '',
     }))
 
+    // 设备当前状态（来自最近一次上报）
+    const ordered = (Array.isArray(timeline?.taskTimelines) ? timeline.taskTimelines : [])
+      .filter((entry) => entry?.metas?.systemContext)
+      .sort((left, right) => Number(right?.timestamp || 0) - Number(left?.timestamp || 0))
+    const latestEvent = ordered[0] ?? null
+    const liveCtx = latestEvent?.metas?.systemContext ?? {}
+    const live = {
+      battery: Number(liveCtx.batteryPercent) || null,
+      taskStatus: liveCtx.taskStatus ?? null,
+      naviStatus: Number(liveCtx.naviStatus) || 0,
+      stationState: typeof liveCtx.stationState === 'string' ? liveCtx.stationState : '',
+      cleanWater: Number(liveCtx.cleanWaterPercent) || 0,
+      dirtyWater: Number(liveCtx.dirtyWaterPercent) || 0,
+      autoMode: liveCtx.autoMode ?? null,
+      locationStatus: Number(liveCtx.robotLocationStatus) || 0,
+      mapName: typeof liveCtx.currentMapName === 'string' ? liveCtx.currentMapName : '',
+      pose: liveCtx.worldPose && Number.isFinite(Number(liveCtx.worldPose.x))
+        ? { x: Number(liveCtx.worldPose.x), y: Number(liveCtx.worldPose.y), theta: Number(liveCtx.worldPose.theta) || 0 }
+        : null,
+      reportedAt: latestEvent ? Number(latestEvent.timestamp) || null : null,
+    }
+    // 只有 10 分钟内的上报才算“当前状态”，否则只是历史快照
+    live.fresh = Boolean(live.reportedAt && Date.now() - live.reportedAt <= 10 * 60 * 1000)
+
     return {
+      live,
       device: {
         ...device,
         modelType: typeof view?.modelType === 'string' ? view.modelType : '',
@@ -345,6 +371,101 @@ export function apply(ctx, config) {
       events,
       fetchedAt: new Date().toISOString(),
     }
+  })
+
+  const liveFeed = new LiveFeed()
+
+  // 实时状态：走平台实时页同一条 socket.io 通道（只订阅状态）
+  registerJson(ctx, `${API}/live`, ['GET'], async (request) => {
+    const url = new URL(request.url)
+    const sn = (url.searchParams.get('sn') || '').trim()
+    if (!sn) throw fail('缺少设备编号 sn', 400, 'BAD_REQUEST')
+    const session = await new PlatformClient().sessionToken().catch(() => null)
+    if (!session) throw fail('登录已过期，请重新登录高仙平台。', 401, 'SESSION_EXPIRED')
+    await liveFeed.watch(sn, session)
+    return { sn, state: liveFeed.state(), fetchedAt: new Date().toISOString() }
+  })
+
+  const mapCache = new Map()
+
+  registerJson(ctx, `${API}/map`, ['GET'], async (request) => {
+    const url = new URL(request.url)
+    const sn = (url.searchParams.get('sn') || '').trim()
+    if (!sn) throw fail('缺少设备编号 sn', 400, 'BAD_REQUEST')
+    const force = url.searchParams.get('refresh') === '1'
+    const hit = mapCache.get(sn)
+    if (!force && hit && Date.now() - hit.at < DEVICE_TTL_MS) return hit.payload
+
+    const { snapshot: latest } = await snapshot()
+    const device = (latest?.devices ?? []).find((entry) => entry.sn === sn)
+    if (!device) throw fail('没有找到这台设备，请刷新后再试。', 404, 'NOT_FOUND')
+
+    // 位姿与地图版本优先取最近事件；没有事件时用设备自带的地图名去查版本
+    const now = Date.now()
+    const timeline = await client.taskTimeline(sn, now - 6 * 60 * 60 * 1000, now, 10).catch(() => null)
+    const events = Array.isArray(timeline?.taskTimelines) ? timeline.taskTimelines : []
+    const withMap = events.find((entry) => entry?.metas?.systemContext?.currentMapName)
+    const system = withMap?.metas?.systemContext ?? events[0]?.metas?.systemContext ?? {}
+    const siteContext = withMap?.metas?.siteContext ?? {}
+    const mapName = (typeof system.currentMapName === 'string' && system.currentMapName)
+      || device.map
+      || ''
+    if (!mapName) throw fail('这台设备没有可用的地图记录。', 404, 'NO_MAP')
+
+    const mapVersion = typeof system.currentMapVersion === 'string' ? system.currentMapVersion.replace(/\/$/, '') : ''
+    // 优先用“机器人当前绑定的地图”（与官方实时页同源），再退回按名称反查
+    const bound = await client.robotMaps(sn).catch(() => null)
+    const boundMap = (Array.isArray(bound?.robotMaps) ? bound.robotMaps : [])
+      .find((entry) => entry?.mapDisplayName === mapName) ?? (bound?.robotMaps ?? [])[0] ?? null
+    const info = boundMap?.localMapUuid && boundMap?.usedVersion?.mapVersionId
+      ? await client.mapInfo(sn, {
+        name: boundMap.mapDisplayName,
+        mapId: boundMap.localMapUuid,
+        version: boundMap.usedVersion.mapVersionId,
+      }).catch(() => null)
+      : await client.mapInfo(sn, {
+        name: mapName,
+        mapId: siteContext.mapId ?? system.currentMapId ?? '',
+        version: mapVersion,
+      }).catch(() => null)
+    const mapId = info?.mapId
+    const mapVersionId = info?.mapVersionId
+    if (!mapId || !mapVersionId) throw fail(`没有查到「${mapName}」的版本信息。`, 404, 'NO_MAP_VERSION')
+
+    const meta = await client.mapMeta(mapId, mapVersionId).catch(() => null)
+    const files = await client.mapVisualFiles(mapId, mapVersionId).catch(() => null)
+    const image = (Array.isArray(files?.files) ? files.files : []).find((entry) => String(entry?.file).endsWith('.png'))
+    if (!image?.downloadUri) throw fail(`「${mapName}」的地图图片没有生成。`, 404, 'NO_MAP_IMAGE')
+
+    const response = await fetch(image.downloadUri, { signal: AbortSignal.timeout(20000) })
+    if (!response.ok) throw fail(`下载地图图片失败（HTTP ${response.status}）`, 502, 'MAP_DOWNLOAD_FAILED')
+    const buffer = Buffer.from(await response.arrayBuffer())
+    const imageWidth = buffer.length > 24 && buffer.toString('ascii', 1, 4) === 'PNG' ? buffer.readUInt32BE(16) : null
+    const imageHeight = buffer.length > 24 && buffer.toString('ascii', 1, 4) === 'PNG' ? buffer.readUInt32BE(20) : null
+    const grid = meta?.mapInfo ?? {}
+    const pose = system.worldPose ?? null
+
+    const payload = {
+      sn,
+      mapId,
+      mapVersionId,
+      name: meta?.name || mapName,
+      image: `data:image/png;base64,${buffer.toString('base64')}`,
+      bytes: buffer.length,
+      imageWidth,
+      imageHeight,
+      grid: {
+        width: Number(grid.gridWidth) || null,
+        height: Number(grid.gridHeight) || null,
+        originX: Number(grid.originX) || 0,
+        originY: Number(grid.originY) || 0,
+        resolution: Number(grid.resolution) || 0.05,
+      },
+      pose: pose && Number.isFinite(Number(pose.x)) ? { x: Number(pose.x), y: Number(pose.y), theta: Number(pose.theta) || 0 } : null,
+      fetchedAt: new Date().toISOString(),
+    }
+    mapCache.set(sn, { at: Date.now(), payload })
+    return payload
   })
 
   registerJson(ctx, `${API}/tasks`, ['GET'], async (request) => {

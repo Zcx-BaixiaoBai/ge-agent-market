@@ -164,26 +164,26 @@
       "name": "高仙机器人助手",
       "category": "operations",
       "author": "颜政、张宸熙",
-      "version": "0.11.2",
+      "version": "0.14.0",
       "license": "MIT",
       "description": {
-        "zh": "高仙机器人助手：调度台以单台设备为中心查看机型、运行数据与调度信息，集团总览汇总各项目机器人的在线、任务、面积与达标情况。开发者：颜政、张宸熙。",
-        "en": "Gaussian robot assistant: a device-centric dispatch console showing model, runtime and scheduling details, plus a group overview of online status, tasks, cleaned area and target attainment across projects. Developers: 颜政、张宸熙."
+        "zh": "高仙机器人助手：调度台以单台设备为中心查看机型、实时状态、点云地图与调度信息，集团总览汇总各项目机器人的在线、任务、面积与达标情况。开发者：颜政、张宸熙。",
+        "en": "Gaussian robot assistant: a device-centric dispatch console showing model, live status, point-cloud map and scheduling details, plus a group overview of online status, tasks, cleaned area and target attainment across projects. Developers: 颜政、张宸熙."
       },
       "distribution": {
         "type": "github-release",
-        "version": "0.11.2",
-        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.11.2.tgz",
-        "sha256": "9ade6f04b54731743d6b9a30008a31f1b6702229354f4078034cdeb0b4fd554b"
+        "version": "0.14.0",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.14.0.tgz",
+        "sha256": "7d34bdcd5ae61caf21d6437eee037f1628d5a44e757084c387487f6e8f8a4f2f"
       },
       "screenshots": [
         {
           "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/ge-workbench-robot-ops/docs/screenshots/overview.png",
-          "alt": "调度台：单台设备的机型图、近 7 天完成率与在线率、所在地图与排班、近 24 小时事件与今日任务",
-          "sha256": "abd002a5aeb3aaf9a356a19614dfb7cc76eb3c9ce931683efd36c3b26a7e7da5",
-          "width": 1302,
-          "height": 805,
-          "bytes": 312813
+          "alt": "调度台：单台设备的实时状态（充电中、电量、定位）、点云地图、机型图、当天调度与近 24 小时事件",
+          "sha256": "e91f2eebc205ca90d4976d61e00860e61c5029134dea83e28f5c98db5aaa8de7",
+          "width": 2604,
+          "height": 1610,
+          "bytes": 905682
         }
       ]
     }
