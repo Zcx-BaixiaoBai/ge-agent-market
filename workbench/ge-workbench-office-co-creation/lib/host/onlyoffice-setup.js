@@ -1,6 +1,7 @@
 import { execFile } from 'node:child_process'
 import { access } from 'node:fs/promises'
 import { arch, platform } from 'node:os'
+import { join } from 'node:path'
 
 const CONTAINER = 'office-co-creation-ds'
 const IMAGE = 'onlyoffice/documentserver:latest'
@@ -17,17 +18,46 @@ function dockerCandidates() {
     ]
   }
   if (platform() === 'win32') {
-    return [
-      'C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe',
-      'C:\\Program Files\\Docker\\Docker\\resources\\docker.exe',
-    ]
+    const env = process.env
+    const roots = [
+      env.ProgramFiles,
+      env['ProgramFiles(x86)'],
+      env.ProgramW6432,
+      env.LOCALAPPDATA,
+      'C:\\Program Files',
+      'C:\\Program Files (x86)',
+    ].filter(Boolean)
+    const candidates = []
+    for (const root of roots) {
+      candidates.push(join(root, 'Docker', 'Docker', 'resources', 'bin', 'docker.exe'))
+      candidates.push(join(root, 'Docker', 'Docker', 'resources', 'docker.exe'))
+      candidates.push(join(root, 'Docker', 'resources', 'bin', 'docker.exe'))
+      candidates.push(join(root, 'Programs', 'Docker', 'Docker', 'resources', 'bin', 'docker.exe'))
+      candidates.push(join(root, 'Programs', 'Docker', 'Docker', 'resources', 'docker.exe'))
+    }
+    return candidates
   }
   return ['/usr/bin/docker', '/usr/local/bin/docker', '/snap/bin/docker']
 }
 
+function dockerDesktopCandidates() {
+  if (platform() === 'win32') {
+    const env = process.env
+    const roots = [env.ProgramFiles, env.ProgramW6432, env.LOCALAPPDATA, 'C:\\Program Files'].filter(Boolean)
+    const candidates = []
+    for (const root of roots) {
+      candidates.push(join(root, 'Docker', 'Docker', 'Docker Desktop.exe'))
+      candidates.push(join(root, 'Docker', 'Docker Desktop.exe'))
+      candidates.push(join(root, 'Programs', 'Docker', 'Docker', 'Docker Desktop.exe'))
+    }
+    return candidates
+  }
+  return []
+}
+
 function run(file, args, timeout = 20_000) {
   return new Promise((resolve) => {
-    execFile(file, args, { timeout, maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
+    execFile(file, args, { timeout, maxBuffer: 1024 * 1024, windowsHide: true }, (error, stdout, stderr) => {
       resolve({
         ok: !error,
         code: error?.code ?? 0,
@@ -74,6 +104,12 @@ function manualCommand() {
   const platformArg = platform() === 'darwin'
     ? ` --platform ${arch() === 'arm64' ? 'linux/arm64' : 'linux/amd64'}`
     : platform() === 'linux' ? ' --add-host host.docker.internal:host-gateway' : ''
+  if (platform() === 'win32') {
+    // cmd / PowerShell 不认反斜杠续行，Windows 下给单行命令。
+    return `docker run -d --name ${CONTAINER} -p 127.0.0.1:${CONTAINER_PORT}:80 ` +
+      '-e JWT_ENABLED=false -e ALLOW_PRIVATE_IP_ADDRESS=true ' +
+      `${IMAGE}`
+  }
   return `docker run -d --name ${CONTAINER}${platformArg} \\\n` +
     `  -p 127.0.0.1:${CONTAINER_PORT}:80 \\\n` +
     '  -e JWT_ENABLED=false \\\n' +
@@ -115,6 +151,32 @@ export class OnlyOfficeSetup {
   append(text) {
     const next = `${this.job.logTail}${text}`.replace(/\r/g, '')
     this.job.logTail = next.length > MAX_LOG ? next.slice(-MAX_LOG) : next
+  }
+
+  async openDockerDesktop() {
+    if (platform() === 'darwin') {
+      const result = await run('open', ['-a', 'Docker'], 10_000)
+      return result.ok
+        ? { started: true, message: '正在启动 Docker Desktop，等它显示 Running 后点“重新检测”。' }
+        : { started: false, message: '没有找到 Docker Desktop，请从“应用程序”里手动启动。' }
+    }
+    if (platform() === 'win32') {
+      for (const candidate of dockerDesktopCandidates()) {
+        try {
+          await access(candidate)
+        } catch {
+          continue
+        }
+        try {
+          execFile(candidate, [], { detached: true, stdio: 'ignore', windowsHide: true }).unref()
+          return { started: true, message: '正在启动 Docker Desktop，等它显示 Running 后点“重新检测”（首次启动可能要 1 分钟）。' }
+        } catch (error) {
+          return { started: false, message: `启动 Docker Desktop 失败：${error instanceof Error ? error.message : String(error)}` }
+        }
+      }
+      return { started: false, message: '没有找到 Docker Desktop，请从开始菜单手动启动。' }
+    }
+    return { started: false, message: 'Linux 请在终端执行 sudo systemctl start docker，然后点“重新检测”。' }
   }
 
   async dockerStatus() {
@@ -235,7 +297,7 @@ export class OnlyOfficeSetup {
       this.job.step = '安装 OnlyOffice'
       this.job.detail = '首次运行会拉取约 1–2 GB 镜像，请保持网络连接…'
       this.append(`[info] docker ${dockerRunArgs().join(' ')}\n`)
-      const child = execFile(dockerBin, dockerRunArgs(), { timeout: 15 * 60_000, maxBuffer: 4 * 1024 * 1024 })
+      const child = execFile(dockerBin, dockerRunArgs(), { timeout: 15 * 60_000, maxBuffer: 4 * 1024 * 1024, windowsHide: true })
       child.stdout?.on('data', (chunk) => this.append(String(chunk)))
       child.stderr?.on('data', (chunk) => this.append(String(chunk)))
       const result = await new Promise((resolve) => {

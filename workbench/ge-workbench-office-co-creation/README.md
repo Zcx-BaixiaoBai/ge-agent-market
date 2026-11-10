@@ -41,6 +41,11 @@ docker run -d --name office-co-creation-ds \
 
 - Intel Mac：`--platform` 改为 `linux/amd64`。
 - Linux：把 `--platform` 一行换成 `--add-host host.docker.internal:host-gateway`。
+- Windows：安装 Docker Desktop 并启用 WSL2；页面里的“一键安装”会调用 Docker Desktop，
+  手动命令自动切换成单行（cmd / PowerShell 不认 `\` 续行）。
+  第一次运行如果弹出 Windows 防火墙提示，请允许“专用网络”；否则容器读不到本机文件。
+  误点取消时到「Windows 安全中心 → 防火墙和网络保护 → 允许应用通过防火墙」，
+  勾选「金鹰 Agent」的专用网络。
 - 只绑定 `127.0.0.1`，不要暴露到局域网。
 
 > 本机自用场景下关闭了 OnlyOffice JWT；工作台用每个文件独立的随机令牌保护

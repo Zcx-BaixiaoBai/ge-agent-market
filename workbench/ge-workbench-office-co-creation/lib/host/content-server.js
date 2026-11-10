@@ -33,6 +33,8 @@ async function findSoffice() {
     '/usr/local/bin/soffice',
     '/opt/homebrew/bin/soffice',
     home ? join(home, '.local/bin/soffice') : '',
+    process.env.ProgramFiles ? join(process.env.ProgramFiles, 'LibreOffice', 'program', 'soffice.exe') : '',
+    process.env['ProgramFiles(x86)'] ? join(process.env['ProgramFiles(x86)'], 'LibreOffice', 'program', 'soffice.exe') : '',
   ].filter(Boolean)
   for (const candidate of candidates) {
     try {
@@ -66,7 +68,7 @@ async function convertToOriginal(buffer, targetExt) {
       '--outdir',
       directory,
       input,
-    ], { timeout: 60_000, maxBuffer: 1024 * 1024 })
+    ], { timeout: 60_000, maxBuffer: 1024 * 1024, windowsHide: true })
     return await readFile(join(directory, `input${targetExt}`))
   } catch (error) {
     throw fail(`转换回 ${targetExt} 失败：${String(error?.message || error)}`, 502)

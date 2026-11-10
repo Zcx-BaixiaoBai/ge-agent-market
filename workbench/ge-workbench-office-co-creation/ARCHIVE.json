@@ -1,11 +1,11 @@
 {
   "id": "zcx-baixiaobai/ge-workbench-office-co-creation",
   "name": "办公套件",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "package": "office-co-creation",
-  "tarball": "../../packages/office-co-creation/office-co-creation-0.2.1.tgz",
-  "sha256": "fea75a52aea4d266379978bbfbf9e8a824999c5480117402cc75d9ad5e0cd731",
+  "tarball": "../../packages/office-co-creation/office-co-creation-0.2.2.tgz",
+  "sha256": "fdb78e0b4114a49053b9bf73285c59d5fd0d6e0d8231981ad074e78bc8103414",
   "screenshot": "../../packages/office-co-creation/docs/screenshots/overview.png",
   "archivedAt": "2026-11-10",
-  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.2.1 在引导安装基础上增加 Docker 可执行文件探测（PATH 找不到时尝试 Docker Desktop / Homebrew / 系统常见路径），避免从 Dock 启动的 macOS 应用误报未安装 Docker。"
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.2.2 兼容 Windows：Docker CLI/Docker Desktop 增加 Program Files、ProgramW6432、LOCALAPPDATA、Programs 等安装路径探测；引导页可一键启动 Docker Desktop；Windows/Linux 的内容服务改绑 0.0.0.0，容器可通过 host.docker.internal 拉取文件；手动命令在 Windows 下为单行；补 LibreOffice Windows 路径；子进程隐藏控制台窗口。"
 }

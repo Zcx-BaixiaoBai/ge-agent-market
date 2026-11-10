@@ -1,5 +1,6 @@
 import Schema from '@deepseek-ai/schemastery'
 import { readFile } from 'node:fs/promises'
+import { platform } from 'node:os'
 import { fileURLToPath } from 'node:url'
 import { FileStore } from '../lib/host/file-store.js'
 import { DocumentServer } from '../lib/host/document-server.js'
@@ -100,7 +101,10 @@ export async function apply(ctx, config) {
   const documentServer = new DocumentServer(config.documentServerUrl)
   const queue = new PatchQueue({ store, documentServer })
   const cloudQueue = new CloudPatchQueue()
-  const content = await createContentServer({ store, documentServer, queue })
+  // Windows/Linux 的 Docker 容器通过 host.docker.internal 访问宿主机，回环地址不可达，
+// 文件内容服务必须监听所有网卡；访问仍由每个文件独立的随机令牌保护。
+  const contentHost = platform() === 'darwin' ? '127.0.0.1' : '0.0.0.0'
+  const content = await createContentServer({ store, documentServer, queue, host: contentHost })
   ctx.effect(() => () => content.close())
   const setup = new OnlyOfficeSetup({ documentServer, baseUrl: config.documentServerUrl })
   const docsUrl = new URL(config.documentServerUrl)
@@ -158,6 +162,8 @@ export async function apply(ctx, config) {
     register('setup/status', ['GET'], async (request) => json(request, await setup.status()))
 
     register('setup/install', ['POST'], async (request) => json(request, await setup.start()))
+
+    register('setup/start-docker', ['POST'], async (request) => json(request, await setup.openDockerDesktop()))
 
     register('recent', ['GET'], async (request) => json(request, { files: await store.recent() }))
 

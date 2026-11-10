@@ -1081,6 +1081,16 @@ window.__ModuleLoader__.load({
         }
       }, [setupBusy, toast])
 
+      const openDocker = useCallback(async () => {
+        try {
+          const result = await api('/setup/start-docker', { method: 'POST' })
+          toast(result.started ? 'info' : 'error', result.message || (result.started ? '正在启动 Docker Desktop…' : '请手动启动 Docker Desktop'))
+          if (result.started) setTimeout(() => loadSetup(), 5000)
+        } catch (error) {
+          toast('error', error.message)
+        }
+      }, [loadSetup, toast])
+
       const refreshHealth = useCallback(async () => {
         try {
           const result = await api('/health')
@@ -1779,8 +1789,11 @@ ${instruction.trim()}
             ].filter(Boolean)
           } else if (!dockerRunning) {
             title = 'Docker 已安装，但服务没有运行'
-            desc = '打开 Docker Desktop，等它显示 Running（鲸鱼图标稳定）后点“重新检测”。'
-            actions = [recheck]
+            desc = '点“打开 Docker Desktop”，等鲸鱼图标稳定显示 Running 后点“重新检测”。Windows 首次启动可能要 1 分钟。'
+            actions = [
+              h('button', { key: 'open-docker', className: 'occ-primary', onClick: openDocker }, '打开 Docker Desktop'),
+              recheck,
+            ]
           } else {
             title = serverUp ? 'OnlyOffice 已连接' : '一键安装本机 OnlyOffice'
             desc = serverUp
