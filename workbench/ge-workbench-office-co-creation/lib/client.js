@@ -122,6 +122,10 @@ window.__ModuleLoader__.load({
         font: 11px/1.55 ui-monospace, SFMono-Regular, monospace; white-space: pre-wrap; color: #4b5563; }
       .occ-setup details { margin-top: 12px; font-size: 11px; color: var(--occ-muted); }
       .occ-setup summary { cursor: pointer; }
+      .occ-setup-registry { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--occ-gold-line); }
+      .occ-setup-input { height: 30px; min-width: 240px; flex: 1 1 240px; padding: 0 10px;
+        border: 1px solid var(--occ-line); border-radius: 8px; font-size: 12px;
+        background: #fff; color: var(--occ-ink); }
       .occ-start { max-width: 860px; width: 100%; margin: 0 auto; }
       .occ-filelist + .occ-filelist { margin-top: 24px; }
       .occ-list-title { display: flex; align-items: baseline; gap: 10px; padding: 0 2px 6px;
@@ -314,6 +318,7 @@ window.__ModuleLoader__.load({
       .occ-root.occ-dark .occ-setup { background: #24262a; border-color: #3a3d42; }
       .occ-root.occ-dark .occ-setup-log { background: #1b1c1e; border-color: #34373c; color: #c5c8cd; }
       .occ-root.occ-dark .occ-setup-actions a { background: #2a2d31; border-color: #44474d; color: #d4b06a; }
+      .occ-root.occ-dark .occ-setup-input { background: #1b1c1e; border-color: #34373c; color: #e5e7eb; }
       .occ-root.occ-dark .occ-composer { background: #202124 !important; }
       .occ-root.occ-dark .occ-chat-float { background: #24262a; box-shadow: 0 24px 70px rgba(0,0,0,.5); }
       .occ-root.occ-dark .occ-composer input { border: none; border-bottom: 1px solid #34373b;
@@ -651,6 +656,7 @@ window.__ModuleLoader__.load({
       const [cloudCompareOpen, setCloudCompareOpen] = useState(false)
       const [setup, setSetup] = useState(null)
       const [setupBusy, setSetupBusy] = useState(false)
+      const [customImage, setCustomImage] = useState('')
 
       const rootRef = useRef(null)
       const dark = useHostTheme(rootRef)
@@ -1068,13 +1074,16 @@ window.__ModuleLoader__.load({
         }
       }, [toast])
 
-      const startSetup = useCallback(async () => {
+      const startSetup = useCallback(async (image = '') => {
         if (setupBusy) return
         setSetupBusy(true)
         try {
-          const started = await api('/setup/install', { method: 'POST' })
+          const started = await api('/setup/install', {
+            method: 'POST',
+            body: JSON.stringify(image ? { image } : {}),
+          })
           setSetup((current) => ({ ...(current || {}), job: started.job }))
-          toast('info', '开始准备 OnlyOffice，首次需要下载镜像…')
+          toast('info', image ? `使用镜像 ${image} 安装…` : '开始准备 OnlyOffice，首次需要下载镜像…')
         } catch (error) {
           setSetupBusy(false)
           toast('error', error.message)
@@ -1763,6 +1772,7 @@ ${instruction.trim()}
         const installed = Boolean(docker?.installed)
         const dockerRunning = Boolean(docker?.running)
         const serverUp = Boolean(setup?.serverUp)
+        const registryBlocked = !job.running && Boolean(job.error && /registry-1\.docker\.io|failed to resolve reference|connectex|No connection could be made|TLS handshake|i\/o timeout|dial tcp/i.test(`${job.error}\n${job.logTail}`))
         const check = (label, state, text) => h('div', { className: 'occ-setup-check' },
           h('span', { className: `occ-setup-dot ${state === true ? 'on' : state === false ? 'off' : ''}` }),
           h('span', { className: 'occ-setup-check-label' }, label),
@@ -1804,7 +1814,7 @@ ${instruction.trim()}
                 job.running ? null : h('button', {
                   key: 'primary',
                   className: 'occ-primary',
-                  onClick: startSetup,
+                  onClick: () => startSetup(),
                   disabled: setupBusy,
                 }, container?.exists
                   ? (container.running ? '等待 OnlyOffice 就绪' : '启动 OnlyOffice 容器')
@@ -1827,6 +1837,36 @@ ${instruction.trim()}
             check('Document Server', serverUp, serverUp ? `已连接 · 127.0.0.1:${setup?.port || 18080}` : '未连接'),
           ),
           h('div', { className: 'occ-setup-actions' }, actions),
+          registryBlocked && h('div', { className: 'occ-setup-registry' },
+            h('div', { className: 'occ-setup-detail occ-setup-error' }, 'Docker Hub 连不上（DNS 污染或网络拦截）。可以改用国内镜像重试：'),
+            h('div', { className: 'occ-setup-actions' },
+              (setup?.mirrors || []).map((image) => h('button', {
+                key: image,
+                onClick: () => startSetup(image),
+                disabled: setupBusy,
+              }, image.split('/')[0])),
+            ),
+            h('div', { className: 'occ-setup-actions' },
+              h('input', {
+                className: 'occ-setup-input',
+                value: customImage,
+                onChange: (event) => setCustomImage(event.target.value),
+                placeholder: 'registry.cn-hangzhou.aliyuncs.com/命名空间/documentserver:latest',
+                'aria-label': '自定义镜像地址',
+              }),
+              h('button', {
+                onClick: () => startSetup(customImage.trim()),
+                disabled: setupBusy || !customImage.trim(),
+              }, '用这个镜像安装'),
+            ),
+            h('details', {},
+              h('summary', {}, '配置 Docker Desktop 镜像加速（长期生效）'),
+              h('div', { className: 'occ-setup-detail' },
+                'Docker Desktop → Settings → Docker Engine，在 JSON 里加 ',
+                h('code', {}, '"registry-mirrors": ["https://docker.m.daocloud.io"]'),
+                '，点 Apply & restart，再回来重新检测。公司有内部镜像仓库时，填内部地址更稳。'),
+            ),
+          ),
           job.startedAt && h('div', { className: `occ-setup-detail${job.error ? ' occ-setup-error' : ''}` },
             h('div', {}, `步骤：${job.step || '准备中'}${job.detail ? ` · ${job.detail}` : ''}`),
             job.error ? h('div', {}, job.error) : null,

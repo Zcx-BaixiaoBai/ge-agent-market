@@ -161,7 +161,10 @@ export async function apply(ctx, config) {
 
     register('setup/status', ['GET'], async (request) => json(request, await setup.status()))
 
-    register('setup/install', ['POST'], async (request) => json(request, await setup.start()))
+    register('setup/install', ['POST'], async (request) => {
+      const body = await bodyJson(request, 8 * 1024)
+      return json(request, await setup.start(body))
+    })
 
     register('setup/start-docker', ['POST'], async (request) => json(request, await setup.openDockerDesktop()))
 

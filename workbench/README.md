@@ -9,7 +9,7 @@
 | `ge-workbench-task-assistant/` | 任务助手 | 0.6.6 | productivity | `packages/ge-workbench-task-assistant/ge-workbench-task-assistant-0.6.6.tgz` |
 | `ge-workbench-engineering-progress/` | 工程进度追踪 | 0.1.3 | engineering | `packages/ge-workbench-engineering-progress/ge-workbench-engineering-progress-0.1.3.tgz` |
 | `ge-workbench-robot-ops/` | 高仙机器人助手 | 0.14.0 | operations | `packages/ge-workbench-robot-ops/ge-workbench-robot-ops-0.14.0.tgz` |
-| `ge-workbench-office-co-creation/` | 办公套件 | 0.2.3 | productivity | `packages/office-co-creation/office-co-creation-0.2.3.tgz` |
+| `ge-workbench-office-co-creation/` | 办公套件 | 0.3.0 | productivity | `packages/office-co-creation/office-co-creation-0.3.0.tgz` |
 
 - 每个目录内的 `ARCHIVE.json` 记录市场条目 ID、版本、安装包相对路径、sha256 与截图。
 - 安装包与截图仍放在 `packages/<name>/`；市场安装走自托管的 github-release tgz，不依赖本目录。

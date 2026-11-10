@@ -5,6 +5,12 @@ import { join } from 'node:path'
 
 const CONTAINER = 'office-co-creation-ds'
 const IMAGE = 'onlyoffice/documentserver:latest'
+const IMAGE_RE = /^[a-z0-9][a-z0-9._:/@-]{0,220}$/
+const MIRRORS = [
+  'docker.m.daocloud.io',
+  'docker.1ms.run',
+  'docker.xuanyuan.me',
+]
 const CONTAINER_PORT = 18080
 const MAX_LOG = 6000
 const START_TIMEOUT_MS = 240_000
@@ -83,7 +89,7 @@ async function resolveDocker() {
   return null
 }
 
-function dockerRunArgs() {
+function dockerRunArgs(image = IMAGE) {
   const args = [
     'run', '-d',
     '--name', CONTAINER,
@@ -96,8 +102,12 @@ function dockerRunArgs() {
   } else if (platform() === 'linux') {
     args.push('--add-host', 'host.docker.internal:host-gateway')
   }
-  args.push(IMAGE)
+  args.push(image)
   return args
+}
+
+function mirrorImages() {
+  return MIRRORS.map((mirror) => `${mirror}/${IMAGE}`)
 }
 
 function manualCommand() {
@@ -214,6 +224,7 @@ export class OnlyOfficeSetup {
       documentServerUrl: this.baseUrl,
       port: this.port,
       image: IMAGE,
+      mirrors: mirrorImages(),
       containerName: CONTAINER,
       docker,
       serverUp,
@@ -232,8 +243,15 @@ export class OnlyOfficeSetup {
     return false
   }
 
-  async start() {
+  async start(options = {}) {
     if (this.job.running) return { started: false, already: true, job: { ...this.job } }
+    const requested = typeof options?.image === 'string' ? options.image.trim() : ''
+    if (requested && !IMAGE_RE.test(requested)) {
+      const error = new Error('镜像地址不合法。示例：docker.m.daocloud.io/onlyoffice/documentserver:latest')
+      error.status = 400
+      throw error
+    }
+    this.jobImage = requested || IMAGE
     this.job = {
       running: true,
       step: '检查 Docker',
@@ -294,10 +312,11 @@ export class OnlyOfficeSetup {
         return
       }
     } else {
+      const image = this.jobImage || IMAGE
       this.job.step = '安装 OnlyOffice'
-      this.job.detail = '首次运行会拉取约 1–2 GB 镜像，请保持网络连接…'
-      this.append(`[info] docker ${dockerRunArgs().join(' ')}\n`)
-      const child = execFile(dockerBin, dockerRunArgs(), { timeout: 15 * 60_000, maxBuffer: 4 * 1024 * 1024, windowsHide: true })
+      this.job.detail = `首次运行会拉取约 1–2 GB 镜像（${image}），请保持网络连接…`
+      this.append(`[info] docker ${dockerRunArgs(image).join(' ')}\n`)
+      const child = execFile(dockerBin, dockerRunArgs(image), { timeout: 15 * 60_000, maxBuffer: 4 * 1024 * 1024, windowsHide: true })
       child.stdout?.on('data', (chunk) => this.append(String(chunk)))
       child.stderr?.on('data', (chunk) => this.append(String(chunk)))
       const result = await new Promise((resolve) => {

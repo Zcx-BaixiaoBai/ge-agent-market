@@ -1,6 +1,6 @@
 {
   "name": "office-co-creation",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "人机协同办公，框选任意区域让 AI 开始工作。",
   "type": "module",
   "main": "dsh/index.js",
