@@ -1,0 +1,6 @@
+UNLICENSED — 本包为金鹰 Agent 本机自用构建，不对外分发。
+
+本包自身代码仅用于本机工作台开发与自用。工作台通过 Docker 运行官方
+ONLYOFFICE Document Server 镜像；该镜像及其前端资源遵循其自身的
+AGPL-3.0（或商业许可）条款，本包不修改、不重新分发该镜像。使用前请自行
+确认所在组织对 ONLYOFFICE 的许可要求。

@@ -1,0 +1,51 @@
+{
+  "name": "office-co-creation",
+  "version": "0.1.0",
+  "description": "人机协同办公，框选任意区域让 AI 开始工作。",
+  "type": "module",
+  "main": "dsh/index.js",
+  "exports": {
+    ".": "./dsh/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "files": [
+    "dsh/index.js",
+    "lib/client.js",
+    "lib/host/*.js",
+    "lib/onlyoffice-plugin/*",
+    "docs/screenshots/overview.png",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "张宸熙",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zcx-BaixiaoBai/ge-workbench-office-co-creation"
+  },
+  "engines": {
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "dsh-desktop-workbenches"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": "0.2.1-rc.2",
+    "@deepseek-ai/schemastery": ">=3.18.0 <4.0.0"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "check": "node --check dsh/index.js && node --check lib/client.js && node --check lib/host/file-store.js && node --check lib/host/document-server.js && node --check lib/host/patches.js && node --check lib/host/cloud-bridge.js && node --check lib/host/cloud-clipboard.js && node --check lib/host/cloud-queue.js && node --check lib/host/cloud-tool.js && node --check lib/onlyoffice-plugin/plugin.js"
+  }
+}

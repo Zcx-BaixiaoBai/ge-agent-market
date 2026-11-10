@@ -1,0 +1,9 @@
+# 办公套件工作台（office-co-creation）
+#
+# 服务端入口注册在本机接口前缀 /api/office-co-creation/ 下，负责文件映射、
+# OnlyOffice 保存回调、版本备份与 Agent 选区补丁队列；业务数据目录由 Desktop 分配。
+- insert:
+    - id: office-co-creation
+      name: office-co-creation
+      config:
+        root: !!js dshHomePath('office-co-creation')

@@ -186,6 +186,37 @@
           "bytes": 905682
         }
       ]
+    },
+    {
+      "id": "zcx-baixiaobai/ge-workbench-office-co-creation",
+      "owner": "zcx-baixiaobai",
+      "repository": "ge-workbench-office-co-creation",
+      "url": "https://github.com/zcx-baixiaobai/ge-workbench-office-co-creation",
+      "name": "办公套件",
+      "category": "productivity",
+      "author": "张宸熙",
+      "version": "0.1.0",
+      "license": "UNLICENSED",
+      "description": {
+        "zh": "办公套件：在本机 OnlyOffice 中完整编辑 Word、Excel、PPT，框选文档内容交给 AI 修改，改完自动写回原文件并保留修改前版本；文档不上传云端。开发者：张宸熙。",
+        "en": "Office suite: edit Word, Excel and PowerPoint locally in OnlyOffice, hand a selected range to the AI, and write the changes back to the same file with a pre-edit backup; documents never leave the machine. Developer: Zhang Chenxi."
+      },
+      "distribution": {
+        "type": "github-release",
+        "version": "0.1.0",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/office-co-creation/office-co-creation-0.1.0.tgz",
+        "sha256": "d9c762b6c2ad4d908182f65ca6dc2797ae04a2af1c8431973eb3213f09343c1a"
+      },
+      "screenshots": [
+        {
+          "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/office-co-creation/docs/screenshots/overview.png",
+          "alt": "办公套件：左侧本地文件夹、最近打开的文件与 OnlyOffice 连接状态",
+          "sha256": "b3f24c5478cb0c8d246a230e357c72baf659037cc2e3fb5c9b71a2abe6d6258b",
+          "width": 3200,
+          "height": 2000,
+          "bytes": 276779
+        }
+      ]
     }
   ]
 }
