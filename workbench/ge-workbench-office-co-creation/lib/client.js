@@ -123,6 +123,17 @@ window.__ModuleLoader__.load({
       .occ-setup details { margin-top: 12px; font-size: 11px; color: var(--occ-muted); }
       .occ-setup summary { cursor: pointer; }
       .occ-setup-registry { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--occ-gold-line); }
+      .occ-setup-progress { margin-top: 12px; }
+      .occ-setup-progress-head { display: flex; justify-content: space-between; gap: 12px;
+        font-size: 12px; margin-bottom: 6px; }
+      .occ-setup-progress-foot { font-size: 11px; color: var(--occ-muted); margin-top: 6px; }
+      .occ-setup-bar { height: 8px; border-radius: 999px; background: #f1ead9; overflow: hidden;
+        position: relative; }
+      .occ-setup-bar-fill { height: 100%; background: var(--occ-gold); border-radius: 999px;
+        transition: width .4s ease; }
+      .occ-setup-bar.indeterminate .occ-setup-bar-fill { width: 35%; position: absolute;
+        animation: occ-slide 1.2s ease-in-out infinite; }
+      @keyframes occ-slide { 0% { left: -35%; } 100% { left: 100%; } }
       .occ-start { max-width: 860px; width: 100%; margin: 0 auto; }
       .occ-filelist + .occ-filelist { margin-top: 24px; }
       .occ-list-title { display: flex; align-items: baseline; gap: 10px; padding: 0 2px 6px;
@@ -315,6 +326,7 @@ window.__ModuleLoader__.load({
       .occ-root.occ-dark .occ-setup { background: #24262a; border-color: #3a3d42; }
       .occ-root.occ-dark .occ-setup-log { background: #1b1c1e; border-color: #34373c; color: #c5c8cd; }
       .occ-root.occ-dark .occ-setup-actions a { background: #2a2d31; border-color: #44474d; color: #d4b06a; }
+      .occ-root.occ-dark .occ-setup-bar { background: #34373c; }
       .occ-root.occ-dark .occ-composer { background: #202124 !important; }
       .occ-root.occ-dark .occ-chat-float { background: #24262a; box-shadow: 0 24px 70px rgba(0,0,0,.5); }
       .occ-root.occ-dark .occ-composer input { border: none; border-bottom: 1px solid #34373b;
@@ -358,6 +370,14 @@ window.__ModuleLoader__.load({
       const data = response.status === 204 ? null : await response.json().catch(() => ({}))
       if (!response.ok) throw new Error(data?.error || `请求失败（${response.status}）`)
       return data
+    }
+
+    function formatBytes(value) {
+      const bytes = Number(value)
+      if (!Number.isFinite(bytes) || bytes <= 0) return '0 MB'
+      if (bytes >= 1e9) return `${(bytes / 1e9).toFixed(1)} GB`
+      if (bytes >= 1e6) return `${Math.round(bytes / 1e6)} MB`
+      return `${Math.max(1, Math.round(bytes / 1e3))} KB`
     }
 
     function extractCloudUrl(input) {
@@ -1770,6 +1790,9 @@ ${instruction.trim()}
         const dockerRunning = Boolean(docker?.running)
         const serverUp = Boolean(setup?.serverUp)
         const registryBlocked = !job.running && Boolean(job.error && /registry-1\.docker\.io|failed to resolve reference|connectex|No connection could be made|TLS handshake|i\/o timeout|dial tcp/i.test(`${job.error}\n${job.logTail}`))
+        const progress = job.progress || null
+        const elapsed = job.startedAt ? Math.max(0, Math.floor((Date.now() - job.startedAt) / 1000)) : 0
+        const since = job.updatedAt ? Math.max(0, Math.floor((Date.now() - job.updatedAt) / 1000)) : null
         const check = (label, state, text) => h('div', { className: 'occ-setup-check' },
           h('span', { className: `occ-setup-dot ${state === true ? 'on' : state === false ? 'off' : ''}` }),
           h('span', { className: 'occ-setup-check-label' }, label),
@@ -1834,6 +1857,29 @@ ${instruction.trim()}
             check('Document Server', serverUp, serverUp ? `已连接 · 127.0.0.1:${setup?.port || 18080}` : '未连接'),
           ),
           h('div', { className: 'occ-setup-actions' }, actions),
+          job.running && h('div', { className: 'occ-setup-progress' },
+            h('div', { className: 'occ-setup-progress-head' },
+              h('span', {}, progress?.phase === 'starting'
+                ? '正在启动 Document Server…'
+                : progress?.phase === 'extract'
+                  ? `正在解压镜像 ${progress?.percent || 0}%`
+                  : progress?.percent == null
+                    ? '正在连接镜像仓库…'
+                    : `正在下载镜像 ${progress.percent}%`),
+              h('span', {}, progress?.total ? `${formatBytes(progress.downloaded)} / ${formatBytes(progress.total)}` : `已用 ${elapsed} 秒`),
+            ),
+            h('div', { className: `occ-setup-bar${progress?.percent == null ? ' indeterminate' : ''}` },
+              h('div', {
+                className: 'occ-setup-bar-fill',
+                style: progress?.percent == null ? undefined : { width: `${progress.percent}%` },
+              }),
+            ),
+            h('div', { className: 'occ-setup-progress-foot' },
+              `已用 ${elapsed} 秒`,
+              since != null ? ` · 最后输出 ${since} 秒前` : '',
+              since != null && since > 60 ? ' · 超过 1 分钟没有新输出，拉取可能很慢；可以继续等或换镜像重试' : '',
+            ),
+          ),
           registryBlocked && h('div', { className: 'occ-setup-registry' },
             h('div', { className: 'occ-setup-detail occ-setup-error' }, 'Docker Hub 连不上（DNS 污染或网络拦截）。可以改用国内镜像重试：'),
             h('div', { className: 'occ-setup-actions' },

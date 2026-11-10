@@ -25,6 +25,8 @@ Word、Excel、PPT；在文档里选中一段内容后，把选区和一句指�
 - Docker 就绪、容器还没创建：点“一键安装并启动 OnlyOffice”，工作台会拉取镜像并启动
   `office-co-creation-ds` 容器，安装进度和日志直接显示在页面里；首次约 1–2 GB，之后直接复用。
 - 安装完成后 Document Server 状态变为“已连接”，即可打开文件。
+- 安装过程中页面显示下载百分比、已下载/总量、已用时间和最后输出时间；
+  超过 1 分钟没有新输出会提示可能卡住，可以继续等或换镜像重试。
 
 ![办公套件引导安装：Docker 与 OnlyOffice 状态检测、一键安装](docs/screenshots/setup.png)
 

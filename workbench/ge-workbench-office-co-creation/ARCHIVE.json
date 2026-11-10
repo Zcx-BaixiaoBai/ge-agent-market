@@ -1,11 +1,11 @@
 {
   "id": "zcx-baixiaobai/ge-workbench-office-co-creation",
   "name": "办公套件",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "package": "office-co-creation",
-  "tarball": "../../packages/office-co-creation/office-co-creation-0.3.1.tgz",
-  "sha256": "ef12e8bfcedef691391c49f56ac2938163392c294b48a59745bc2cd1171cf191",
+  "tarball": "../../packages/office-co-creation/office-co-creation-0.4.0.tgz",
+  "sha256": "29107af1a87f558dd8b6f497a0238f62d32434f28e31f924fcdf85045ab6c36c",
   "screenshot": "../../packages/office-co-creation/docs/screenshots/overview.png",
   "archivedAt": "2026-11-10",
-  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.3.1 去掉自定义镜像输入：/setup/install 只接受镜像列表下标，实际镜像名始终来自服务端常量，避免用户输入进入 docker 命令参数；Docker Hub 不可达时仍可一键切换 daocloud / 1ms / xuanyuan 镜像。"
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.4.0 增加 OnlyOffice 下载进度：解析 docker pull 各图层 Downloading/Extracting 的字节数，显示百分比、已下载/总量、已用时间与最后输出时间；超过 1 分钟无输出提示可能卡住。未知总量时显示不定进度条。"
 }

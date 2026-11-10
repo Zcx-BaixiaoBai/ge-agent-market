@@ -1,7 +1,7 @@
 import { execFile } from 'node:child_process'
 import { access } from 'node:fs/promises'
 import { arch, platform } from 'node:os'
-import { join } from 'node:path'
+import { delimiter, dirname, join } from 'node:path'
 
 const CONTAINER = 'office-co-creation-ds'
 const IMAGE = 'onlyoffice/documentserver:latest'
@@ -45,24 +45,15 @@ function dockerCandidates() {
   return ['/usr/bin/docker', '/usr/local/bin/docker', '/snap/bin/docker']
 }
 
-function dockerDesktopCandidates() {
-  if (platform() === 'win32') {
-    const env = process.env
-    const roots = [env.ProgramFiles, env.ProgramW6432, env.LOCALAPPDATA, 'C:\\Program Files'].filter(Boolean)
-    const candidates = []
-    for (const root of roots) {
-      candidates.push(join(root, 'Docker', 'Docker', 'Docker Desktop.exe'))
-      candidates.push(join(root, 'Docker', 'Docker Desktop.exe'))
-      candidates.push(join(root, 'Programs', 'Docker', 'Docker', 'Docker Desktop.exe'))
-    }
-    return candidates
-  }
-  return []
+function envWithPath(dir) {
+  if (!dir) return process.env
+  const key = Object.keys(process.env).find((name) => name.toUpperCase() === 'PATH') || 'PATH'
+  return { ...process.env, [key]: `${dir}${delimiter}${process.env[key] || ''}` }
 }
 
-function run(file, args, timeout = 20_000) {
+function runDocker(args, timeout = 20_000, dir = '') {
   return new Promise((resolve) => {
-    execFile(file, args, { timeout, maxBuffer: 1024 * 1024, windowsHide: true }, (error, stdout, stderr) => {
+    execFile('docker', args, { timeout, maxBuffer: 1024 * 1024, windowsHide: true, env: envWithPath(dir) }, (error, stdout, stderr) => {
       resolve({
         ok: !error,
         code: error?.code ?? 0,
@@ -73,17 +64,46 @@ function run(file, args, timeout = 20_000) {
   })
 }
 
+function runOpen(args, timeout = 10_000) {
+  return new Promise((resolve) => {
+    execFile('open', args, { timeout, maxBuffer: 1024 * 1024, windowsHide: true }, (error, stdout, stderr) => {
+      resolve({
+        ok: !error,
+        code: error?.code ?? 0,
+        stdout: String(stdout || ''),
+        stderr: String(stderr || error?.message || ''),
+      })
+    })
+  })
+}
+
+function runDockerStreaming(args, dir, onData) {
+  return new Promise((resolve) => {
+    const child = execFile('docker', args, {
+      timeout: 15 * 60_000,
+      maxBuffer: 4 * 1024 * 1024,
+      windowsHide: true,
+      env: envWithPath(dir),
+    })
+    child.stdout?.on('data', (chunk) => onData(String(chunk)))
+    child.stderr?.on('data', (chunk) => onData(String(chunk)))
+    child.on('error', (error) => resolve({ ok: false, code: -1, stderr: error.message }))
+    child.on('close', (code) => resolve({ ok: code === 0, code, stderr: '' }))
+  })
+}
+
 async function resolveDocker() {
-  const onPath = await run('docker', ['--version'], 8000)
-  if (onPath.ok) return { path: 'docker', version: onPath.stdout.trim() }
+  const onPath = await runDocker(['--version'], 8000)
+  if (onPath.ok) return { path: 'docker', dir: '', version: onPath.stdout.trim() }
   for (const candidate of dockerCandidates()) {
     try {
       await access(candidate)
     } catch {
       continue
     }
-    const probe = await run(candidate, ['--version'], 8000)
-    if (probe.ok) return { path: candidate, version: probe.stdout.trim() }
+    const dir = dirname(candidate)
+    const probe = await runDocker(['--version'], 8000, dir)
+    if (probe.ok) return { path: candidate, dir, version: probe.stdout.trim() }
   }
   return null
 }
@@ -108,6 +128,17 @@ function dockerRunArgs(image = IMAGE) {
 function mirrorImages() {
   return MIRRORS.map((mirror) => `${mirror}/${IMAGE}`)
 }
+
+function parseBytes(value, unit) {
+  const amount = Number(value)
+  if (!Number.isFinite(amount)) return 0
+  const prefix = String(unit || '').toUpperCase().charAt(0)
+  const scale = prefix === 'G' ? 1e9 : prefix === 'M' ? 1e6 : prefix === 'K' ? 1e3 : 1
+  return Math.round(amount * scale)
+}
+
+const LAYER_ACTIVE = new RegExp('^([0-9a-f]{6,64}):\\s+(Downloading|Extracting)\\s+\\[[^\\]]*\\]\\s+([\\d.]+)\\s*([kKMGT]?i?B)\\s*/\\s*([\\d.]+)\\s*([kKMGT]?i?B)', 'i')
+const LAYER_STATE = new RegExp('^([0-9a-f]{6,64}):\\s+(Pulling fs layer|Waiting|Verifying Checksum|Download complete|Pull complete)', 'i')
 
 function manualCommand() {
   const platformArg = platform() === 'darwin'
@@ -154,36 +185,88 @@ export class OnlyOfficeSetup {
       finishedAt: null,
       error: null,
       logTail: '',
+      updatedAt: null,
+      progress: null,
     }
+    this.layers = new Map()
   }
 
   append(text) {
-    const next = `${this.job.logTail}${text}`.replace(/\r/g, '')
+    const clean = String(text).replace(/\r/g, '\n')
+    const next = `${this.job.logTail}${clean}`
     this.job.logTail = next.length > MAX_LOG ? next.slice(-MAX_LOG) : next
+    this.job.updatedAt = Date.now()
+    for (const line of clean.split('\n')) {
+      if (line.trim()) this.parseProgress(line.trim())
+    }
+  }
+
+  parseProgress(line) {
+    const active = line.match(LAYER_ACTIVE)
+    if (active) {
+      const [, id, kind, doneValue, doneUnit, totalValue, totalUnit] = active
+      const layer = this.layers.get(id) || { download: null, extract: null, downloadDone: false }
+      const point = { done: parseBytes(doneValue, doneUnit), total: parseBytes(totalValue, totalUnit) }
+      if (kind.toLowerCase() === 'downloading') layer.download = point
+      else layer.extract = point
+      this.layers.set(id, layer)
+      this.recomputeProgress()
+      return
+    }
+    const marked = line.match(LAYER_STATE)
+    if (marked) {
+      const [, id, state] = marked
+      const layer = this.layers.get(id) || { download: null, extract: null, downloadDone: false }
+      const lowered = state.toLowerCase()
+      if (lowered.includes('download complete') || lowered.includes('pull complete')) layer.downloadDone = true
+      this.layers.set(id, layer)
+      this.recomputeProgress()
+      return
+    }
+    if (line.startsWith('Status: Downloaded newer image') || line.startsWith('Status: Image is up to date')) {
+      this.job.progress = { percent: 99, phase: 'starting' }
+    }
+  }
+
+  recomputeProgress() {
+    const layers = [...this.layers.values()].filter((layer) => layer.download?.total)
+    if (!layers.length) {
+      this.job.progress = { percent: null, phase: 'download' }
+      return
+    }
+    const downloadTotal = layers.reduce((sum, layer) => sum + layer.download.total, 0)
+    const downloadDone = layers.reduce((sum, layer) => (
+      layer.downloadDone ? sum + layer.download.total : sum + Math.min(layer.download.done, layer.download.total)
+    ), 0)
+    const extractLayers = layers.filter((layer) => layer.extract?.total)
+    const extractTotal = extractLayers.reduce((sum, layer) => sum + layer.extract.total, 0)
+    const extractDone = extractLayers.reduce((sum, layer) => sum + Math.min(layer.extract.done, layer.extract.total), 0)
+    const allDownloaded = layers.every((layer) => layer.downloadDone || layer.download.done >= layer.download.total)
+    let ratio = downloadTotal ? downloadDone / downloadTotal : 0
+    let phase = 'download'
+    if (allDownloaded) {
+      phase = 'extract'
+      ratio = extractTotal ? 0.9 + 0.09 * (extractDone / extractTotal) : 0.95
+    } else {
+      ratio *= 0.9
+    }
+    this.job.progress = {
+      percent: Math.max(1, Math.min(99, Math.round(ratio * 100))),
+      downloaded: downloadDone,
+      total: downloadTotal,
+      phase,
+    }
   }
 
   async openDockerDesktop() {
     if (platform() === 'darwin') {
-      const result = await run('open', ['-a', 'Docker'], 10_000)
+      const result = await runOpen(['-a', 'Docker'])
       return result.ok
         ? { started: true, message: '正在启动 Docker Desktop，等它显示 Running 后点“重新检测”。' }
         : { started: false, message: '没有找到 Docker Desktop，请从“应用程序”里手动启动。' }
     }
     if (platform() === 'win32') {
-      for (const candidate of dockerDesktopCandidates()) {
-        try {
-          await access(candidate)
-        } catch {
-          continue
-        }
-        try {
-          execFile(candidate, [], { detached: true, stdio: 'ignore', windowsHide: true }).unref()
-          return { started: true, message: '正在启动 Docker Desktop，等它显示 Running 后点“重新检测”（首次启动可能要 1 分钟）。' }
-        } catch (error) {
-          return { started: false, message: `启动 Docker Desktop 失败：${error instanceof Error ? error.message : String(error)}` }
-        }
-      }
-      return { started: false, message: '没有找到 Docker Desktop，请从开始菜单手动启动。' }
+      return { started: false, message: '请从开始菜单打开 Docker Desktop，等它显示 Running 后点“重新检测”（首次启动可能要 1 分钟）。' }
     }
     return { started: false, message: 'Linux 请在终端执行 sudo systemctl start docker，然后点“重新检测”。' }
   }
@@ -192,12 +275,13 @@ export class OnlyOfficeSetup {
     const resolved = await resolveDocker()
     if (!resolved) return { installed: false, running: false, version: '' }
     this.dockerPath = resolved.path
+    this.dockerDir = resolved.dir
     const cli = { ok: true, stdout: resolved.version }
-    const daemon = await run(resolved.path, ['info', '--format', '{{.ServerVersion}}'], 10_000)
+    const daemon = await runDocker(['info', '--format', '{{.ServerVersion}}'], 10_000, resolved.dir)
     if (!daemon.ok) {
       return { installed: true, running: false, version: cli.stdout.trim(), cliPath: resolved.path, daemonError: daemon.stderr.trim().slice(0, 300) }
     }
-    const info = await run(resolved.path, ['inspect', '-f', '{{.State.Running}}|{{.Config.Image}}', CONTAINER], 10_000)
+    const info = await runDocker(['inspect', '-f', '{{.State.Running}}|{{.Config.Image}}', CONTAINER], 10_000, resolved.dir)
     const exists = info.ok
     const [runningRaw, imageRaw] = exists ? info.stdout.trim().split('|') : ['false', '']
     return {
@@ -257,7 +341,10 @@ export class OnlyOfficeSetup {
       finishedAt: null,
       error: null,
       logTail: '',
+      updatedAt: Date.now(),
+      progress: null,
     }
+    this.layers = new Map()
     this.runJob().catch((error) => {
       this.job.running = false
       this.job.finishedAt = Date.now()
@@ -291,7 +378,7 @@ export class OnlyOfficeSetup {
     }
 
     const container = docker.container
-    const dockerBin = this.dockerPath || 'docker'
+    const dockerDir = this.dockerDir || ''
     if (container?.exists && container.running) {
       this.job.step = '容器已在运行'
       this.job.detail = '正在等待 Document Server 就绪…'
@@ -299,7 +386,7 @@ export class OnlyOfficeSetup {
     } else if (container?.exists) {
       this.job.step = '启动已有容器'
       this.job.detail = 'docker start office-co-creation-ds'
-      const started = await run(dockerBin, ['start', CONTAINER], 60_000)
+      const started = await runDocker(['start', CONTAINER], 60_000, dockerDir)
       this.append(started.ok ? '[info] 容器已启动\n' : `[error] ${started.stderr}\n`)
       if (!started.ok) {
         this.job.error = '启动 OnlyOffice 容器失败。'
@@ -313,13 +400,7 @@ export class OnlyOfficeSetup {
       this.job.step = '安装 OnlyOffice'
       this.job.detail = `首次运行会拉取约 1–2 GB 镜像（${image}），请保持网络连接…`
       this.append(`[info] docker ${dockerRunArgs(image).join(' ')}\n`)
-      const child = execFile(dockerBin, dockerRunArgs(image), { timeout: 15 * 60_000, maxBuffer: 4 * 1024 * 1024, windowsHide: true })
-      child.stdout?.on('data', (chunk) => this.append(String(chunk)))
-      child.stderr?.on('data', (chunk) => this.append(String(chunk)))
-      const result = await new Promise((resolve) => {
-        child.on('error', (error) => resolve({ ok: false, stderr: error.message, code: -1 }))
-        child.on('close', (code) => resolve({ ok: code === 0, code, stderr: '' }))
-      })
+      const result = await runDockerStreaming(dockerRunArgs(image), dockerDir, (chunk) => this.append(chunk))
       if (!result.ok) {
         const tail = this.job.logTail.trim().split('\n').slice(-6).join('\n')
         this.job.error = `创建 OnlyOffice 容器失败（退出码 ${result.code}）。`
@@ -334,6 +415,8 @@ export class OnlyOfficeSetup {
 
     this.job.step = '等待 Document Server 就绪'
     this.job.detail = '首次启动通常需要 30–120 秒；如果正在拉取镜像会更久。'
+    this.job.progress = { percent: 100, phase: 'starting' }
+    this.job.updatedAt = Date.now()
     const up = await this.waitUntilUp()
     this.job.running = false
     this.job.finishedAt = Date.now()
