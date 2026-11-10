@@ -1,4 +1,5 @@
 import { execFile } from 'node:child_process'
+import { access } from 'node:fs/promises'
 import { arch, platform } from 'node:os'
 
 const CONTAINER = 'office-co-creation-ds'
@@ -6,6 +7,23 @@ const IMAGE = 'onlyoffice/documentserver:latest'
 const CONTAINER_PORT = 18080
 const MAX_LOG = 6000
 const START_TIMEOUT_MS = 240_000
+
+function dockerCandidates() {
+  if (platform() === 'darwin') {
+    return [
+      '/Applications/Docker.app/Contents/Resources/bin/docker',
+      '/usr/local/bin/docker',
+      '/opt/homebrew/bin/docker',
+    ]
+  }
+  if (platform() === 'win32') {
+    return [
+      'C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe',
+      'C:\\Program Files\\Docker\\Docker\\resources\\docker.exe',
+    ]
+  }
+  return ['/usr/bin/docker', '/usr/local/bin/docker', '/snap/bin/docker']
+}
 
 function run(file, args, timeout = 20_000) {
   return new Promise((resolve) => {
@@ -18,6 +36,21 @@ function run(file, args, timeout = 20_000) {
       })
     })
   })
+}
+
+async function resolveDocker() {
+  const onPath = await run('docker', ['--version'], 8000)
+  if (onPath.ok) return { path: 'docker', version: onPath.stdout.trim() }
+  for (const candidate of dockerCandidates()) {
+    try {
+      await access(candidate)
+    } catch {
+      continue
+    }
+    const probe = await run(candidate, ['--version'], 8000)
+    if (probe.ok) return { path: candidate, version: probe.stdout.trim() }
+  }
+  return null
 }
 
 function dockerRunArgs() {
@@ -85,19 +118,22 @@ export class OnlyOfficeSetup {
   }
 
   async dockerStatus() {
-    const cli = await run('docker', ['--version'], 8000)
-    if (!cli.ok) return { installed: false, running: false, version: '' }
-    const daemon = await run('docker', ['info', '--format', '{{.ServerVersion}}'], 10_000)
+    const resolved = await resolveDocker()
+    if (!resolved) return { installed: false, running: false, version: '' }
+    this.dockerPath = resolved.path
+    const cli = { ok: true, stdout: resolved.version }
+    const daemon = await run(resolved.path, ['info', '--format', '{{.ServerVersion}}'], 10_000)
     if (!daemon.ok) {
-      return { installed: true, running: false, version: cli.stdout.trim(), daemonError: daemon.stderr.trim().slice(0, 300) }
+      return { installed: true, running: false, version: cli.stdout.trim(), cliPath: resolved.path, daemonError: daemon.stderr.trim().slice(0, 300) }
     }
-    const info = await run('docker', ['inspect', '-f', '{{.State.Running}}|{{.Config.Image}}', CONTAINER], 10_000)
+    const info = await run(resolved.path, ['inspect', '-f', '{{.State.Running}}|{{.Config.Image}}', CONTAINER], 10_000)
     const exists = info.ok
     const [runningRaw, imageRaw] = exists ? info.stdout.trim().split('|') : ['false', '']
     return {
       installed: true,
       running: true,
       version: daemon.stdout.trim() || cli.stdout.trim(),
+      cliPath: resolved.path,
       container: {
         name: CONTAINER,
         exists,
@@ -185,7 +221,8 @@ export class OnlyOfficeSetup {
     } else if (container?.exists) {
       this.job.step = '启动已有容器'
       this.job.detail = 'docker start office-co-creation-ds'
-      const started = await run('docker', ['start', CONTAINER], 60_000)
+      const dockerBin = this.dockerPath || 'docker'
+      const started = await run(dockerBin, ['start', CONTAINER], 60_000)
       this.append(started.ok ? '[info] 容器已启动\n' : `[error] ${started.stderr}\n`)
       if (!started.ok) {
         this.job.error = '启动 OnlyOffice 容器失败。'
@@ -198,7 +235,7 @@ export class OnlyOfficeSetup {
       this.job.step = '安装 OnlyOffice'
       this.job.detail = '首次运行会拉取约 1–2 GB 镜像，请保持网络连接…'
       this.append(`[info] docker ${dockerRunArgs().join(' ')}\n`)
-      const child = execFile('docker', dockerRunArgs(), { timeout: 15 * 60_000, maxBuffer: 4 * 1024 * 1024 })
+      const child = execFile(dockerBin, dockerRunArgs(), { timeout: 15 * 60_000, maxBuffer: 4 * 1024 * 1024 })
       child.stdout?.on('data', (chunk) => this.append(String(chunk)))
       child.stderr?.on('data', (chunk) => this.append(String(chunk)))
       const result = await new Promise((resolve) => {
