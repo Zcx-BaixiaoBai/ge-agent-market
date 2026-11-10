@@ -1,11 +1,11 @@
 {
   "id": "zcx-baixiaobai/ge-workbench-office-co-creation",
   "name": "办公套件",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "package": "office-co-creation",
-  "tarball": "../../packages/office-co-creation/office-co-creation-0.2.2.tgz",
-  "sha256": "fdb78e0b4114a49053b9bf73285c59d5fd0d6e0d8231981ad074e78bc8103414",
+  "tarball": "../../packages/office-co-creation/office-co-creation-0.2.3.tgz",
+  "sha256": "bf6d2f2a0b4b2dc216be652c6449f085977d9044a9425e3af1afb6a8a1a5786f",
   "screenshot": "../../packages/office-co-creation/docs/screenshots/overview.png",
   "archivedAt": "2026-11-10",
-  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.2.2 兼容 Windows：Docker CLI/Docker Desktop 增加 Program Files、ProgramW6432、LOCALAPPDATA、Programs 等安装路径探测；引导页可一键启动 Docker Desktop；Windows/Linux 的内容服务改绑 0.0.0.0，容器可通过 host.docker.internal 拉取文件；手动命令在 Windows 下为单行；补 LibreOffice Windows 路径；子进程隐藏控制台窗口。"
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.2.3 修复 Windows 一键安装时报 dockerBin is not defined（dockerBin 原先声明在启动已有容器的分支里，创建新容器分支取不到）；现在在执行分支前统一解析 Docker 路径。"
 }

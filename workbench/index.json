@@ -195,7 +195,7 @@
       "name": "办公套件",
       "category": "productivity",
       "author": "张宸熙",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "license": "UNLICENSED",
       "description": {
         "zh": "办公套件：在本机 OnlyOffice 中完整编辑 Word、Excel、PPT，框选文档内容交给 AI 修改，改完自动写回原文件并保留修改前版本。首次打开会检测 Docker 并引导一键安装 OnlyOffice，支持 Windows / macOS / Linux，文档不上传云端。开发者：张宸熙。",
@@ -203,9 +203,9 @@
       },
       "distribution": {
         "type": "github-release",
-        "version": "0.2.2",
-        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/office-co-creation/office-co-creation-0.2.2.tgz",
-        "sha256": "fdb78e0b4114a49053b9bf73285c59d5fd0d6e0d8231981ad074e78bc8103414"
+        "version": "0.2.3",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/office-co-creation/office-co-creation-0.2.3.tgz",
+        "sha256": "bf6d2f2a0b4b2dc216be652c6449f085977d9044a9425e3af1afb6a8a1a5786f"
       },
       "screenshots": [
         {

@@ -276,6 +276,7 @@ export class OnlyOfficeSetup {
     }
 
     const container = docker.container
+    const dockerBin = this.dockerPath || 'docker'
     if (container?.exists && container.running) {
       this.job.step = '容器已在运行'
       this.job.detail = '正在等待 Document Server 就绪…'
@@ -283,7 +284,6 @@ export class OnlyOfficeSetup {
     } else if (container?.exists) {
       this.job.step = '启动已有容器'
       this.job.detail = 'docker start office-co-creation-ds'
-      const dockerBin = this.dockerPath || 'docker'
       const started = await run(dockerBin, ['start', CONTAINER], 60_000)
       this.append(started.ok ? '[info] 容器已启动\n' : `[error] ${started.stderr}\n`)
       if (!started.ok) {
