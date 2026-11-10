@@ -1,11 +1,11 @@
 {
   "id": "zcx-baixiaobai/ge-workbench-office-co-creation",
   "name": "办公套件",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "package": "office-co-creation",
-  "tarball": "../../packages/office-co-creation/office-co-creation-0.3.0.tgz",
-  "sha256": "44d3ed8c9e52c9297d90ef109f8a00eedc3650088c9c417f9182466bc274e5ca",
+  "tarball": "../../packages/office-co-creation/office-co-creation-0.3.1.tgz",
+  "sha256": "ef12e8bfcedef691391c49f56ac2938163392c294b48a59745bc2cd1171cf191",
   "screenshot": "../../packages/office-co-creation/docs/screenshots/overview.png",
   "archivedAt": "2026-11-10",
-  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.3.0 处理 Docker Hub 不可达：识别 registry-1.docker.io / connection refused 类错误后，引导页提供 daocloud / 1ms / xuanyuan 三个镜像一键重试、自定义镜像地址输入，以及 Docker Desktop registry-mirrors 配置说明；镜像地址严格校验后作为 execFile 参数传入。"
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.3.1 去掉自定义镜像输入：/setup/install 只接受镜像列表下标，实际镜像名始终来自服务端常量，避免用户输入进入 docker 命令参数；Docker Hub 不可达时仍可一键切换 daocloud / 1ms / xuanyuan 镜像。"
 }

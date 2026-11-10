@@ -47,8 +47,9 @@ docker run -d --name office-co-creation-ds \
   误点取消时到「Windows 安全中心 → 防火墙和网络保护 → 允许应用通过防火墙」，
   勾选「金鹰 Agent」的专用网络。
 - 如果拉镜像时报 `registry-1.docker.io ... connection refused`，说明本机到 Docker Hub
-  不通（常见于公司网络或 DNS 污染）：引导页会给出国内镜像一键重试和自定义镜像地址，
-  也可以给 Docker Desktop 配 `registry-mirrors`（Settings → Docker Engine）。
+  不通（常见于公司网络或 DNS 污染）：引导页会给出国内镜像一键重试；
+  公司有内部镜像仓库时，给 Docker Desktop 配 `registry-mirrors`（Settings → Docker Engine），
+  再回来重新检测即可。
 - 只绑定 `127.0.0.1`，不要暴露到局域网。
 
 > 本机自用场景下关闭了 OnlyOffice JWT；工作台用每个文件独立的随机令牌保护

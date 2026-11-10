@@ -5,7 +5,6 @@ import { join } from 'node:path'
 
 const CONTAINER = 'office-co-creation-ds'
 const IMAGE = 'onlyoffice/documentserver:latest'
-const IMAGE_RE = /^[a-z0-9][a-z0-9._:/@-]{0,220}$/
 const MIRRORS = [
   'docker.m.daocloud.io',
   'docker.1ms.run',
@@ -245,13 +244,11 @@ export class OnlyOfficeSetup {
 
   async start(options = {}) {
     if (this.job.running) return { started: false, already: true, job: { ...this.job } }
-    const requested = typeof options?.image === 'string' ? options.image.trim() : ''
-    if (requested && !IMAGE_RE.test(requested)) {
-      const error = new Error('镜像地址不合法。示例：docker.m.daocloud.io/onlyoffice/documentserver:latest')
-      error.status = 400
-      throw error
-    }
-    this.jobImage = requested || IMAGE
+    // 只接受镜像列表的下标，实际镜像名始终来自服务端常量，避免用户输入进入命令参数。
+    const mirror = Number(options?.mirror)
+    this.jobImage = Number.isInteger(mirror) && mirror >= 0 && mirror < MIRRORS.length
+      ? `${MIRRORS[mirror]}/${IMAGE}`
+      : IMAGE
     this.job = {
       running: true,
       step: '检查 Docker',
