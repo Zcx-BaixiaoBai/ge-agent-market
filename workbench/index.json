@@ -195,17 +195,17 @@
       "name": "办公套件",
       "category": "productivity",
       "author": "张宸熙",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "license": "UNLICENSED",
       "description": {
-        "zh": "办公套件：在本机 OnlyOffice 中完整编辑 Word、Excel、PPT，框选文档内容交给 AI 修改，改完自动写回原文件并保留修改前版本；文档不上传云端。开发者：张宸熙。",
-        "en": "Office suite: edit Word, Excel and PowerPoint locally in OnlyOffice, hand a selected range to the AI, and write the changes back to the same file with a pre-edit backup; documents never leave the machine. Developer: Zhang Chenxi."
+        "zh": "办公套件：在本机 OnlyOffice 中完整编辑 Word、Excel、PPT，框选文档内容交给 AI 修改，改完自动写回原文件并保留修改前版本。首次打开会检测 Docker 并引导一键安装 OnlyOffice，文档不上传云端。开发者：张宸熙。",
+        "en": "Office suite: edit Word, Excel and PowerPoint locally in OnlyOffice, hand a selected range to the AI, and write the changes back to the same file with a pre-edit backup. First launch checks Docker and guides a one-click OnlyOffice install; documents never leave the machine. Developer: Zhang Chenxi."
       },
       "distribution": {
         "type": "github-release",
-        "version": "0.1.0",
-        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/office-co-creation/office-co-creation-0.1.0.tgz",
-        "sha256": "d9c762b6c2ad4d908182f65ca6dc2797ae04a2af1c8431973eb3213f09343c1a"
+        "version": "0.2.0",
+        "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/office-co-creation/office-co-creation-0.2.0.tgz",
+        "sha256": "9dd7492cd672371723c793e2f662f646e110504a8ddf5768448ba610b06da595"
       },
       "screenshots": [
         {
@@ -215,6 +215,14 @@
           "width": 3200,
           "height": 2000,
           "bytes": 276779
+        },
+        {
+          "url": "https://jinying-agent.zcx-baixiaobai.cn/market-assets/packages/office-co-creation/docs/screenshots/setup.png",
+          "alt": "办公套件引导安装页：检测 Docker 与 OnlyOffice 状态，一键安装并启动容器",
+          "sha256": "6696c6cbc9bb1452b45cc40c71360efce94cf895e2d0a3cf43c38866308647b3",
+          "width": 3200,
+          "height": 2000,
+          "bytes": 130662
         }
       ]
     }

@@ -100,6 +100,28 @@ window.__ModuleLoader__.load({
       .occ-notice-dot { width: 8px; height: 8px; border-radius: 50%; background: #d9a441; flex: 0 0 8px; }
       .occ-notice-text { font-size: 13px; font-weight: 600; flex: 1; }
       .occ-notice-note { font-size: 11px; color: var(--occ-muted); margin-top: 8px; }
+      .occ-setup { max-width: 760px; width: 100%; margin: 0 auto; border: 1px solid var(--occ-gold-line);
+        border-radius: 12px; padding: 18px 20px; background: #fffdf8; }
+      .occ-setup-title { font-size: 15px; font-weight: 700; margin: 0 0 6px; }
+      .occ-setup-desc { font-size: 12px; color: var(--occ-muted); line-height: 1.65; margin: 0 0 14px; }
+      .occ-setup-checks { display: grid; gap: 7px; margin-bottom: 14px; }
+      .occ-setup-check { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+      .occ-setup-check-label { min-width: 104px; color: var(--occ-muted); }
+      .occ-setup-check-text { color: var(--occ-ink); }
+      .occ-setup-dot { width: 8px; height: 8px; border-radius: 50%; background: #d9a441; flex: 0 0 8px; }
+      .occ-setup-dot.on { background: #2f9e62; }
+      .occ-setup-dot.off { background: #c9ccd2; }
+      .occ-setup-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+      .occ-setup-actions a { display: inline-flex; align-items: center; height: 30px; padding: 0 12px;
+        border-radius: 8px; border: 1px solid var(--occ-gold-line); color: var(--occ-gold-strong);
+        text-decoration: none; font-size: 12px; background: #fff; }
+      .occ-setup-detail { font-size: 12px; line-height: 1.6; margin-top: 10px; }
+      .occ-setup-error { color: #b3261e; }
+      .occ-setup-log { margin: 10px 0 0; max-height: 170px; overflow: auto; background: #fff;
+        border: 1px solid var(--occ-line); border-radius: 8px; padding: 10px;
+        font: 11px/1.55 ui-monospace, SFMono-Regular, monospace; white-space: pre-wrap; color: #4b5563; }
+      .occ-setup details { margin-top: 12px; font-size: 11px; color: var(--occ-muted); }
+      .occ-setup summary { cursor: pointer; }
       .occ-start { max-width: 860px; width: 100%; margin: 0 auto; }
       .occ-filelist + .occ-filelist { margin-top: 24px; }
       .occ-list-title { display: flex; align-items: baseline; gap: 10px; padding: 0 2px 6px;
@@ -289,6 +311,9 @@ window.__ModuleLoader__.load({
       .occ-root.occ-dark .occ-filerow { border-radius: 0 !important; }
       .occ-root.occ-dark .occ-filerow:hover { background: #2a2d31 !important; }
       .occ-root.occ-dark .occ-code { background: #1b1c1e; border: none; border-radius: 6px; color: #c5c8cd; }
+      .occ-root.occ-dark .occ-setup { background: #24262a; border-color: #3a3d42; }
+      .occ-root.occ-dark .occ-setup-log { background: #1b1c1e; border-color: #34373c; color: #c5c8cd; }
+      .occ-root.occ-dark .occ-setup-actions a { background: #2a2d31; border-color: #44474d; color: #d4b06a; }
       .occ-root.occ-dark .occ-composer { background: #202124 !important; }
       .occ-root.occ-dark .occ-chat-float { background: #24262a; box-shadow: 0 24px 70px rgba(0,0,0,.5); }
       .occ-root.occ-dark .occ-composer input { border: none; border-bottom: 1px solid #34373b;
@@ -624,6 +649,8 @@ window.__ModuleLoader__.load({
       const [cloudSavedAt, setCloudSavedAt] = useState(0)
       const [cloudVerify, setCloudVerify] = useState(null)
       const [cloudCompareOpen, setCloudCompareOpen] = useState(false)
+      const [setup, setSetup] = useState(null)
+      const [setupBusy, setSetupBusy] = useState(false)
 
       const rootRef = useRef(null)
       const dark = useHostTheme(rootRef)
@@ -1033,6 +1060,27 @@ window.__ModuleLoader__.load({
         return () => { alive = false }
       }, [toast])
 
+      const loadSetup = useCallback(async () => {
+        try {
+          setSetup(await api('/setup/status'))
+        } catch (error) {
+          toast('error', error.message)
+        }
+      }, [toast])
+
+      const startSetup = useCallback(async () => {
+        if (setupBusy) return
+        setSetupBusy(true)
+        try {
+          const started = await api('/setup/install', { method: 'POST' })
+          setSetup((current) => ({ ...(current || {}), job: started.job }))
+          toast('info', '开始准备 OnlyOffice，首次需要下载镜像…')
+        } catch (error) {
+          setSetupBusy(false)
+          toast('error', error.message)
+        }
+      }, [setupBusy, toast])
+
       const refreshHealth = useCallback(async () => {
         try {
           const result = await api('/health')
@@ -1044,6 +1092,32 @@ window.__ModuleLoader__.load({
           toast('error', error.message)
         }
       }, [toast])
+
+      useEffect(() => {
+        if (health !== false) return
+        loadSetup()
+      }, [health, loadSetup])
+
+      useEffect(() => {
+        if (!setup?.job?.running) return undefined
+        const timer = setInterval(async () => {
+          try {
+            const next = await api('/setup/status')
+            setSetup(next)
+            if (next.serverUp) {
+              setHealth(true)
+              setSetupBusy(false)
+              toast('success', 'OnlyOffice 已就绪，可以打开文件了')
+            } else if (!next.job?.running) {
+              setSetupBusy(false)
+              if (next.job?.error) toast('error', next.job.error)
+            }
+          } catch {
+            // 安装期间状态轮询失败不打断，下一轮继续
+          }
+        }, 1500)
+        return () => clearInterval(timer)
+      }, [setup?.job?.running, toast])
 
       const applyOpenedFolder = useCallback((opened) => {
         setFolder(opened)
@@ -1671,6 +1745,89 @@ ${instruction.trim()}
         }, busy ? '发送中' : '应用'),
       )
 
+      const renderSetup = () => {
+        const docker = setup?.docker
+        const job = setup?.job || {}
+        const guide = setup?.guide
+        const container = docker?.container
+        const installed = Boolean(docker?.installed)
+        const dockerRunning = Boolean(docker?.running)
+        const serverUp = Boolean(setup?.serverUp)
+        const check = (label, state, text) => h('div', { className: 'occ-setup-check' },
+          h('span', { className: `occ-setup-dot ${state === true ? 'on' : state === false ? 'off' : ''}` }),
+          h('span', { className: 'occ-setup-check-label' }, label),
+          h('span', { className: 'occ-setup-check-text' }, text),
+        )
+        const recheck = h('button', {
+          key: 'recheck',
+          onClick: async () => {
+            await loadSetup()
+            await refreshHealth()
+          },
+          disabled: setupBusy || job.running,
+        }, '重新检测')
+        let title = '正在检查本机环境…'
+        let desc = '正在确认 Docker 与 OnlyOffice Document Server 的状态。'
+        let actions = [recheck]
+        if (setup) {
+          if (!installed) {
+            title = '需要先安装 Docker'
+            desc = `${guide?.text || 'OnlyOffice 通过 Docker 在本机运行。'} 安装完成后回到这里点“重新检测”。文档与 OnlyOffice 都留在本机，不会上传云端。`
+            actions = [
+              guide?.url ? h('a', { key: 'guide', href: guide.url, target: '_blank', rel: 'noreferrer' }, '去安装 Docker') : null,
+              recheck,
+            ].filter(Boolean)
+          } else if (!dockerRunning) {
+            title = 'Docker 已安装，但服务没有运行'
+            desc = '打开 Docker Desktop，等它显示 Running（鲸鱼图标稳定）后点“重新检测”。'
+            actions = [recheck]
+          } else {
+            title = serverUp ? 'OnlyOffice 已连接' : '一键安装本机 OnlyOffice'
+            desc = serverUp
+              ? '本机 Document Server 已就绪，可以直接打开并编辑文件。'
+              : '文档编辑依赖本机 OnlyOffice Document Server。首次安装会拉取约 1–2 GB 镜像，之后直接复用；服务只监听 127.0.0.1，文档不上传云端。'
+            if (!serverUp) {
+              actions = [
+                job.running ? null : h('button', {
+                  key: 'primary',
+                  className: 'occ-primary',
+                  onClick: startSetup,
+                  disabled: setupBusy,
+                }, container?.exists
+                  ? (container.running ? '等待 OnlyOffice 就绪' : '启动 OnlyOffice 容器')
+                  : '一键安装并启动 OnlyOffice'),
+                recheck,
+              ].filter(Boolean)
+            } else {
+              actions = [recheck]
+            }
+          }
+        }
+        return h('div', { className: 'occ-setup' },
+          h('div', { className: 'occ-setup-title' }, title),
+          h('div', { className: 'occ-setup-desc' }, desc),
+          h('div', { className: 'occ-setup-checks' },
+            check('Docker', installed, installed ? (docker?.version ? `已安装 · ${docker.version.split('\n')[0]}` : '已安装') : '未检测到 docker 命令'),
+            check('Docker 服务', dockerRunning, dockerRunning ? '运行中' : installed ? '未运行' : '—'),
+            check('OnlyOffice 容器', container?.exists ? container.running : undefined,
+              container?.exists ? (container.running ? '运行中' : '已停止') : installed && dockerRunning ? '尚未创建' : '—'),
+            check('Document Server', serverUp, serverUp ? `已连接 · 127.0.0.1:${setup?.port || 18080}` : '未连接'),
+          ),
+          h('div', { className: 'occ-setup-actions' }, actions),
+          job.startedAt && h('div', { className: `occ-setup-detail${job.error ? ' occ-setup-error' : ''}` },
+            h('div', {}, `步骤：${job.step || '准备中'}${job.detail ? ` · ${job.detail}` : ''}`),
+            job.error ? h('div', {}, job.error) : null,
+            job.logTail ? h('pre', { className: 'occ-setup-log' }, job.logTail) : null,
+          ),
+          setup?.manualCommand
+            ? h('details', {},
+              h('summary', {}, '查看手动安装命令'),
+              h('pre', { className: 'occ-code' }, setup.manualCommand),
+            )
+            : null,
+        )
+      }
+
       return h('div', { ref: rootRef, className: `occ-root ${dark ? 'occ-dark' : 'occ-light'}` },
         h('input', {
           type: 'file',
@@ -1798,20 +1955,7 @@ ${instruction.trim()}
               )
               : h('div', { className: 'occ-landing' },
                 health === false
-                  ? h('div', { className: 'occ-notice' },
-                    h('div', { className: 'occ-notice-row' },
-                      h('span', { className: 'occ-notice-dot' }),
-                      h('span', { className: 'occ-notice-text' }, 'OnlyOffice 未启动（127.0.0.1:18080）'),
-                      h('button', { onClick: refreshHealth }, '重新检测'),
-                    ),
-                    h('div', { className: 'occ-code' }, `docker run -d --name office-co-creation-ds \\
-  --platform linux/arm64 \\
-  -p 127.0.0.1:18080:80 \\
-  -e JWT_ENABLED=false \\
-  -e ALLOW_PRIVATE_IP_ADDRESS=true \\
-  onlyoffice/documentserver:latest`),
-                    h('div', { className: 'occ-notice-note' }, 'Intel Mac 换 --platform linux/amd64；启动约 30 秒后重新检测。'),
-                  )
+                  ? renderSetup()
                   : (folder || recent.length > 0)
                     ? h('div', { className: 'occ-start' },
                       folder && h('div', { className: 'occ-filelist' },

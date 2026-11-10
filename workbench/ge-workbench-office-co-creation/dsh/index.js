@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { FileStore } from '../lib/host/file-store.js'
 import { DocumentServer } from '../lib/host/document-server.js'
+import { OnlyOfficeSetup } from '../lib/host/onlyoffice-setup.js'
 import { PatchQueue, officeApplyPatchTool } from '../lib/host/patches.js'
 import { createContentServer } from '../lib/host/content-server.js'
 import { CloudPatchQueue } from '../lib/host/cloud-queue.js'
@@ -101,6 +102,7 @@ export async function apply(ctx, config) {
   const cloudQueue = new CloudPatchQueue()
   const content = await createContentServer({ store, documentServer, queue })
   ctx.effect(() => () => content.close())
+  const setup = new OnlyOfficeSetup({ documentServer, baseUrl: config.documentServerUrl })
   const docsUrl = new URL(config.documentServerUrl)
   const docsPort = docsUrl.port ? `:${docsUrl.port}` : ''
   const allowedOrigins = new Set([
@@ -152,6 +154,10 @@ export async function apply(ctx, config) {
       ok: await documentServer.probe(),
       documentServerUrl: config.documentServerUrl,
     }))
+
+    register('setup/status', ['GET'], async (request) => json(request, await setup.status()))
+
+    register('setup/install', ['POST'], async (request) => json(request, await setup.start()))
 
     register('recent', ['GET'], async (request) => json(request, { files: await store.recent() }))
 

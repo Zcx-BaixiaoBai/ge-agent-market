@@ -1,11 +1,11 @@
 {
   "id": "zcx-baixiaobai/ge-workbench-office-co-creation",
   "name": "办公套件",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "package": "office-co-creation",
-  "tarball": "../../packages/office-co-creation/office-co-creation-0.1.0.tgz",
-  "sha256": "d9c762b6c2ad4d908182f65ca6dc2797ae04a2af1c8431973eb3213f09343c1a",
+  "tarball": "../../packages/office-co-creation/office-co-creation-0.2.0.tgz",
+  "sha256": "9dd7492cd672371723c793e2f662f646e110504a8ddf5768448ba610b06da595",
   "screenshot": "../../packages/office-co-creation/docs/screenshots/overview.png",
   "archivedAt": "2026-11-10",
-  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.1.0 使用本机 ONLYOFFICE Document Server 完整编辑 Word/Excel/PPT，框选内容交给 Agent 后自动写回原文件并保留修改前版本。"
+  "note": "已发布安装包解包归档；市场安装仍使用 tarball。0.2.0 增加引导安装：检测 Docker CLI/服务/容器/端口，Docker 缺失时给出对应系统安装入口，就绪后一键拉取并启动 office-co-creation-ds 容器，页面显示安装步骤与日志。"
 }

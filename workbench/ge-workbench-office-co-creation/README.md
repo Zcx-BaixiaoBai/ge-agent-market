@@ -15,10 +15,20 @@ Word、Excel、PPT；在文档里选中一段内容后，把选区和一句指�
 ## 运行条件
 
 1. 支持工作台的金鹰 Agent Desktop。
-2. 本机 Docker（或能访问本机 Docker 的等价环境）。
+2. 本机 Docker（Docker Desktop，或能访问本机 Docker 的等价环境）。
 3. ONLYOFFICE Document Server，默认监听 `127.0.0.1:18080`。
 
-首次启动 Document Server：
+**首次打开工作台会进入引导安装页**，不需要先执行命令：
+
+- 没有 Docker：页面给出对应系统的 Docker Desktop / Docker Engine 安装入口，装完点“重新检测”。
+- Docker 已装但没运行：提示打开 Docker Desktop，等它显示 Running 后重新检测。
+- Docker 就绪、容器还没创建：点“一键安装并启动 OnlyOffice”，工作台会拉取镜像并启动
+  `office-co-creation-ds` 容器，安装进度和日志直接显示在页面里；首次约 1–2 GB，之后直接复用。
+- 安装完成后 Document Server 状态变为“已连接”，即可打开文件。
+
+![办公套件引导安装：Docker 与 OnlyOffice 状态检测、一键安装](docs/screenshots/setup.png)
+
+页面底部保留“查看手动安装命令”，等价命令如下：
 
 ```bash
 docker run -d --name office-co-creation-ds \
@@ -32,7 +42,6 @@ docker run -d --name office-co-creation-ds \
 - Intel Mac：`--platform` 改为 `linux/amd64`。
 - Linux：把 `--platform` 一行换成 `--add-host host.docker.internal:host-gateway`。
 - 只绑定 `127.0.0.1`，不要暴露到局域网。
-- 启动后约 30 秒，工作台点“检测 OnlyOffice”即可。
 
 > 本机自用场景下关闭了 OnlyOffice JWT；工作台用每个文件独立的随机令牌保护
 > 文件读取、保存回调、选区上报和补丁通道，Document Server 只监听环回地址。
